@@ -71,6 +71,63 @@ input:focus, select:focus {
     outline: none;
 }
 
+input[readonly] {
+    background-color: #f3f4f6;
+    color: #6b7280;
+    cursor: not-allowed;
+    border: 1px dashed #d1d5db;
+}
+
+input[readonly]:focus {
+    border-color: #d1d5db;
+    box-shadow: none;
+}
+
+.error-message {
+    color: #b91c1c;
+    background-color: #fee2e2;
+    border: 1px solid #f87171;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.field-hint {
+    display: block;
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 6px;
+    line-height: 1.4;
+}
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    padding-right: 42px;
+}
+
+.password-wrapper .toggle-password {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    font-size: 16px;
+}
+
+.password-wrapper .toggle-password:hover {
+    color: #ff1a66;
+}
+
 input::placeholder {
     color: #888;
 }

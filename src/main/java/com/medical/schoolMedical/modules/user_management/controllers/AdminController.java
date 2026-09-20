@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import com.medical.schoolMedical.util.ValidationUtil;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
@@ -100,21 +101,76 @@ public class AdminController {
     }
 
     @PostMapping("/update-user")
-    public String updateUser(@ModelAttribute("editUser") User user, RedirectAttributes redirectAttributes) {
-        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        } else {
-            // Nếu không đổi mật khẩu thì giữ nguyên
-            User existing = userService.findById(user.getId());
-            user.setPassword(existing.getPassword());
+    public String updateUser(@ModelAttribute("editUser") User user,
+                             @RequestParam(value = "newPassword", required = false) String newPassword,
+                             Authentication authentication,
+                             Model model,
+                             RedirectAttributes redirectAttributes) {
+        User existing = userService.findById(user.getId());
+        if (existing == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Người dùng không tồn tại!");
+            return "redirect:/admin/manage-users";
         }
-        userService.saveUser(user);
+
+        // Đảm bảo tên đăng nhập luôn giữ nguyên theo tài khoản trong cơ sở dữ liệu
+        user.setUsername(existing.getUsername());
+
+        // Ngăn chặn admin tự tước quyền ADMIN của chính mình
+        if (authentication != null && existing.getUsername().equals(authentication.getName()) && user.getRole() != Role.ADMIN) {
+            model.addAttribute("editUser", user);
+            model.addAttribute("roles", Role.values());
+            model.addAttribute("errorMessage", "Bạn không thể tự hạ quyền quản trị viên (ADMIN) của chính mình!");
+            return "admin/edit-user";
+        }
+
+        String newEmail = (user.getEmail() != null) ? user.getEmail().trim() : "";
+
+        // Kiểm tra định dạng email
+        if (newEmail.isEmpty() || !ValidationUtil.isValidEmail(newEmail)) {
+            model.addAttribute("editUser", user);
+            model.addAttribute("roles", Role.values());
+            model.addAttribute("errorMessage", "Email không đúng định dạng!");
+            return "admin/edit-user";
+        }
+
+        // Kiểm tra trùng lặp email với tài khoản khác
+        if (!newEmail.equalsIgnoreCase(existing.getEmail()) && userService.existsUserByEmail(newEmail)) {
+            model.addAttribute("editUser", user);
+            model.addAttribute("roles", Role.values());
+            model.addAttribute("errorMessage", "Email này đã được sử dụng bởi tài khoản khác!");
+            return "admin/edit-user";
+        }
+
+        // Kiểm tra mật khẩu mới nếu người dùng muốn đổi
+        if (newPassword != null && !newPassword.trim().isEmpty()) {
+            String pwd = newPassword.trim();
+            if (pwd.length() < 5 || pwd.length() > 30 || pwd.contains(" ")) {
+                model.addAttribute("editUser", user);
+                model.addAttribute("roles", Role.values());
+                model.addAttribute("errorMessage", "Mật khẩu mới phải từ 5-30 ký tự và không chứa khoảng trắng!");
+                return "admin/edit-user";
+            }
+            existing.setPassword(passwordEncoder.encode(pwd));
+        }
+
+        // Cập nhật các trường được phép thay đổi
+        existing.setEmail(newEmail);
+        existing.setRole(user.getRole());
+        userService.saveUser(existing);
+
         redirectAttributes.addFlashAttribute("success", "Cập nhật người dùng thành công!");
         return "redirect:/admin/manage-users";
     }
 
     @PostMapping("/delete-user/{id}")
-    public String deleteUser(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    public String deleteUser(@PathVariable Long id,
+                             Authentication authentication,
+                             RedirectAttributes redirectAttributes) {
+        User userToDelete = userService.findById(id);
+        if (userToDelete != null && userToDelete.getUsername().equals(authentication.getName())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Bạn không thể tự xoá tài khoản quản trị viên của chính mình!");
+            return "redirect:/admin/manage-users";
+        }
         userService.softDeleteUser(id);
         redirectAttributes.addFlashAttribute("success", "Xoá người dùng thành công!");
         return "redirect:/admin/manage-users";

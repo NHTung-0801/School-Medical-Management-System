@@ -50,6 +50,12 @@ h2 {
     border-radius: 10px;
 }
 
+.message.error {
+    color: #b91c1c;
+    background-color: #fee2e2;
+    border: 1px solid #f87171;
+}
+
 .add-button {
     display: inline-block;
     margin-bottom: 20px;

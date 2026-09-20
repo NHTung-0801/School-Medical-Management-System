@@ -6,29 +6,46 @@
     <link rel="stylesheet" th:href="@{/assets/css/admin/edit-user.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/fragments/header.css}" type="text/css"/>
     <link rel="stylesheet" th:href="@{/assets/css/fragments/footer.css}" type="text/css"/>
-    <title>Quản Lý Người Dùng</title>
+    <title>Chỉnh Sửa Người Dùng</title>
 </head>
 <body>
 <div th:replace="fragments/header :: Header"></div>
 <div th:replace="fragments/header :: Nav-Admin"></div>
 <div class="container">
     <h2>Chỉnh sửa người dùng</h2>
+
+    <!-- Thông báo lỗi nếu có -->
+    <div th:if="${errorMessage}" class="error-message">
+        <i class="fas fa-exclamation-circle"></i> <span th:text="${errorMessage}"></span>
+    </div>
+
     <form th:action="@{/admin/update-user}" method="post" th:object="${editUser}">
-    <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{id}" />
+
         <div class="form-group">
-            <label>Tên đăng nhập:</label><br/>
-            <input type="text" th:field="*{username}" required/>
+            <label for="username"><i class="fas fa-user"></i> Tên đăng nhập:</label>
+            <input type="text" th:field="*{username}" id="username" readonly tabindex="-1" />
+            <small class="field-hint"><i class="fas fa-lock"></i> Tên đăng nhập là mã định danh hệ thống và không thể thay đổi.</small>
         </div>
 
         <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="text" id="email" name="email" placeholder="Nhập email" required>
+            <label for="email"><i class="fas fa-envelope"></i> Email:</label>
+            <input type="email" th:field="*{email}" id="email" placeholder="Nhập email" required />
         </div>
 
         <div class="form-group">
-            <label>Vai trò:</label><br/>
-            <select th:field="*{role}">
-                <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
+            <label for="password"><i class="fas fa-key"></i> Mật khẩu mới:</label>
+            <div class="password-wrapper">
+                <input type="password" id="password" name="newPassword" placeholder="Để trống nếu không muốn đổi mật khẩu" />
+                <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+            </div>
+            <small class="field-hint"><i class="fas fa-info-circle"></i> Chỉ điền nếu cần đổi mật khẩu mới (5-30 ký tự, không chứa dấu cách).</small>
+        </div>
+
+        <div class="form-group">
+            <label for="role"><i class="fas fa-user-tag"></i> Vai trò:</label>
+            <select th:field="*{role}" id="role">
+                <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option>
             </select>
         </div>
 
@@ -38,7 +55,8 @@
         </div>
     </form>
 </div>
-    <script th:src="@{/assets/js/fragments/header.js}"></script>
-    <div th:replace="fragments/footer :: footer"></div>
+<script th:src="@{/assets/js/admin/add-user.js}"></script>
+<script th:src="@{/assets/js/fragments/header.js}"></script>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
