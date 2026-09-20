@@ -1,6 +1,6 @@
 package com.medical.schoolMedical.modules.pharmacy.entities;
 
-import com.medical.schoolMedical.entities.MedicalEvent;
+import com.medical.schoolMedical.modules.medical_event.entities.MedicalEvent;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -6,6 +6,7 @@ import com.medical.schoolMedical.enums.Role;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
 import com.medical.schoolMedical.mapper.UserMapper;
+import com.medical.schoolMedical.modules.medical_event.repositories.MedicalEventRepository;
 import com.medical.schoolMedical.repositories.*;
 import jakarta.annotation.PostConstruct;
 import lombok.AccessLevel;

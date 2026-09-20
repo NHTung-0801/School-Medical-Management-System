@@ -1,5 +1,8 @@
-package com.medical.schoolMedical.entities;
+package com.medical.schoolMedical.modules.medical_event.entities;
 
+import com.medical.schoolMedical.entities.SchoolNurse;
+import com.medical.schoolMedical.entities.Student;
+import com.medical.schoolMedical.entities.User;
 import com.medical.schoolMedical.modules.pharmacy.entities.MedicineUsed;
 import com.medical.schoolMedical.modules.pharmacy.entities.SupplyUsed;
 import jakarta.persistence.*;
@@ -8,11 +11,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -58,12 +59,9 @@ public class MedicalEvent {
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
 
-
-
     @OneToMany(mappedBy = "medicalEvent", cascade = CascadeType.ALL)
     private Set<MedicineUsed> medicineUsed = new HashSet<>();
 
     @OneToMany(mappedBy = "medicalEvent", cascade = CascadeType.ALL)
     private Set<SupplyUsed> supplyUsed = new HashSet<>();
 }
-

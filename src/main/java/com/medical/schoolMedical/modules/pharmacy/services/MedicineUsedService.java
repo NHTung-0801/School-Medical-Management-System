@@ -1,13 +1,13 @@
 package com.medical.schoolMedical.modules.pharmacy.services;
 
 import com.medical.schoolMedical.modules.pharmacy.dto.MedicineUsedDTO;
-import com.medical.schoolMedical.entities.MedicalEvent;
+import com.medical.schoolMedical.modules.medical_event.entities.MedicalEvent;
+import com.medical.schoolMedical.modules.medical_event.repositories.MedicalEventRepository;
 import com.medical.schoolMedical.modules.pharmacy.entities.Medicine;
 import com.medical.schoolMedical.modules.pharmacy.entities.MedicineUsed;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
 import com.medical.schoolMedical.modules.pharmacy.mappers.MedicineUsedMapper;
-import com.medical.schoolMedical.repositories.MedicalEventRepository;
 import com.medical.schoolMedical.modules.pharmacy.repositories.MedicineRepository;
 import com.medical.schoolMedical.modules.pharmacy.repositories.MedicineUsedRepository;
 import lombok.RequiredArgsConstructor;

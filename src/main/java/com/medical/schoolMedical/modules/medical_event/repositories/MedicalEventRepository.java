@@ -1,25 +1,27 @@
-package com.medical.schoolMedical.repositories;
+package com.medical.schoolMedical.modules.medical_event.repositories;
 
-import com.medical.schoolMedical.entities.MedicalEvent;
+import com.medical.schoolMedical.modules.medical_event.entities.MedicalEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface MedicalEventRepository extends JpaRepository<MedicalEvent, Long> {
     List<MedicalEvent> findAll();
     List<MedicalEvent> findByStudentId(Long studentId);
     List<MedicalEvent> findBySchoolNurseId(Long nurseId);
+
     @Query("SELECT e FROM MedicalEvent e " +
             "LEFT JOIN FETCH e.medicineUsed " +
             "LEFT JOIN FETCH e.supplyUsed " +
             "WHERE e.id = :id")
     Optional<MedicalEvent> findByIdWithDetails(@Param("id") Long id);
 
-    //    Câu lệnh thuần SQL và để lấy thống kê số lượng sự kiện y tế theo tháng trong một năm
-
+    // Câu lệnh thuần SQL để lấy thống kê số lượng sự kiện y tế theo tháng trong một năm
     @Query(value = """
         SELECT m.month AS month, 
                COALESCE(COUNT(me.medical_event_id), 0) AS total
@@ -32,5 +34,4 @@ public interface MedicalEventRepository extends JpaRepository<MedicalEvent, Long
         ORDER BY m.month
     """, nativeQuery = true)
     List<Object[]> getMonthlyMedicalEventStats(@Param("year") int year);
-
 }

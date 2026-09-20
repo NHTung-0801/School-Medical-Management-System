@@ -1,5 +1,4 @@
-package com.medical.schoolMedical.dto;
-
+package com.medical.schoolMedical.modules.medical_event.dto;
 
 import com.medical.schoolMedical.modules.pharmacy.dto.MedicineUsedDTO;
 import com.medical.schoolMedical.modules.pharmacy.dto.SupplyUsedDTO;
@@ -35,5 +34,4 @@ public class MedicalEventDTO {
 
     private List<MedicineUsedDTO> medicinesUsed = new ArrayList<>();
     private List<SupplyUsedDTO> suppliesUsed = new ArrayList<>();
-
 }

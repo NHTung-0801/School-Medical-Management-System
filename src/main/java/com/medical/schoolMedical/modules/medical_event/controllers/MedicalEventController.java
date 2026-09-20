@@ -1,17 +1,19 @@
-package com.medical.schoolMedical.controller.schoolNurse;
+package com.medical.schoolMedical.modules.medical_event.controllers;
 
-import com.medical.schoolMedical.dto.MedicalEventDTO;
+import com.medical.schoolMedical.entities.SchoolNurse;
+import com.medical.schoolMedical.entities.User;
+import com.medical.schoolMedical.modules.medical_event.dto.MedicalEventDTO;
+import com.medical.schoolMedical.modules.medical_event.entities.MedicalEvent;
+import com.medical.schoolMedical.modules.medical_event.services.MedicalEventService;
 import com.medical.schoolMedical.modules.pharmacy.dto.MedicineUsedDTO;
 import com.medical.schoolMedical.modules.pharmacy.dto.MedicineUsedRequestDTO;
 import com.medical.schoolMedical.modules.pharmacy.dto.SupplyUsedDTO;
-import com.medical.schoolMedical.modules.pharmacy.entities.MedicalSupply;
-import com.medical.schoolMedical.modules.pharmacy.entities.Medicine;
 import com.medical.schoolMedical.modules.pharmacy.services.MedicalSupplyService;
 import com.medical.schoolMedical.modules.pharmacy.services.MedicineService;
 import com.medical.schoolMedical.modules.pharmacy.services.MedicineUsedService;
-import com.medical.schoolMedical.entities.*;
 import com.medical.schoolMedical.security.CustomUserDetails;
-import com.medical.schoolMedical.service.*;
+import com.medical.schoolMedical.service.StudentService;
+import com.medical.schoolMedical.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +25,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
 @RequestMapping("/nurse/medical-events")
 @RequiredArgsConstructor
 public class MedicalEventController {
-
 
     @Autowired
     private MedicalEventService medicalEventService;
@@ -49,7 +49,6 @@ public class MedicalEventController {
 
     @Autowired
     private StudentService studentService;
-
 
     // Danh sách sự kiện y tế
     @GetMapping
@@ -72,16 +71,12 @@ public class MedicalEventController {
         return "nurse/list";
     }
 
-
-    //Trang form thêm sự kiện y tế
+    // Trang form thêm sự kiện y tế
     @GetMapping("/create")
     public String showCreateForm(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
-
         MedicalEventDTO dto = new MedicalEventDTO();
-
         dto.getMedicinesUsed().add(new MedicineUsedDTO()); // Chỉ 1 dòng thuốc
         dto.getSuppliesUsed().add(new SupplyUsedDTO());    // Chỉ 1 dòng vật tư
-
 
         model.addAttribute("eventDTO", dto);
         model.addAttribute("students", userService.getAllStudents());
@@ -89,8 +84,6 @@ public class MedicalEventController {
         model.addAttribute("supplies", medicalSupplyService.getAllSupplies());
         return "nurse/create";
     }
-
-
 
     @PostMapping("/save")
     public String saveMedicalEvent(@ModelAttribute("eventDTO") @Valid MedicalEventDTO dto,
@@ -120,43 +113,32 @@ public class MedicalEventController {
             redirectAttributes.addFlashAttribute("success", "Ghi nhận sự kiện thành công!");
             return "redirect:/nurse/medical-events";
         } catch (IllegalArgumentException e) {
-            // Nếu xảy ra lỗi → trả lại form kèm lỗi và dữ liệu
             model.addAttribute("error", e.getMessage());
             model.addAttribute("eventDTO", dto);
             model.addAttribute("students", studentService.getAllStudents());
             model.addAttribute("medicines", medicineService.getAllMedicines());
             model.addAttribute("supplies", medicalSupplyService.getAllMedicalSupplies());
 
-            return "nurse/create";  // Trả về lại giao diện form để sửa
+            return "nurse/create";
         }
-
     }
-
 
     @GetMapping("/{id}")
     public String viewEventDetail(@PathVariable Long id, Model model) {
         MedicalEvent event = medicalEventService.findMedicalEventById(id);
-
-        // Chuyển sang DTO đầy đủ, bao gồm cả thuốc và vật tư
         MedicalEventDTO dto = medicalEventService.convertToDto(event);
 
         model.addAttribute("event", dto);
         return "nurse/detail";
     }
 
-
-
-
     @GetMapping("/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model) {
         MedicalEvent event = medicalEventService.findMedicalEventById(id);
         MedicalEventDTO dto = medicalEventService.convertToDto(event);
 
-
-
         model.addAttribute("event", dto);
         model.addAttribute("students", userService.getAllStudents());
-
         model.addAttribute("medicines", medicineService.getAllMedicines());
         model.addAttribute("supplies", medicalSupplyService.getAllSupplies());
 
@@ -183,6 +165,7 @@ public class MedicalEventController {
         );
         return ResponseEntity.ok("Đã ghi nhận sử dụng thuốc");
     }
+
     @GetMapping("/{eventId}/used-medicines")
     public ResponseEntity<List<MedicineUsedDTO>> getUsedMedicines(@PathVariable Long eventId) {
         return ResponseEntity.ok(medicineUsedService.getUsedMedicinesByEvent(eventId));
@@ -199,6 +182,4 @@ public class MedicalEventController {
         }
         return "redirect:/nurse/medical-events";
     }
-
-
 }
