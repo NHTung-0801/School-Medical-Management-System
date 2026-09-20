@@ -2,8 +2,8 @@ package com.medical.schoolMedical.controller.parent;
 
 import com.medical.schoolMedical.dto.ParentDTO;
 import com.medical.schoolMedical.exceptions.BusinessException;
+import com.medical.schoolMedical.modules.healthcheck.services.HealthCheckConsentService;
 import com.medical.schoolMedical.security.CustomUserDetails;
-import com.medical.schoolMedical.service.HealthCheckConsentService;
 import com.medical.schoolMedical.service.NotificationService;
 import com.medical.schoolMedical.service.ParentService;
 import jakarta.servlet.http.HttpSession;

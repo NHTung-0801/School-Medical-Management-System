@@ -1,13 +1,12 @@
-package com.medical.schoolMedical.entities;
+package com.medical.schoolMedical.modules.healthcheck.entities;
 
+import com.medical.schoolMedical.entities.SchoolNurse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -32,13 +31,13 @@ public class HealthCheckRecord {
     private SchoolNurse schoolNurse;
 
     @Column(name = "vision_result", nullable = false)
-    private int visionResult ;
+    private int visionResult;
 
     @Column(name = "hearing_result", nullable = false)
     private String hearingResult;
 
     @Column(name = "bloodPressure")
-    private String bloodPressure ;
+    private String bloodPressure;
 
     @Column(name = "heartrate")
     private int heartRate;
@@ -55,13 +54,12 @@ public class HealthCheckRecord {
     @Column(name = "assessment")
     private String assessment;
 
-    @Column(name = "needs_consultation",columnDefinition = "TINYINT DEFAULT 0",nullable = false)
+    @Column(name = "needs_consultation", columnDefinition = "TINYINT DEFAULT 0", nullable = false)
     private boolean needsConsultation = false;
 
-    @Column(name = "is_sent_to_parent",columnDefinition = "TINYINT DEFAULT 0",nullable = false)
+    @Column(name = "is_sent_to_parent", columnDefinition = "TINYINT DEFAULT 0", nullable = false)
     private boolean sentToParent = false;
 
-    @Column(name = "is_viewed_by_parent ",columnDefinition = "TINYINT DEFAULT 0",nullable = false)
-    private boolean viewedByParent  = false;
+    @Column(name = "is_viewed_by_parent", columnDefinition = "TINYINT DEFAULT 0", nullable = false)
+    private boolean viewedByParent = false;
 }
-

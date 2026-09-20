@@ -1,7 +1,5 @@
 package com.medical.schoolMedical.service;
 
-import com.medical.schoolMedical.dto.HealthCheckConsentDTO;
-import com.medical.schoolMedical.dto.HealthCheckRecordDTO;
 import com.medical.schoolMedical.dto.VaccinationConsentDTO;
 import com.medical.schoolMedical.dto.VaccinationRecordDTO;
 import com.medical.schoolMedical.entities.*;

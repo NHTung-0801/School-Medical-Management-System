@@ -1,6 +1,5 @@
 package com.medical.schoolMedical.controller.schoolNurse;
 
-import com.medical.schoolMedical.dto.HealthCheckConsentDTO;
 import com.medical.schoolMedical.dto.VaccinationConsentDTO;
 import com.medical.schoolMedical.entities.VaccinationConsent;
 import com.medical.schoolMedical.service.VaccinationConsentService;

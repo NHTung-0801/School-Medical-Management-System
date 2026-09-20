@@ -2,7 +2,7 @@ package com.medical.schoolMedical.service;
 
 import com.medical.schoolMedical.dto.ConsultationAppointmentDTO;
 import com.medical.schoolMedical.entities.ConsultationAppointment;
-import com.medical.schoolMedical.entities.HealthCheckConsent;
+import com.medical.schoolMedical.modules.healthcheck.entities.HealthCheckConsent;
 import com.medical.schoolMedical.entities.SchoolNurse;
 import com.medical.schoolMedical.entities.Student;
 import com.medical.schoolMedical.enums.ConsentStatus;

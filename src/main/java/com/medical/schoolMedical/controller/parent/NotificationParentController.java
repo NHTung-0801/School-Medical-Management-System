@@ -1,6 +1,9 @@
 package com.medical.schoolMedical.controller.parent;
 
 import com.medical.schoolMedical.dto.*;
+import com.medical.schoolMedical.modules.healthcheck.dto.*;
+import com.medical.schoolMedical.modules.healthcheck.services.HealthCheckConsentService;
+import com.medical.schoolMedical.modules.healthcheck.services.HealthCheckRecordService;
 import com.medical.schoolMedical.entities.VaccinationRecord;
 import com.medical.schoolMedical.security.CustomUserDetails;
 import com.medical.schoolMedical.service.*;

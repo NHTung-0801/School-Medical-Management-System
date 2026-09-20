@@ -1,6 +1,5 @@
 package com.medical.schoolMedical.controller.parent;
 
-import com.medical.schoolMedical.dto.HealthCheckRecordDTO;
 import com.medical.schoolMedical.dto.VaccinationRecordDTO;
 import com.medical.schoolMedical.entities.VaccinationRecord;
 import com.medical.schoolMedical.exceptions.BusinessException;

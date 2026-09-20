@@ -1,19 +1,12 @@
-package com.medical.schoolMedical.dto;
+package com.medical.schoolMedical.modules.healthcheck.dto;
 
-import com.medical.schoolMedical.entities.HealthCheckRecord;
-import com.medical.schoolMedical.entities.HealthCheckSchedule;
+import com.medical.schoolMedical.dto.StudentDTO;
 import com.medical.schoolMedical.entities.Parent;
-import com.medical.schoolMedical.entities.Student;
 import com.medical.schoolMedical.enums.ConsentStatus;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.FutureOrPresent;
+import com.medical.schoolMedical.modules.healthcheck.entities.HealthCheckSchedule;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -30,8 +23,4 @@ public class HealthCheckConsentDTO {
     private boolean checkedHealth = false;
     private Boolean sentToParent;
     private boolean needsConsultation;
-
-
-
-
 }

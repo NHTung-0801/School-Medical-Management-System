@@ -1,22 +1,21 @@
-package com.medical.schoolMedical.repositories;
+package com.medical.schoolMedical.modules.healthcheck.repositories;
 
-import com.medical.schoolMedical.dto.HealthCheckScheduleDTO;
-import com.medical.schoolMedical.entities.HealthCheckSchedule;
-import com.medical.schoolMedical.entities.VaccinationSchedule;
+import com.medical.schoolMedical.modules.healthcheck.entities.HealthCheckSchedule;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface HealthCheckScheduleRepository extends JpaRepository<HealthCheckSchedule, Long> {
     Page<HealthCheckSchedule> findAll(Pageable pageable);
     Page<HealthCheckSchedule> findBySentToParent(boolean sentToParent, Pageable pageable);
 
-    //    Câu lệnh thuần SQL và để lấy thống kê số lượng lịch khám sức khỏe theo tháng trong một năm
-
+    // Câu lệnh thuần SQL để lấy thống kê số lượng lịch khám sức khỏe theo tháng trong một năm
     @Query(value = """
         SELECT m.month AS month, 
                COALESCE(COUNT(h.health_check_schedule_id), 0) AS total
@@ -29,5 +28,4 @@ public interface HealthCheckScheduleRepository extends JpaRepository<HealthCheck
         ORDER BY m.month
     """, nativeQuery = true)
     List<Object[]> getMonthlyHealthCheckStats(@Param("year") int year);
-
 }

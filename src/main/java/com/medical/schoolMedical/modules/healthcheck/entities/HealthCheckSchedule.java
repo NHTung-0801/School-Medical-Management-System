@@ -1,6 +1,6 @@
-package com.medical.schoolMedical.entities;
+package com.medical.schoolMedical.modules.healthcheck.entities;
 
-import com.medical.schoolMedical.enums.ConsentStatus;
+import com.medical.schoolMedical.entities.SchoolNurse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,7 +40,7 @@ public class HealthCheckSchedule {
     @Column(name = "className", columnDefinition = "TEXT")
     private int className;
 
-    @Column(name = "check_date",nullable = false)
+    @Column(name = "check_date", nullable = false)
     private LocalDateTime checkDate;
 
     @Column(name = "sent_date")
@@ -53,7 +53,6 @@ public class HealthCheckSchedule {
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
 
-    @Column(name = "is_sent_to_parent",columnDefinition = "TINYINT DEFAULT 0",nullable = false)
+    @Column(name = "is_sent_to_parent", columnDefinition = "TINYINT DEFAULT 0", nullable = false)
     private boolean sentToParent = false;
-
 }

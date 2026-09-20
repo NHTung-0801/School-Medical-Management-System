@@ -1,7 +1,6 @@
 package com.medical.schoolMedical.controller.user;
 
 import com.medical.schoolMedical.security.CustomUserDetails;
-import com.medical.schoolMedical.service.HealthCheckConsentService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

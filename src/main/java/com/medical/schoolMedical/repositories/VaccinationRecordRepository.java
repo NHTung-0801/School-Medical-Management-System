@@ -1,7 +1,5 @@
 package com.medical.schoolMedical.repositories;
 
-import com.medical.schoolMedical.entities.HealthCheckConsent;
-import com.medical.schoolMedical.entities.HealthCheckRecord;
 import com.medical.schoolMedical.entities.VaccinationConsent;
 import com.medical.schoolMedical.entities.VaccinationRecord;
 import org.springframework.data.domain.Page;

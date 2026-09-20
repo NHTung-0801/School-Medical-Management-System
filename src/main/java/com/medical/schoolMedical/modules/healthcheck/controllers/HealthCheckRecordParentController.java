@@ -1,10 +1,8 @@
-package com.medical.schoolMedical.controller.parent;
+package com.medical.schoolMedical.modules.healthcheck.controllers;
 
-import com.medical.schoolMedical.dto.HealthCheckRecordDTO;
-import com.medical.schoolMedical.entities.HealthCheckRecord;
 import com.medical.schoolMedical.exceptions.BusinessException;
-import com.medical.schoolMedical.service.HealthCheckRecordService;
-import com.medical.schoolMedical.service.HealthCheckScheduleService;
+import com.medical.schoolMedical.modules.healthcheck.dto.HealthCheckRecordDTO;
+import com.medical.schoolMedical.modules.healthcheck.services.HealthCheckRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,24 +20,21 @@ public class HealthCheckRecordParentController {
     private HealthCheckRecordService healthCheckRecordService;
 
     @GetMapping
-    public String getHealthCheckRecordParent(Model model
-                                             , RedirectAttributes redirectAttributes
-                                            ,@RequestParam(value = "idRecord", required = false ) Long idRecord){
-        if(idRecord == null){
-            redirectAttributes.addFlashAttribute("error","Vui lòng chọn bản ghi khám sức khỏe phù hợp để xem chi tiết.");
+    public String getHealthCheckRecordParent(Model model,
+                                             RedirectAttributes redirectAttributes,
+                                             @RequestParam(value = "idRecord", required = false) Long idRecord) {
+        if (idRecord == null) {
+            redirectAttributes.addFlashAttribute("error", "Vui lòng chọn bản ghi khám sức khỏe phù hợp để xem chi tiết.");
             return "redirect:/parent/notification/HealthCheckRecords";
         }
 
-        try{
+        try {
             HealthCheckRecordDTO healthCheckRecordDTO = healthCheckRecordService.getCheckRecord_updateViewed(idRecord);
             model.addAttribute("healthCheckRecord", healthCheckRecordDTO);
-//            log.info("healthCheckRecord in getHealthCheckRecordParent: {}", healthCheckRecordDTO);
             return "parent/healthCheckRecordParent";
-        }catch (BusinessException e){
-            redirectAttributes.addFlashAttribute("error",e.getMessage());
+        } catch (BusinessException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/parent/notification/HealthCheckRecords";
         }
-
-
     }
 }

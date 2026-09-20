@@ -1,8 +1,6 @@
 package com.medical.schoolMedical.service;
 
-import com.medical.schoolMedical.dto.HealthCheckScheduleDTO;
 import com.medical.schoolMedical.dto.VaccinationScheduleDTO;
-import com.medical.schoolMedical.entities.HealthCheckSchedule;
 import com.medical.schoolMedical.entities.SchoolNurse;
 import com.medical.schoolMedical.entities.VaccinationSchedule;
 import com.medical.schoolMedical.exceptions.BusinessException;

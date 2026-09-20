@@ -1,13 +1,10 @@
-package com.medical.schoolMedical.dto;
+package com.medical.schoolMedical.modules.healthcheck.dto;
 
-
-import com.medical.schoolMedical.entities.HealthCheckConsent;
 import com.medical.schoolMedical.entities.SchoolNurse;
-import jakarta.persistence.*;
+import com.medical.schoolMedical.modules.healthcheck.entities.HealthCheckConsent;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,11 +28,7 @@ public class HealthCheckScheduleDTO {
 
     private boolean sentToParent;
 
-// ngày và giờ để ghép lại thành LocalDateTime checkDate; phù hợp
+    // ngày và giờ để ghép lại thành LocalDateTime checkDate
     private String date;
     private String time;
-
-
-
-
 }

@@ -1,7 +1,5 @@
 package com.medical.schoolMedical.repositories;
 
-import com.medical.schoolMedical.entities.HealthCheckConsent;
-import com.medical.schoolMedical.entities.HealthCheckSchedule;
 import com.medical.schoolMedical.entities.VaccinationConsent;
 import com.medical.schoolMedical.entities.VaccinationSchedule;
 import com.medical.schoolMedical.enums.ConsentStatus;

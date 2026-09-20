@@ -1,12 +1,10 @@
-package com.medical.schoolMedical.entities;
+package com.medical.schoolMedical.modules.healthcheck.entities;
 
+import com.medical.schoolMedical.entities.Parent;
+import com.medical.schoolMedical.entities.Student;
 import com.medical.schoolMedical.enums.ConsentStatus;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -42,11 +40,10 @@ public class HealthCheckConsent {
     private HealthCheckRecord healthCheckRecord;
 
     @Builder.Default
-    @Column(name = "is_checked_health",columnDefinition = "TINYINT DEFAULT 0",nullable = false)
+    @Column(name = "is_checked_health", columnDefinition = "TINYINT DEFAULT 0", nullable = false)
     private boolean checkedHealth = false;
 
     @Column(name = "consent_status", nullable = false, columnDefinition = "VARCHAR(20) DEFAULT 'UNCONFIRMED'")
     @Enumerated(EnumType.STRING)
     private ConsentStatus status;
 }
-

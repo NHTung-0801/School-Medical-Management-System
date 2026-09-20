@@ -1,5 +1,6 @@
 package com.medical.schoolMedical.entities;
 
+import com.medical.schoolMedical.modules.healthcheck.entities.HealthCheckSchedule;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

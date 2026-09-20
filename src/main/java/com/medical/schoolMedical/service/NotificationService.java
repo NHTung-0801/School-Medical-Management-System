@@ -1,8 +1,8 @@
 package com.medical.schoolMedical.service;
 
 import com.medical.schoolMedical.enums.ConsentStatus;
-import com.medical.schoolMedical.repositories.HealthCheckConsentRepository;
-import com.medical.schoolMedical.repositories.HealthCheckRecordRepository;
+import com.medical.schoolMedical.modules.healthcheck.repositories.HealthCheckConsentRepository;
+import com.medical.schoolMedical.modules.healthcheck.repositories.HealthCheckRecordRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

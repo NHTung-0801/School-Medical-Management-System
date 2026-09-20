@@ -1,7 +1,6 @@
 package com.medical.schoolMedical.mapper;
 
 import com.medical.schoolMedical.dto.VaccinationRecordDTO;
-import com.medical.schoolMedical.entities.HealthCheckRecord;
 import com.medical.schoolMedical.entities.VaccinationRecord;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

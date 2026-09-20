@@ -1,6 +1,7 @@
 package com.medical.schoolMedical.service;
 
-import com.medical.schoolMedical.entities.HealthCheckSchedule;
+import com.medical.schoolMedical.modules.healthcheck.entities.HealthCheckSchedule;
+import com.medical.schoolMedical.modules.healthcheck.repositories.HealthCheckScheduleRepository;
 import com.medical.schoolMedical.modules.medical_event.repositories.MedicalEventRepository;
 import com.medical.schoolMedical.modules.pharmacy.repositories.MedicineRepository;
 import com.medical.schoolMedical.repositories.*;
