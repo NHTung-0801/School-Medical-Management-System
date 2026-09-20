@@ -91,7 +91,7 @@ public class AdminController {
 
 
     @GetMapping("/edit-user/{id}")
-    public String editUser(@PathVariable int id, Model model) {
+    public String editUser(@PathVariable Long id, Model model) {
         User user = userService.findById(id);
         model.addAttribute("editUser", user);
         model.addAttribute("roles", Role.values());
@@ -112,11 +112,10 @@ public class AdminController {
         return "redirect:/admin/manage-users";
     }
 
-
-
-    @GetMapping("/delete-user/{id}")
-    public String deleteUser(@PathVariable int id) {
+    @PostMapping("/delete-user/{id}")
+    public String deleteUser(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         userService.softDeleteUser(id);
+        redirectAttributes.addFlashAttribute("success", "Xoá người dùng thành công!");
         return "redirect:/admin/manage-users";
     }
 

@@ -5,7 +5,6 @@ import com.medical.schoolMedical.service.EmailService;
 import com.medical.schoolMedical.service.OtpService;
 import com.medical.schoolMedical.service.UserService;
 import com.medical.schoolMedical.util.ValidationUtil;
-import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,16 +36,11 @@ public class OtpController {
         }
 
         if ("send".equals(action)) {
-                try {
-                    String otp = otpService.generateOtp(email);
-                    emailService.sendOtpEmail(email, otp);
-                    redirectAttributes.addFlashAttribute("showOtpModal", true);
-                    redirectAttributes.addFlashAttribute("email", email);
-                    return "redirect:/forgot-password";
-                } catch (MessagingException e) {
-                    model.addAttribute("error", "Failed to send OTP: " + e.getMessage());
-                    return "user/forgotpass";
-                }
+            String otp = otpService.generateOtp(email);
+            emailService.sendOtpEmail(email, otp);
+            redirectAttributes.addFlashAttribute("showOtpModal", true);
+            redirectAttributes.addFlashAttribute("email", email);
+            return "redirect:/forgot-password";
         }
         return "redirect:/forgot-password";
     }
@@ -57,9 +51,9 @@ public class OtpController {
         String otp = String.join("", otpArray);
         boolean isValid = otpService.validateOtp(email, otp);
         if (isValid) {
-//            Lấy id của user có email hợp lệ để cập nhật password
             UserDTO user = userService.findUserByEmail(email);
-            return "redirect:/reset-password?userID=" + user.getId();
+            String resetToken = otpService.generateResetToken(email, user.getId());
+            return "redirect:/reset-password?token=" + resetToken;
         }
 
         model.addAttribute("showOtpModal", true);
@@ -67,27 +61,17 @@ public class OtpController {
         model.addAttribute("errorOtp", "Mã OTP không hợp lệ hoặc đã hết hạn");
 
         return "user/forgotpass";
-
-
     }
 
     // Xử lý gửi lại OTP
     @PostMapping(params = "action=resend")
     public String resendOtp(@RequestParam String email, Model model) {
-        try {
-            String otp = otpService.generateOtp(email);
-            emailService.sendOtpEmail(email, otp);
-            model.addAttribute("showOtpModal", true);
-            model.addAttribute("email", email);
-            model.addAttribute("resendMessage", "Đã gửi lại mã OTP mới đến email của bạn");
-            return "user/forgotpass";
-        } catch (MessagingException e) {
-            model.addAttribute("showOtpModal", true);
-            model.addAttribute("email", email);
-            model.addAttribute("errorOtp", "Không thể gửi mã OTP: ");
-            e.printStackTrace();
-            return "user/forgotpass";
-        }
+        String otp = otpService.generateOtp(email);
+        emailService.sendOtpEmail(email, otp);
+        model.addAttribute("showOtpModal", true);
+        model.addAttribute("email", email);
+        model.addAttribute("resendMessage", "Đã gửi lại mã OTP mới đến email của bạn");
+        return "user/forgotpass";
     }
 
 

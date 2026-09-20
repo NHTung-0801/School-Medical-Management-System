@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -168,8 +169,8 @@ public class MedicalEventService {
         event.setNotes(dto.getNotes());
 
 
-        List<MedicineUsed> medicinesUsed = dto.getMedicinesUsed().stream()
-                .filter(mu -> mu.getMedicineId() != null) // rất quan trọng!
+        Set<MedicineUsed> medicinesUsed = dto.getMedicinesUsed().stream()
+                .filter(m -> m.getMedicineId() != null)
                 .map(muDto -> {
                     MedicineUsed mu = new MedicineUsed();
                     mu.setQuantity(muDto.getQuantity());
@@ -177,12 +178,12 @@ public class MedicalEventService {
                     mu.setMedicalEvent(event);
                     mu.setMedicine(medicineRepository.findById(muDto.getMedicineId()).orElseThrow());
                     return mu;
-                }).collect(Collectors.toList());
+                }).collect(Collectors.toSet());
 
         event.setMedicineUsed(medicinesUsed);
 
 
-        List<SupplyUsed> supplyUsedList = dto.getSuppliesUsed().stream()
+        Set<SupplyUsed> supplyUsedList = dto.getSuppliesUsed().stream()
                 .filter(s -> s.getSupplyId() != null)
                 .map(supplyDto -> {
                     SupplyUsed su = new SupplyUsed();
@@ -193,7 +194,7 @@ public class MedicalEventService {
                     su.setNotes(supplyDto.getNotes());
                     su.setMedicalEvent(event);
                     return su;
-                }).collect(Collectors.toList());
+                }).collect(Collectors.toSet());
         event.setSupplyUsed(supplyUsedList);
 
         return event;
@@ -214,7 +215,7 @@ public class MedicalEventService {
         event.setFinal_treatment(dto.getFinalTreatment());
         event.setNotes(dto.getNotes());
 
-        List<MedicineUsed> medicineUsedList = dto.getMedicinesUsed().stream()
+        Set<MedicineUsed> medicineUsedList = dto.getMedicinesUsed().stream()
                 .filter(m -> m.getMedicineId() != null)
                 .map(medDto -> {
                     MedicineUsed mu = new MedicineUsed();
@@ -225,10 +226,10 @@ public class MedicalEventService {
                     mu.setNotes(medDto.getNotes());
                     mu.setMedicalEvent(event);
                     return mu;
-                }).collect(Collectors.toList());
+                }).collect(Collectors.toSet());
         event.setMedicineUsed(medicineUsedList);
 
-        List<SupplyUsed> supplyUsedList = dto.getSuppliesUsed().stream()
+        Set<SupplyUsed> supplyUsedList = dto.getSuppliesUsed().stream()
                 .filter(s -> s.getSupplyId() != null)
                 .map(supplyDto -> {
                     SupplyUsed su = new SupplyUsed();
@@ -239,7 +240,7 @@ public class MedicalEventService {
                     su.setNotes(supplyDto.getNotes());
                     su.setMedicalEvent(event);
                     return su;
-                }).collect(Collectors.toList());
+                }).collect(Collectors.toSet());
         event.setSupplyUsed(supplyUsedList);
 
         medicalEventRepository.save(event);
@@ -284,8 +285,8 @@ public class MedicalEventService {
         event.setNotes(dto.getNotes());
 
         // Xử lý danh sách thuốc sử dụng
-        List<MedicineUsed> medicinesUsed = dto.getMedicinesUsed().stream()
-                .filter(m -> m.getMedicineId() != null) // tránh lỗi ID null
+        Set<MedicineUsed> medicinesUsed = dto.getMedicinesUsed().stream()
+                .filter(m -> m.getMedicineId() != null)
                 .map(medDto -> {
                     MedicineUsed mu = new MedicineUsed();
                     Medicine medicine = medicineRepository.findById(medDto.getMedicineId())
@@ -295,11 +296,11 @@ public class MedicalEventService {
                     mu.setNotes(medDto.getNotes());
                     mu.setMedicalEvent(event); // gán liên kết ngược
                     return mu;
-                }).collect(Collectors.toList());
+                }).collect(Collectors.toSet());
         event.setMedicineUsed(medicinesUsed);
 
         // Xử lý danh sách vật tư y tế sử dụng
-        List<SupplyUsed> suppliesUsed = dto.getSuppliesUsed().stream()
+        Set<SupplyUsed> suppliesUsed = dto.getSuppliesUsed().stream()
                 .filter(s -> s.getSupplyId() != null) // tránh lỗi ID null
                 .map(supplyDto -> {
                     SupplyUsed su = new SupplyUsed();
@@ -310,7 +311,7 @@ public class MedicalEventService {
                     su.setNotes(supplyDto.getNotes());
                     su.setMedicalEvent(event); // gán liên kết ngược
                     return su;
-                }).collect(Collectors.toList());
+                }).collect(Collectors.toSet());
         event.setSupplyUsed(suppliesUsed);
 
         return event;

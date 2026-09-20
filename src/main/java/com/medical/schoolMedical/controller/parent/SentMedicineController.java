@@ -76,6 +76,11 @@ public class SentMedicineController {
             throw new BusinessException(ErrorCode.STUDENT_NOT_FOUND);
         }
 
+        if (student.getParent() == null || student.getParent().getId() != parent.getId()) {
+            redirectAttributes.addFlashAttribute("error", "Bạn không có quyền gửi thuốc cho học sinh này!");
+            return "redirect:/parent/sentMedicine/form";
+        }
+
         // Tạo entity từ DTO
         SentMedicine sent = new SentMedicine();
         sent.setParent(parent);

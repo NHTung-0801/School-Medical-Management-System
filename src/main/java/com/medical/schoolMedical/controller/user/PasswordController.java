@@ -28,6 +28,9 @@ public class PasswordController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private com.medical.schoolMedical.service.OtpService otpService;
+
 
     @GetMapping({"/admin/change-password", "/parent/change-password", "/manager/change-password", "/nurse/change-password"})
     public String changePasswordPage(@AuthenticationPrincipal CustomUserDetails customUserDetails,
@@ -73,34 +76,55 @@ public class PasswordController {
         return "user/forgotpass";
     }
 
-//    Xác thực 2 pass mới và xác thực đã giống chưa ở quên password
+//    Xác thực token và cập nhật mật khẩu mới
     @GetMapping("/reset-password")
-    public String resetPasswordPage(@RequestParam("userID") long userId,Model model) {
-        model.addAttribute("userID", userId);
+    public String resetPasswordPage(@RequestParam(value = "token", required = false) String token,
+                                    Model model,
+                                    RedirectAttributes redirectAttributes) {
+        if (token == null || !otpService.validateResetToken(token)) {
+            redirectAttributes.addFlashAttribute("error", "Đường dẫn đặt lại mật khẩu không hợp lệ hoặc đã hết hạn!");
+            return "redirect:/forgot-password";
+        }
+        model.addAttribute("token", token);
         return "user/newpass";
     }
 
     @PostMapping("/reset-password")
-    public String resetPassword(@RequestParam("userID") long userId,
+    public String resetPassword(@RequestParam("token") String token,
                                 @RequestParam("password") String newPassword,
                                 @RequestParam("confirm-password") String confirmNewPassword,
                                 RedirectAttributes redirectAttributes,
                                 Model model) {
+        if (token == null || !otpService.validateResetToken(token)) {
+            redirectAttributes.addFlashAttribute("error", "Mã xác thực không hợp lệ hoặc đã hết hạn!");
+            return "redirect:/forgot-password";
+        }
+
         if (!newPassword.equals(confirmNewPassword)) {
             model.addAttribute("error", "Mật khẩu xác nhận không khớp!");
-            model.addAttribute("userID", userId);
-            return "user/newpass";
-        }
-//        reset mật khẩu
-        try{
-            userService.resetPassword(userId, newPassword);
-        }catch (BusinessException e){
-            model.addAttribute("error", e.getMessage());
+            model.addAttribute("token", token);
             return "user/newpass";
         }
 
-        redirectAttributes.addFlashAttribute("success", "Đặt lại mật khẩu thành công!");
+        Long userId = otpService.getUserIdByResetToken(token);
+        if (userId == null) {
+            redirectAttributes.addFlashAttribute("error", "Không tìm thấy thông tin người dùng!");
+            return "redirect:/forgot-password";
+        }
+
+        // reset mật khẩu
+        try {
+            userService.resetPassword(userId, newPassword);
+            // Hủy token ngay sau khi đổi mật khẩu thành công
+            otpService.invalidateResetToken(token);
+        } catch (BusinessException e) {
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("token", token);
+            return "user/newpass";
+        }
+
+        redirectAttributes.addFlashAttribute("success", "Đặt lại mật khẩu thành công! Vui lòng đăng nhập.");
         return "redirect:/login";
     }
-
 }
+

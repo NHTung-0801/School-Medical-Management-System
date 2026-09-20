@@ -43,8 +43,10 @@
         <td th:text="${user.role}">ROLE_PARENT</td>
         <td class="actions">
             <a th:href="@{'/admin/edit-user/' + ${user.id}}">Sửa</a>
-            <a th:href="@{'/admin/delete-user/' + ${user.id}}"
-               onclick="return confirm('Bạn có chắc chắn muốn xoá người dùng này không?');">Xoá</a>
+            <form th:action="@{'/admin/delete-user/' + ${user.id}}" method="post" style="display:inline;"
+                  onsubmit="return confirm('Bạn có chắc chắn muốn xoá người dùng này không?');">
+                <button type="submit" style="background:none;border:none;color:#dc3545;cursor:pointer;padding:0;font:inherit;">Xoá</button>
+            </form>
         </td>
     </tr>
     </tbody>

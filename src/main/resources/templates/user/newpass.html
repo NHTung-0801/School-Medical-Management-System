@@ -14,7 +14,7 @@
         <div class="right-section">
             <h1>Đặt mật khẩu mới</h1>
             <form th:action="@{/reset-password}" method="post">
-                <input type="hidden" name="userID" th:value="${userID}"/>
+                <input type="hidden" name="token" th:value="${token}"/>
                 <div class="form-group">
                     <label for="password">Mật khẩu</label>
                     <input type="password" id="password" name="password" required>

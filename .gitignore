@@ -73,3 +73,7 @@ buildNumber.properties
 
 #Bỏ folder logs:
 logs/
+
+# Local sensitive properties:
+src/main/resources/application-dev.properties
+.env
