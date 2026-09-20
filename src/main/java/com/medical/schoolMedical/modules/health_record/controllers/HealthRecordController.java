@@ -1,9 +1,9 @@
-package com.medical.schoolMedical.controller.parent;
+package com.medical.schoolMedical.modules.health_record.controllers;
 
-import com.medical.schoolMedical.entities.HealthRecord;
 import com.medical.schoolMedical.entities.Parent;
 import com.medical.schoolMedical.entities.Student;
-import com.medical.schoolMedical.service.HealthRecordService;
+import com.medical.schoolMedical.modules.health_record.entities.HealthRecord;
+import com.medical.schoolMedical.modules.health_record.services.HealthRecordService;
 import com.medical.schoolMedical.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,16 +26,14 @@ public class HealthRecordController {
     // Giao diện chọn học sinh (nếu phụ huynh có nhiều con)
     @GetMapping("/select-student")
     public String selectStudent(Model model) {
-        Parent parent = userService.getCurrentParent();  // sẽ gọi findByUser_Username
+        Parent parent = userService.getCurrentParent();
         Long parentId = parent.getId();
 
         List<Student> students = userService.getStudentsByParentId(parentId);
 
         model.addAttribute("students", students);
-        return "parent/health-record/select_student"; // tên file HTML
+        return "parent/health-record/select_student";
     }
-
-
 
     // Hiển thị form khai báo hoặc cập nhật
     @GetMapping("/form/{studentId}")
@@ -85,8 +83,6 @@ public class HealthRecordController {
         redirectAttributes.addFlashAttribute("success", "Lưu hồ sơ sức khỏe thành công.");
         return "redirect:/parent/health-record/select-student";
     }
-
-
 
     // Xem chi tiết hồ sơ
     @GetMapping("/view/{studentId}")

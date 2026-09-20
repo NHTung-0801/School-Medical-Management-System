@@ -4,6 +4,8 @@ import com.medical.schoolMedical.dto.*;
 import com.medical.schoolMedical.modules.healthcheck.dto.*;
 import com.medical.schoolMedical.modules.healthcheck.services.HealthCheckConsentService;
 import com.medical.schoolMedical.modules.healthcheck.services.HealthCheckRecordService;
+import com.medical.schoolMedical.modules.consultation.dto.ConsultationAppointmentDTO;
+import com.medical.schoolMedical.modules.consultation.services.ConsultationAppointmentService;
 import com.medical.schoolMedical.modules.vaccination.dto.VaccinationConsentDTO;
 import com.medical.schoolMedical.modules.vaccination.dto.VaccinationRecordDTO;
 import com.medical.schoolMedical.modules.vaccination.entities.VaccinationRecord;

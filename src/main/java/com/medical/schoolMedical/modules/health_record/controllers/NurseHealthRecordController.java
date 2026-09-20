@@ -1,7 +1,7 @@
-package com.medical.schoolMedical.controller.schoolNurse;
+package com.medical.schoolMedical.modules.health_record.controllers;
 
-import com.medical.schoolMedical.entities.HealthRecord;
-import com.medical.schoolMedical.service.HealthRecordService;
+import com.medical.schoolMedical.modules.health_record.entities.HealthRecord;
+import com.medical.schoolMedical.modules.health_record.services.HealthRecordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,10 +32,8 @@ public class NurseHealthRecordController {
         return "nurse/health-records/health_record_list";
     }
 
-
     @GetMapping("/view/{id}")
     public String viewDetail(@PathVariable Long id, Model model) {
-
         Optional<HealthRecord> optionalRecord = healthRecordService.findByIdWithStudentAndParent(id);
 
         if (optionalRecord.isEmpty()) {
@@ -45,5 +43,4 @@ public class NurseHealthRecordController {
         model.addAttribute("record", optionalRecord.get());
         return "nurse/health-records/health_record_view";
     }
-
 }

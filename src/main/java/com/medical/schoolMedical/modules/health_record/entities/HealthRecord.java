@@ -1,5 +1,7 @@
-package com.medical.schoolMedical.entities;
+package com.medical.schoolMedical.modules.health_record.entities;
 
+import com.medical.schoolMedical.entities.Parent;
+import com.medical.schoolMedical.entities.Student;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,16 +29,16 @@ public class HealthRecord {
     private Parent parent;
 
     @Column(name = "allergies ", nullable = false)
-    private String allergies ;
+    private String allergies;
 
     @Column(name = "chronic_disease ", nullable = false)
-    private String chronicDisease ;
+    private String chronicDisease;
 
     @Column(name = "treatment_history ", columnDefinition = "TEXT", nullable = false)
-    private String treatmentHistory ;
+    private String treatmentHistory;
 
     @Column(name = "vision", nullable = false)
-    private int vision ;
+    private int vision;
 
     @Column(name = "hearing", nullable = false)
     private String hearing;
@@ -46,6 +48,4 @@ public class HealthRecord {
 
     @Column(name = "other_health_info", columnDefinition = "TEXT")
     private String other_health_info;
-
 }
-

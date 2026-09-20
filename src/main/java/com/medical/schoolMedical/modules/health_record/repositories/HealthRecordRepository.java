@@ -1,7 +1,7 @@
-package com.medical.schoolMedical.repositories;
+package com.medical.schoolMedical.modules.health_record.repositories;
 
-import com.medical.schoolMedical.entities.HealthRecord;
 import com.medical.schoolMedical.entities.Student;
+import com.medical.schoolMedical.modules.health_record.entities.HealthRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +15,7 @@ public interface HealthRecordRepository extends JpaRepository<HealthRecord, Long
     Optional<HealthRecord> findByStudent_Id(Long studentId);
 
     Optional<HealthRecord> findByStudent(Student student);
+
     boolean existsByStudent(Student student);
 
     List<HealthRecord> findAll();
@@ -27,5 +28,4 @@ public interface HealthRecordRepository extends JpaRepository<HealthRecord, Long
             "JOIN FETCH hr.parent p " +
             "WHERE hr.id = :id")
     Optional<HealthRecord> findByIdWithStudentAndParent(@Param("id") Long id);
-
 }

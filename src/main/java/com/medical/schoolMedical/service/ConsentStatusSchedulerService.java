@@ -1,6 +1,7 @@
 package com.medical.schoolMedical.service;
 
-import com.medical.schoolMedical.entities.ConsultationAppointment;
+import com.medical.schoolMedical.modules.consultation.entities.ConsultationAppointment;
+import com.medical.schoolMedical.modules.consultation.services.ConsultationAppointmentService;
 import com.medical.schoolMedical.modules.healthcheck.services.HealthCheckConsentService;
 import com.medical.schoolMedical.modules.vaccination.services.VaccinationConsentService;
 import org.springframework.beans.factory.annotation.Autowired;

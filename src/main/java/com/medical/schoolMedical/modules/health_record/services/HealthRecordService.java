@@ -1,10 +1,10 @@
-package com.medical.schoolMedical.service;
+package com.medical.schoolMedical.modules.health_record.services;
 
-import com.medical.schoolMedical.entities.HealthRecord;
 import com.medical.schoolMedical.entities.Student;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
-import com.medical.schoolMedical.repositories.HealthRecordRepository;
+import com.medical.schoolMedical.modules.health_record.entities.HealthRecord;
+import com.medical.schoolMedical.modules.health_record.repositories.HealthRecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,6 @@ public class HealthRecordService {
         return healthRecordRepository.findByStudent(student);
     }
 
-
     // Kiểm tra học sinh đã có hồ sơ chưa
     public boolean hasRecord(Student student) {
         return healthRecordRepository.existsByStudent(student);
@@ -48,17 +47,15 @@ public class HealthRecordService {
         return healthRecordRepository.findByStudent_Id(studentId);
     }
 
-    //Lây danh sách
+    // Lấy danh sách
     public List<HealthRecord> getAll() {
         return healthRecordRepository.findAll();
     }
 
-    // truy vấn tìm kiếm theo tên học sinh
+    // Truy vấn tìm kiếm theo tên học sinh
     public List<HealthRecord> searchByStudentName(String keyword) {
         return healthRecordRepository.searchByStudentName(keyword);
     }
-
-    //
 
     public Optional<HealthRecord> findById(Long id) {
         return healthRecordRepository.findById(id);
@@ -67,9 +64,4 @@ public class HealthRecordService {
     public Optional<HealthRecord> findByIdWithStudentAndParent(Long id) {
         return healthRecordRepository.findByIdWithStudentAndParent(id);
     }
-
-
-
-
-
 }

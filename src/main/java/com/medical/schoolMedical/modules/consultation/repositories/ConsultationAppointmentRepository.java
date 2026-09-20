@@ -1,7 +1,7 @@
-package com.medical.schoolMedical.repositories;
+package com.medical.schoolMedical.modules.consultation.repositories;
 
-import com.medical.schoolMedical.entities.ConsultationAppointment;
 import com.medical.schoolMedical.enums.ConsentStatus;
+import com.medical.schoolMedical.modules.consultation.entities.ConsultationAppointment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,8 +17,8 @@ public interface ConsultationAppointmentRepository extends JpaRepository<Consult
 
     @Query("""
         SELECT ca FROM ConsultationAppointment ca
-                WHERE ca.student.parent.user.id = :userId
-                 ORDER BY ca.id DESC
+        WHERE ca.student.parent.user.id = :userId
+        ORDER BY ca.id DESC
         """)
     Page<ConsultationAppointment> findAppointmentsByParentUserId(@Param("userId") Long userId, Pageable pageable);
 
@@ -26,9 +26,9 @@ public interface ConsultationAppointmentRepository extends JpaRepository<Consult
         SELECT ca FROM ConsultationAppointment ca
         WHERE ca.status = :status
         AND ca.student.parent.user.id = :userId
-""")
-    Page<ConsultationAppointment> findAcceptedAppointmentsByParentUserId(@Param("status") ConsentStatus status,@Param("userId") Long userId, Pageable pageable);
+        """)
+    Page<ConsultationAppointment> findAcceptedAppointmentsByParentUserId(@Param("status") ConsentStatus status, @Param("userId") Long userId, Pageable pageable);
 
-//    list cac appointment chưa confirm
+    // List các appointment chưa confirm
     List<ConsultationAppointment> findByStatus(ConsentStatus status);
 }

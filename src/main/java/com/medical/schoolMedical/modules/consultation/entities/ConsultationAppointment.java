@@ -1,5 +1,7 @@
-package com.medical.schoolMedical.entities;
+package com.medical.schoolMedical.modules.consultation.entities;
 
+import com.medical.schoolMedical.entities.SchoolNurse;
+import com.medical.schoolMedical.entities.Student;
 import com.medical.schoolMedical.enums.ConsentStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -46,16 +48,14 @@ public class ConsultationAppointment {
     @Enumerated(EnumType.STRING)
     private ConsentStatus status;
 
-    @Column(name = "content",columnDefinition = "TEXT")
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
     @Builder.Default
-    @Column(name = "is_sent_to_parent",columnDefinition = "TINYINT DEFAULT 0",nullable = false)
+    @Column(name = "is_sent_to_parent", columnDefinition = "TINYINT DEFAULT 0", nullable = false)
     private boolean sentToParent = false;
 
     @Builder.Default
-    @Column(name = "is_viewed_by_parent",columnDefinition = "TINYINT DEFAULT 0",nullable = false)
-    private boolean viewedByParent  = false;
-
+    @Column(name = "is_viewed_by_parent", columnDefinition = "TINYINT DEFAULT 0", nullable = false)
+    private boolean viewedByParent = false;
 }
-

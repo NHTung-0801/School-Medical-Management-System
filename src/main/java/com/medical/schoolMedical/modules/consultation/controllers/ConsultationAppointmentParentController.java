@@ -1,10 +1,9 @@
-package com.medical.schoolMedical.controller.parent;
-
-import com.medical.schoolMedical.dto.ConsultationAppointmentDTO;
+package com.medical.schoolMedical.modules.consultation.controllers;
 
 import com.medical.schoolMedical.exceptions.BusinessException;
+import com.medical.schoolMedical.modules.consultation.dto.ConsultationAppointmentDTO;
+import com.medical.schoolMedical.modules.consultation.services.ConsultationAppointmentService;
 import com.medical.schoolMedical.security.CustomUserDetails;
-import com.medical.schoolMedical.service.ConsultationAppointmentService;
 import com.medical.schoolMedical.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,53 +22,53 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/parent/consultationAppointment")
 public class ConsultationAppointmentParentController {
     @Autowired
-    StudentService studentService;
+    private StudentService studentService;
     @Autowired
-    ConsultationAppointmentService consultationAppointmentService;
+    private ConsultationAppointmentService consultationAppointmentService;
 
     @GetMapping("/listReview")
-    public String listParentReview(Model model, @RequestParam(defaultValue = "0") int page
-            , @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-//        Lấy id user của phụ huynh
+    public String listParentReview(Model model, @RequestParam(defaultValue = "0") int page,
+                                   @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        // Lấy id user của phụ huynh
         long userId = customUserDetails.getUser().getId();
-        Page<ConsultationAppointmentDTO> appointmentDTOS = consultationAppointmentService.getAllAppointmentAccepted_Parent(userId,page);
-        model.addAttribute("appointmentDTOS",appointmentDTOS.getContent());
+        Page<ConsultationAppointmentDTO> appointmentDTOS = consultationAppointmentService.getAllAppointmentAccepted_Parent(userId, page);
+        model.addAttribute("appointmentDTOS", appointmentDTOS.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", appointmentDTOS.getTotalPages());
         return "parent/listReview";
     }
 
     @GetMapping("/confirmReview")
-    public String confirmReview(@RequestParam(value = "appointmentId", required = false) Long appointmentId
-            , Model model
-            , RedirectAttributes redirectAttributes) {
+    public String confirmReview(@RequestParam(value = "appointmentId", required = false) Long appointmentId,
+                                Model model,
+                                RedirectAttributes redirectAttributes) {
         if (appointmentId == null) {
             redirectAttributes.addFlashAttribute("message", "Vui lòng chọn lịch tư vấn phù hợp để xác nhận");
             return "redirect:/parent/parent-home";
         }
-        ConsultationAppointmentDTO consultationAppointmentDTO = null;
-        try{
+        ConsultationAppointmentDTO consultationAppointmentDTO;
+        try {
             consultationAppointmentDTO = consultationAppointmentService.getAndUpdateViewedByParent_ConsultationAppointment(appointmentId);
         } catch (BusinessException e) {
-            redirectAttributes.addFlashAttribute("error",e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/parent/notification/ConsultationAppointments";
         }
 
-        model.addAttribute("consultationAppointmentDTO",consultationAppointmentDTO);
+        model.addAttribute("consultationAppointmentDTO", consultationAppointmentDTO);
         return "parent/confirmReview";
     }
 
-//    confirm lịch hẹn
+    // Confirm lịch hẹn
     @PostMapping("/confirmReview")
-    public String confirmAppointment(@RequestParam("appointmentId") Long appointmentId
-            , @RequestParam("response") String response
-            , RedirectAttributes redirectAttributes) {
-        try{
+    public String confirmAppointment(@RequestParam("appointmentId") Long appointmentId,
+                                     @RequestParam("response") String response,
+                                     RedirectAttributes redirectAttributes) {
+        try {
             consultationAppointmentService.confirmAppointment(appointmentId, response);
             redirectAttributes.addFlashAttribute("success", "Xác nhận lịch tư vấn sức khỏe thành công");
             return "redirect:/parent/notification/ConsultationAppointments";
-        }catch(BusinessException e){
-            redirectAttributes.addFlashAttribute("error",e.getMessage());
+        } catch (BusinessException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/parent/notification/ConsultationAppointments";
         }
     }

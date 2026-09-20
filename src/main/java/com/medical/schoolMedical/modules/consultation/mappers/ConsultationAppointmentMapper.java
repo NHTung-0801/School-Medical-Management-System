@@ -1,11 +1,9 @@
-package com.medical.schoolMedical.mapper;
+package com.medical.schoolMedical.modules.consultation.mappers;
 
-import com.medical.schoolMedical.dto.ConsultationAppointmentDTO;
-import com.medical.schoolMedical.entities.ConsultationAppointment;
+import com.medical.schoolMedical.modules.consultation.dto.ConsultationAppointmentDTO;
+import com.medical.schoolMedical.modules.consultation.entities.ConsultationAppointment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
-import org.springframework.stereotype.Component;
 
 @Mapper(componentModel = "spring")
 public interface ConsultationAppointmentMapper {
