@@ -1,6 +1,6 @@
 package com.medical.schoolMedical.modules.pharmacy.entities;
 
-import com.medical.schoolMedical.entities.SchoolNurse;
+import com.medical.schoolMedical.modules.user_management.entities.SchoolNurse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

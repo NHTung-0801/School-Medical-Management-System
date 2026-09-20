@@ -1,7 +1,7 @@
 package com.medical.schoolMedical.modules.vaccination.dto;
 
-import com.medical.schoolMedical.entities.Parent;
-import com.medical.schoolMedical.entities.Student;
+import com.medical.schoolMedical.modules.user_management.entities.Parent;
+import com.medical.schoolMedical.modules.user_management.entities.Student;
 import com.medical.schoolMedical.enums.ConsentStatus;
 import com.medical.schoolMedical.modules.vaccination.entities.VaccinationSchedule;
 import lombok.Data;

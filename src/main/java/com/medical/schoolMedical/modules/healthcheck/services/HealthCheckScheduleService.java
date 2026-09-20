@@ -1,13 +1,13 @@
 package com.medical.schoolMedical.modules.healthcheck.services;
 
-import com.medical.schoolMedical.entities.SchoolNurse;
+import com.medical.schoolMedical.modules.user_management.entities.SchoolNurse;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
 import com.medical.schoolMedical.modules.healthcheck.dto.HealthCheckScheduleDTO;
 import com.medical.schoolMedical.modules.healthcheck.entities.HealthCheckSchedule;
 import com.medical.schoolMedical.modules.healthcheck.mappers.HealthCheckScheduleMapper;
 import com.medical.schoolMedical.modules.healthcheck.repositories.HealthCheckScheduleRepository;
-import com.medical.schoolMedical.repositories.SchoolNurseRepository;
+import com.medical.schoolMedical.modules.user_management.repositories.SchoolNurseRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

@@ -1,6 +1,6 @@
 package com.medical.schoolMedical.modules.vaccination.services;
 
-import com.medical.schoolMedical.entities.Student;
+import com.medical.schoolMedical.modules.user_management.entities.Student;
 import com.medical.schoolMedical.enums.ConsentStatus;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
@@ -12,7 +12,7 @@ import com.medical.schoolMedical.modules.vaccination.mappers.VaccinationConsentM
 import com.medical.schoolMedical.modules.vaccination.mappers.VaccinationScheduleMapper;
 import com.medical.schoolMedical.modules.vaccination.repositories.VaccinationConsentRepository;
 import com.medical.schoolMedical.modules.vaccination.repositories.VaccinationScheduleRepository;
-import com.medical.schoolMedical.service.StudentService;
+import com.medical.schoolMedical.modules.user_management.services.StudentService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

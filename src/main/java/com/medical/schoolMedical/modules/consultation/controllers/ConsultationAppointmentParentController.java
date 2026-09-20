@@ -4,7 +4,7 @@ import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.modules.consultation.dto.ConsultationAppointmentDTO;
 import com.medical.schoolMedical.modules.consultation.services.ConsultationAppointmentService;
 import com.medical.schoolMedical.security.CustomUserDetails;
-import com.medical.schoolMedical.service.StudentService;
+import com.medical.schoolMedical.modules.user_management.services.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

@@ -1,6 +1,6 @@
 package com.medical.schoolMedical.security;
 
-import com.medical.schoolMedical.entities.User;
+import com.medical.schoolMedical.modules.user_management.entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

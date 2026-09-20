@@ -1,6 +1,6 @@
 package com.medical.schoolMedical.modules.health_record.repositories;
 
-import com.medical.schoolMedical.entities.Student;
+import com.medical.schoolMedical.modules.user_management.entities.Student;
 import com.medical.schoolMedical.modules.health_record.entities.HealthRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

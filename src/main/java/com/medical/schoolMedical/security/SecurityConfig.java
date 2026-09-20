@@ -1,6 +1,6 @@
 package com.medical.schoolMedical.security;
 
-import com.medical.schoolMedical.service.CustomUserDetailsService;
+import com.medical.schoolMedical.modules.auth.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

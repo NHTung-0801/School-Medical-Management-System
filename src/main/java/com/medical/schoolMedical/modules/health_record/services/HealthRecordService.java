@@ -1,6 +1,6 @@
 package com.medical.schoolMedical.modules.health_record.services;
 
-import com.medical.schoolMedical.entities.Student;
+import com.medical.schoolMedical.modules.user_management.entities.Student;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
 import com.medical.schoolMedical.modules.health_record.entities.HealthRecord;

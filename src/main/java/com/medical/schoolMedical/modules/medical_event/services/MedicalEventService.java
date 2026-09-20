@@ -1,8 +1,8 @@
 package com.medical.schoolMedical.modules.medical_event.services;
 
-import com.medical.schoolMedical.entities.SchoolNurse;
-import com.medical.schoolMedical.entities.Student;
-import com.medical.schoolMedical.entities.User;
+import com.medical.schoolMedical.modules.user_management.entities.SchoolNurse;
+import com.medical.schoolMedical.modules.user_management.entities.Student;
+import com.medical.schoolMedical.modules.user_management.entities.User;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
 import com.medical.schoolMedical.modules.medical_event.dto.MedicalEventDTO;
@@ -16,9 +16,9 @@ import com.medical.schoolMedical.modules.pharmacy.entities.MedicineUsed;
 import com.medical.schoolMedical.modules.pharmacy.entities.SupplyUsed;
 import com.medical.schoolMedical.modules.pharmacy.repositories.MedicalSupplyRepository;
 import com.medical.schoolMedical.modules.pharmacy.repositories.MedicineRepository;
-import com.medical.schoolMedical.repositories.StudentRepository;
-import com.medical.schoolMedical.repositories.UserRepository;
-import com.medical.schoolMedical.service.UserService;
+import com.medical.schoolMedical.modules.user_management.repositories.StudentRepository;
+import com.medical.schoolMedical.modules.user_management.repositories.UserRepository;
+import com.medical.schoolMedical.modules.user_management.services.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

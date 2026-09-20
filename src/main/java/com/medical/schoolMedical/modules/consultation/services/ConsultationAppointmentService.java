@@ -1,7 +1,5 @@
 package com.medical.schoolMedical.modules.consultation.services;
 
-import com.medical.schoolMedical.entities.SchoolNurse;
-import com.medical.schoolMedical.entities.Student;
 import com.medical.schoolMedical.enums.ConsentStatus;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
@@ -9,8 +7,10 @@ import com.medical.schoolMedical.modules.consultation.dto.ConsultationAppointmen
 import com.medical.schoolMedical.modules.consultation.entities.ConsultationAppointment;
 import com.medical.schoolMedical.modules.consultation.mappers.ConsultationAppointmentMapper;
 import com.medical.schoolMedical.modules.consultation.repositories.ConsultationAppointmentRepository;
-import com.medical.schoolMedical.repositories.SchoolNurseRepository;
-import com.medical.schoolMedical.repositories.StudentRepository;
+import com.medical.schoolMedical.modules.user_management.entities.SchoolNurse;
+import com.medical.schoolMedical.modules.user_management.entities.Student;
+import com.medical.schoolMedical.modules.user_management.repositories.SchoolNurseRepository;
+import com.medical.schoolMedical.modules.user_management.repositories.StudentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

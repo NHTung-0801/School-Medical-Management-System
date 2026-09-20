@@ -1,7 +1,7 @@
 package com.medical.schoolMedical.modules.medical_event.controllers;
 
-import com.medical.schoolMedical.entities.SchoolNurse;
-import com.medical.schoolMedical.entities.User;
+import com.medical.schoolMedical.modules.user_management.entities.SchoolNurse;
+import com.medical.schoolMedical.modules.user_management.entities.User;
 import com.medical.schoolMedical.modules.medical_event.dto.MedicalEventDTO;
 import com.medical.schoolMedical.modules.medical_event.entities.MedicalEvent;
 import com.medical.schoolMedical.modules.medical_event.services.MedicalEventService;
@@ -12,8 +12,8 @@ import com.medical.schoolMedical.modules.pharmacy.services.MedicalSupplyService;
 import com.medical.schoolMedical.modules.pharmacy.services.MedicineService;
 import com.medical.schoolMedical.modules.pharmacy.services.MedicineUsedService;
 import com.medical.schoolMedical.security.CustomUserDetails;
-import com.medical.schoolMedical.service.StudentService;
-import com.medical.schoolMedical.service.UserService;
+import com.medical.schoolMedical.modules.user_management.services.StudentService;
+import com.medical.schoolMedical.modules.user_management.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

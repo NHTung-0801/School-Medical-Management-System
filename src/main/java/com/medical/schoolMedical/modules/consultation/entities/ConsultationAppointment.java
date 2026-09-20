@@ -1,7 +1,7 @@
 package com.medical.schoolMedical.modules.consultation.entities;
 
-import com.medical.schoolMedical.entities.SchoolNurse;
-import com.medical.schoolMedical.entities.Student;
+import com.medical.schoolMedical.modules.user_management.entities.SchoolNurse;
+import com.medical.schoolMedical.modules.user_management.entities.Student;
 import com.medical.schoolMedical.enums.ConsentStatus;
 import jakarta.persistence.*;
 import lombok.*;

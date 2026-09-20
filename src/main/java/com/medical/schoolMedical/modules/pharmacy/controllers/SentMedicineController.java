@@ -1,15 +1,15 @@
 package com.medical.schoolMedical.modules.pharmacy.controllers;
 
-import com.medical.schoolMedical.entities.Parent;
-import com.medical.schoolMedical.entities.Student;
+import com.medical.schoolMedical.modules.user_management.entities.Parent;
+import com.medical.schoolMedical.modules.user_management.entities.Student;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
 import com.medical.schoolMedical.modules.pharmacy.dto.SentMedicineDTO;
 import com.medical.schoolMedical.modules.pharmacy.entities.SentMedicine;
 import com.medical.schoolMedical.modules.pharmacy.services.SentMedicineService;
 import com.medical.schoolMedical.security.CustomUserDetails;
-import com.medical.schoolMedical.service.ParentService;
-import com.medical.schoolMedical.service.StudentService;
+import com.medical.schoolMedical.modules.user_management.services.ParentService;
+import com.medical.schoolMedical.modules.user_management.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

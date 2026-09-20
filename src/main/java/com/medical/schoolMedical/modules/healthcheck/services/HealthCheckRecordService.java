@@ -1,6 +1,6 @@
 package com.medical.schoolMedical.modules.healthcheck.services;
 
-import com.medical.schoolMedical.entities.SchoolNurse;
+import com.medical.schoolMedical.modules.user_management.entities.SchoolNurse;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
 import com.medical.schoolMedical.modules.healthcheck.dto.HealthCheckConsentDTO;
@@ -11,7 +11,7 @@ import com.medical.schoolMedical.modules.healthcheck.mappers.HealthCheckConsentM
 import com.medical.schoolMedical.modules.healthcheck.mappers.HealthCheckRecordMapper;
 import com.medical.schoolMedical.modules.healthcheck.repositories.HealthCheckConsentRepository;
 import com.medical.schoolMedical.modules.healthcheck.repositories.HealthCheckRecordRepository;
-import com.medical.schoolMedical.repositories.SchoolNurseRepository;
+import com.medical.schoolMedical.modules.user_management.repositories.SchoolNurseRepository;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;

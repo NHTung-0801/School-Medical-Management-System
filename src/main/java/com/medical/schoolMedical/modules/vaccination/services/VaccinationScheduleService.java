@@ -1,13 +1,13 @@
 package com.medical.schoolMedical.modules.vaccination.services;
 
-import com.medical.schoolMedical.entities.SchoolNurse;
+import com.medical.schoolMedical.modules.user_management.entities.SchoolNurse;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
 import com.medical.schoolMedical.modules.vaccination.dto.VaccinationScheduleDTO;
 import com.medical.schoolMedical.modules.vaccination.entities.VaccinationSchedule;
 import com.medical.schoolMedical.modules.vaccination.mappers.VaccinationScheduleMapper;
 import com.medical.schoolMedical.modules.vaccination.repositories.VaccinationScheduleRepository;
-import com.medical.schoolMedical.repositories.SchoolNurseRepository;
+import com.medical.schoolMedical.modules.user_management.repositories.SchoolNurseRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

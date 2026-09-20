@@ -1,8 +1,8 @@
 package com.medical.schoolMedical.modules.medical_event.entities;
 
-import com.medical.schoolMedical.entities.SchoolNurse;
-import com.medical.schoolMedical.entities.Student;
-import com.medical.schoolMedical.entities.User;
+import com.medical.schoolMedical.modules.user_management.entities.SchoolNurse;
+import com.medical.schoolMedical.modules.user_management.entities.Student;
+import com.medical.schoolMedical.modules.user_management.entities.User;
 import com.medical.schoolMedical.modules.pharmacy.entities.MedicineUsed;
 import com.medical.schoolMedical.modules.pharmacy.entities.SupplyUsed;
 import jakarta.persistence.*;

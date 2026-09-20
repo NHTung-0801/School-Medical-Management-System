@@ -1,7 +1,7 @@
 package com.medical.schoolMedical.modules.healthcheck.dto;
 
-import com.medical.schoolMedical.dto.StudentDTO;
-import com.medical.schoolMedical.entities.Parent;
+import com.medical.schoolMedical.modules.user_management.dto.StudentDTO;
+import com.medical.schoolMedical.modules.user_management.entities.Parent;
 import com.medical.schoolMedical.enums.ConsentStatus;
 import com.medical.schoolMedical.modules.healthcheck.entities.HealthCheckSchedule;
 import lombok.Data;

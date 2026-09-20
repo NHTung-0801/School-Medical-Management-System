@@ -1,7 +1,7 @@
 package com.medical.schoolMedical.modules.consultation.dto;
 
-import com.medical.schoolMedical.dto.SchoolNurseDTO;
-import com.medical.schoolMedical.dto.StudentDTO;
+import com.medical.schoolMedical.modules.user_management.dto.SchoolNurseDTO;
+import com.medical.schoolMedical.modules.user_management.dto.StudentDTO;
 import com.medical.schoolMedical.enums.ConsentStatus;
 import jakarta.validation.constraints.FutureOrPresent;
 import lombok.Data;

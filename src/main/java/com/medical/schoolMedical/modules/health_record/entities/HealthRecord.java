@@ -1,7 +1,7 @@
 package com.medical.schoolMedical.modules.health_record.entities;
 
-import com.medical.schoolMedical.entities.Parent;
-import com.medical.schoolMedical.entities.Student;
+import com.medical.schoolMedical.modules.user_management.entities.Parent;
+import com.medical.schoolMedical.modules.user_management.entities.Student;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

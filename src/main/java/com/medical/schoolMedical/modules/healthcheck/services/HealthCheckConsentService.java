@@ -1,11 +1,11 @@
 package com.medical.schoolMedical.modules.healthcheck.services;
 
-import com.medical.schoolMedical.dto.StudentDTO;
-import com.medical.schoolMedical.entities.Student;
+import com.medical.schoolMedical.modules.user_management.dto.StudentDTO;
+import com.medical.schoolMedical.modules.user_management.entities.Student;
 import com.medical.schoolMedical.enums.ConsentStatus;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
-import com.medical.schoolMedical.mapper.StudentMapper;
+import com.medical.schoolMedical.modules.user_management.mappers.StudentMapper;
 import com.medical.schoolMedical.modules.healthcheck.dto.HealthCheckConsentDTO;
 import com.medical.schoolMedical.modules.healthcheck.dto.HealthCheckScheduleDTO;
 import com.medical.schoolMedical.modules.healthcheck.entities.HealthCheckConsent;
@@ -14,8 +14,8 @@ import com.medical.schoolMedical.modules.healthcheck.mappers.HealthCheckConsentM
 import com.medical.schoolMedical.modules.healthcheck.mappers.HealthCheckScheduleMapper;
 import com.medical.schoolMedical.modules.healthcheck.repositories.HealthCheckConsentRepository;
 import com.medical.schoolMedical.modules.healthcheck.repositories.HealthCheckScheduleRepository;
-import com.medical.schoolMedical.repositories.StudentRepository;
-import com.medical.schoolMedical.service.StudentService;
+import com.medical.schoolMedical.modules.user_management.repositories.StudentRepository;
+import com.medical.schoolMedical.modules.user_management.services.StudentService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;

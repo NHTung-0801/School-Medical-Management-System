@@ -1,10 +1,10 @@
 package com.medical.schoolMedical.modules.health_record.controllers;
 
-import com.medical.schoolMedical.entities.Parent;
-import com.medical.schoolMedical.entities.Student;
+import com.medical.schoolMedical.modules.user_management.entities.Parent;
+import com.medical.schoolMedical.modules.user_management.entities.Student;
 import com.medical.schoolMedical.modules.health_record.entities.HealthRecord;
 import com.medical.schoolMedical.modules.health_record.services.HealthRecordService;
-import com.medical.schoolMedical.service.UserService;
+import com.medical.schoolMedical.modules.user_management.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

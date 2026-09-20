@@ -1,6 +1,6 @@
 package com.medical.schoolMedical.modules.healthcheck.dto;
 
-import com.medical.schoolMedical.dto.SchoolNurseDTO;
+import com.medical.schoolMedical.modules.user_management.dto.SchoolNurseDTO;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

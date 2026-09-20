@@ -1,6 +1,6 @@
 package com.medical.schoolMedical.modules.healthcheck.dto;
 
-import com.medical.schoolMedical.entities.SchoolNurse;
+import com.medical.schoolMedical.modules.user_management.entities.SchoolNurse;
 import com.medical.schoolMedical.modules.healthcheck.entities.HealthCheckConsent;
 import lombok.Data;
 import lombok.NoArgsConstructor;
