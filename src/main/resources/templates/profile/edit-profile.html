@@ -2,14 +2,18 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/parent/style.css}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh Sửa Hồ Sơ | School Medical</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" th:href="@{/assets/css/fragments/header.css}" type="text/css"/>
     <link rel="stylesheet" th:href="@{/assets/css/fragments/footer.css}" type="text/css"/>
-    <title>Chỉnh Sửa Hồ Sơ</title>
+    <link rel="stylesheet" th:href="@{/assets/css/parent/style.css}"/>
 </head>
 <body>
 <div th:replace="fragments/header :: Header"></div>
+
+<!-- Phân phối Navigation phù hợp theo Role -->
 <div th:if="${user.role.name() == 'ADMIN'}">
     <div th:replace="fragments/header :: Nav-Admin"></div>
 </div>
@@ -22,95 +26,100 @@
 <div th:if="${user.role.name() == 'MANAGER'}">
     <div th:replace="fragments/header :: Nav-Manager"></div>
 </div>
-<div class="container">
-<h2>Chỉnh sửa hồ sơ <span th:text="${user.username}"></span></h2>
 
-<form th:action="@{'/' + ${user.role.name().toLowerCase()} + '/update-profile'}" th:object="${info}" method="post">
+<main class="container">
+    <h2><i class="fas fa-user-edit"></i> Chỉnh sửa hồ sơ <span>@<span th:text="${user.username}">admin</span></span></h2>
 
-    <input type="hidden" name="userId" th:value="${user.id}"/>
+    <form th:action="@{'/' + ${user.role.name().toLowerCase()} + '/update-profile'}" th:object="${info}" method="post">
+        <input type="hidden" name="userId" th:value="${user.id}"/>
 
-    <!-- Trường chung -->
-<!--    <h3><strong> Vai trò: <span th:text="${user.role}"></span></strong></h3>-->
+        <!-- Trường của ADMIN -->
+        <div th:if="${user.role.name() == 'ADMIN'}">
+            <div class="form-group">
+                <label><i class="fas fa-signature"></i> Họ và tên Quản trị viên:</label>
+                <input type="text" th:field="*{fullName}" placeholder="Nhập họ và tên" required/>
+            </div>
 
-    <!-- Trường của ADMIN -->
-    <div class="form-group" th:if="${user.role.name() == 'ADMIN'}">
+            <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Email liên hệ:</label>
+                <input type="email" name="email" th:value="${user.email}" placeholder="Nhập email" required />
+            </div>
+        </div>
 
-        <label>Họ tên Admin:</label>
-        <input type="text" th:field="*{fullName}" required/>
+        <!-- Trường của PARENT -->
+        <div th:if="${user.role.name() == 'PARENT'}">
+            <div class="form-group">
+                <label><i class="fas fa-signature"></i> Họ và tên Phụ huynh:</label>
+                <input type="text" th:field="*{fullName}" placeholder="Nhập họ và tên" required/>
+            </div>
 
-        <label>Email:</label>
-        <input type="email" name="email" th:value="${user.email}" required /><br/>
+            <div class="form-group">
+                <label><i class="fas fa-phone"></i> Số điện thoại liên lạc:</label>
+                <input type="text" th:field="*{phoneNumber}" placeholder="Nhập số điện thoại" required/>
+            </div>
 
-    </div>
+            <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Email:</label>
+                <input type="email" name="email" th:value="${user.email}" placeholder="Nhập email" required />
+            </div>
 
-    <!-- Trường của PARENT -->
-    <div class="form-group" th:if="${user.role.name() == 'PARENT'}">
-        <label>Họ tên Phụ huynh:</label>
-        <input type="text" th:field="*{fullName}" required/>
+            <div class="form-group">
+                <label><i class="fas fa-map-marker-alt"></i> Địa chỉ thường trú:</label>
+                <textarea th:field="*{address}" placeholder="Nhập địa chỉ" required></textarea>
+            </div>
+        </div>
 
-        <label>SĐT:</label>
-        <input type="text" th:field="*{phoneNumber}" required/><br/>
+        <!-- Trường của MANAGER -->
+        <div th:if="${user.role.name() == 'MANAGER'}">
+            <div class="form-group">
+                <label><i class="fas fa-signature"></i> Họ và tên Cán bộ quản lý:</label>
+                <input type="text" th:field="*{fullName}" placeholder="Nhập họ và tên" required/>
+            </div>
 
-        <!--<label>Email:</label>
-        <input type="text" name="email" value="tranthib@example.com" required><br/>-->
+            <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Email:</label>
+                <input type="email" name="email" th:value="${user.email}" placeholder="Nhập email" required />
+            </div>
+        </div>
 
-        <label>Email:</label>
-        <input type="email" name="email" th:value="${user.email}" required /><br/>
+        <!-- Trường của SCHOOL_NURSE -->
+        <div th:if="${user.role.name() == 'NURSE'}">
+            <div class="form-group">
+                <label><i class="fas fa-signature"></i> Họ và tên Nhân viên y tế:</label>
+                <input type="text" th:field="*{fullName}" placeholder="Nhập họ và tên" required/>
+            </div>
 
-        <label>Địa chỉ:</label>
-        <textarea th:field="*{address}" required></textarea><br/>
+            <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Email:</label>
+                <input type="email" name="email" th:value="${user.email}" placeholder="Nhập email" required />
+            </div>
 
-    </div>
+            <div class="form-group">
+                <label><i class="fas fa-award"></i> Số năm kinh nghiệm:</label>
+                <input type="number" th:field="*{experience}" min="0" step="1" placeholder="Nhập số năm kinh nghiệm" required/>
+            </div>
+        </div>
 
-    <!--<div class="form-group">
-        <label>SĐT:</label>
-        <input type="text" th:field="*{phoneNumber}" required/><br/>
-    </div>
+        <div>
+            <a th:href="@{'/' + ${role} + '/change-password'}" class="change-password">
+                <i class="fas fa-key"></i> Đổi mật khẩu tài khoản
+            </a>
+        </div>
 
-    <div class="form-group">
-        <label>Email:</label>
-        <input type="text" name="email" value="tranthib@example.com" required><br/>
-        <label>Email:</label>
-        <input type="email" name="email" th:value="${user.email}" required /><br/>
+        <div class="buttons">
+            <button type="submit">
+                <i class="fas fa-save"></i> Lưu thay đổi
+            </button>
+            <a th:href="@{'/' + ${user.role.name().toLowerCase()} + '/profile'}" style="text-decoration: none;">
+                <button type="button">
+                    <i class="fas fa-arrow-left"></i> Quay lại hồ sơ
+                </button>
+            </a>
+        </div>
+    </form>
+</main>
 
-    </div>-->
-
-   <!-- <div class="form-group">
-        <label>Địa chỉ:</label>
-        <textarea th:field="*{address}" required></textarea><br/>
-    </div>-->
-
-    <!-- Trường của MANAGER -->
-    <div class="form-group"  th:if="${user.role.name() == 'MANAGER'}">
-        <label>Họ tên Quản lý:</label>
-        <input type="text" th:field="*{fullName}" required/><br/>
-
-        <label>Email:</label>
-        <input type="email" name="email" th:value="${user.email}" required /><br/>
-    </div>
-
-    <!-- Trường của SCHOOL_NURSE -->
-    <div class="form-group" th:if="${user.role.name() == 'NURSE'}">
-        <label>Họ tên Nhân viên y tế:</label>
-        <input type="text" th:field="*{fullName}" required/><br/>
-
-        <label>Email:</label>
-        <input type="email" name="email" th:value="${user.email}" required /><br/>
-
-        <label>Năm kinh nghiệm:</label>
-        <input type="number" th:field="*{experience}" min="0" step="1" required/><br/>
-
-    </div>
-        <a th:href="@{'/' + ${role} + '/change-password'}" class="change-password">
-            → Đổi mật khẩu
-        </a>
-    <div class="buttons">
-        <button type="submit">Cập nhật</button>
-        <a th:href="@{'/' + ${user.role.name().toLowerCase()} + '/profile'}"><button type="button">Quay lại hồ sơ</button></a>
-    </div>
-</form>
-</div>
+<script th:src="@{/assets/js/fragments/header.js}"></script>
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
-

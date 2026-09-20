@@ -2,14 +2,18 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/parent/profile.css}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ Sơ Tài Khoản | School Medical</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" th:href="@{/assets/css/fragments/header.css}" type="text/css"/>
     <link rel="stylesheet" th:href="@{/assets/css/fragments/footer.css}" type="text/css"/>
-    <title>Thông Tin Người Dùng</title>
+    <link rel="stylesheet" th:href="@{/assets/css/parent/profile.css}"/>
 </head>
 <body>
 <div th:replace="fragments/header :: Header"></div>
+
+<!-- Phân phối Navigation phù hợp theo Role -->
 <div th:if="${user.role.name() == 'ADMIN'}">
     <div th:replace="fragments/header :: Nav-Admin"></div>
 </div>
@@ -22,56 +26,108 @@
 <div th:if="${user.role.name() == 'MANAGER'}">
     <div th:replace="fragments/header :: Nav-Manager"></div>
 </div>
-<div class="container">
-    <h2>Hồ Sơ Tài Khoản</h2>
-<div class="info-group"><strong >Tên đăng nhập:</strong> <span th:text="${user.username}"></span></div>
-<!--<p><strong>Vai trò:</strong> <span th:text="${user.role}"></span></p>-->
-<div class="info-group"><strong style="color: #ff4d88">Ngày cập nhật tài khoản:</strong> <span th:text="${user.creationDate}"></span></div>
 
-<hr>
+<main class="profile-container">
+    <div class="profile-hub">
+        <!-- CỘT TRÁI: ĐỊNH DANH & TRẠNG THÁI -->
+        <aside class="profile-sidebar">
+            <div class="profile-avatar">
+                <i th:if="${user.role.name() == 'ADMIN'}" class="fas fa-user-shield"></i>
+                <i th:if="${user.role.name() == 'NURSE'}" class="fas fa-user-md"></i>
+                <i th:if="${user.role.name() == 'PARENT'}" class="fas fa-user-friends"></i>
+                <i th:if="${user.role.name() == 'MANAGER'}" class="fas fa-user-tie"></i>
+            </div>
 
-<!-- Nếu là ADMIN -->
-<div class="role-section" th:if="${user.role.name() == 'ADMIN'}">
-    <h2>Thông tin Quản trị viên</h2>
-    <div class="info-group"><strong>Họ tên:</strong> <span th:text="${info.fullName} ?: 'Chưa cập nhật'"></span></div>
-    <div class="info-group"><strong>Email:</strong> <span th:text="${user.email} ?: 'Chưa cập nhật'"></span></div>
-</div>
+            <div class="profile-name" th:text="${info != null && info.fullName != null && !info.fullName.isBlank()} ? ${info.fullName} : ${user.username}">Họ và Tên</div>
+            <div class="profile-username" th:text="'@' + ${user.username}">@admin</div>
 
-<!-- Nếu là PARENT -->
-<div class="role-section" th:if="${user.role.name() == 'PARENT'}">
-    <h2>Thông tin Phụ huynh</h2>
-    <div class="info-group"><strong>Họ tên:</strong> <span th:text="${info.fullName} ?: 'Chưa cập nhật'"></span></div>
-    <div class="info-group"><strong>Số điện thoại:</strong> <span th:text="${info.phoneNumber} ?: 'Chưa cập nhật'"></span></div>
-    <div class="info-group"><strong>Email:</strong> <span th:text="${user.email} ?: 'Chưa cập nhật'"></span></div>
-    <div class="info-group"><strong>Địa chỉ:</strong> <span th:text="${info.address} ?: 'Chưa cập nhật'"> </span></div>
+            <div class="profile-badge">
+                <span th:if="${user.role.name() == 'ADMIN'}"><i class="fas fa-shield-alt"></i> Quản Trị Viên Hệ Thống</span>
+                <span th:if="${user.role.name() == 'NURSE'}"><i class="fas fa-stethoscope"></i> Cán Bộ Y Tế Học Đường</span>
+                <span th:if="${user.role.name() == 'PARENT'}"><i class="fas fa-heart"></i> Phụ Huynh Học Sinh</span>
+                <span th:if="${user.role.name() == 'MANAGER'}"><i class="fas fa-briefcase"></i> Cán Bộ Quản Lý</span>
+            </div>
 
-</div>
+            <div class="status-pill">
+                <i class="fas fa-circle"></i> Tài khoản đang hoạt động
+            </div>
 
-<!-- Nếu là MANAGER -->
-<div class="role-section" th:if="${user.role.name() == 'MANAGER'}">
-    <h2>Thông tin Quản lý</h2>
-    <div class="info-group"><strong>Họ tên:</strong> <span th:text="${info.fullName} ?: 'Chưa cập nhật'"></span></div>
-    <div class="info-group"><strong>Email:</strong> <span th:text="${user.email} ?: 'Chưa cập nhật'"></span></div>
+            <div class="profile-meta-info">
+                <i class="far fa-calendar-alt"></i>
+                <span>Ngày tạo: <strong th:text="${user.creationDate != null ? user.creationDate : '2026-09-20'}">2026-09-20</strong></span>
+            </div>
+        </aside>
 
-</div>
+        <!-- CỘT PHẢI: CHI TIẾT THÔNG TIN & HÀNH ĐỘNG -->
+        <section class="profile-details">
+            <div class="details-header">
+                <h2><i class="fas fa-id-card"></i> Thông Tin Chi Tiết Tài Khoản</h2>
+                <p>Thông tin danh tính và quyền hạn của người dùng trên cổng y tế</p>
+            </div>
 
-<!-- Nếu là SCHOOL_NURSE -->
-<div class="role-section" th:if="${user.role.name() == 'NURSE'}">
-    <h2>Thông tin Nhân viên y tế</h2>
+            <div class="info-grid">
+                <!-- Họ tên -->
+                <div class="info-item">
+                    <div class="info-label"><i class="fas fa-signature"></i> Họ và tên</div>
+                    <div class="info-val" th:text="${info != null && info.fullName != null && !info.fullName.isBlank()} ? ${info.fullName} : 'Chưa cập nhật'">Admin</div>
+                </div>
 
-    <div class="info-group"><strong>Họ tên:</strong> <span th:text="${info.fullName} ?: 'Chưa cập nhật'"></span></div>
-    <div class="info-group"><strong>Email:</strong> <span th:text="${user.email} ?: 'Chưa cập nhật'"></span></div>
-    <div class="info-group"><strong>Năm kinh nghiệm:</strong> <span th:text="${info.experience} ?: 'Chưa cập nhật'"></span></div>
+                <!-- Tên đăng nhập -->
+                <div class="info-item">
+                    <div class="info-label"><i class="fas fa-user"></i> Tên đăng nhập</div>
+                    <div class="info-val" th:text="${user.username}">admin</div>
+                </div>
 
-</div>
+                <!-- Email -->
+                <div class="info-item">
+                    <div class="info-label"><i class="fas fa-envelope"></i> Địa chỉ Email</div>
+                    <div class="info-val" th:text="${user.email != null && !user.email.isBlank()} ? ${user.email} : 'Chưa cập nhật'">admin123@gmail.com</div>
+                </div>
 
-<hr>
-    <div class="buttons">
-        <a th:href="@{${homeUrl}}"><button type="button">Quay lại trang chủ</button></a> |
-        <a th:href="@{'/' + ${user.role.name().toLowerCase()} + '/edit-profile'}"><button type="submit">Chỉnh sửa hồ sơ</button></a>
+                <!-- Vai trò -->
+                <div class="info-item">
+                    <div class="info-label"><i class="fas fa-user-tag"></i> Quyền truy cập</div>
+                    <div class="info-val" style="color: #ff4d88; font-weight: 600;" th:text="${user.role.name()}">ADMIN</div>
+                </div>
+
+                <!-- Nếu là Phụ huynh -->
+                <div class="info-item" th:if="${user.role.name() == 'PARENT'}">
+                    <div class="info-label"><i class="fas fa-phone"></i> Số điện thoại</div>
+                    <div class="info-val" th:text="${info != null && info.phoneNumber != null} ? ${info.phoneNumber} : 'Chưa cập nhật'">---</div>
+                </div>
+
+                <div class="info-item" th:if="${user.role.name() == 'PARENT'}">
+                    <div class="info-label"><i class="fas fa-map-marker-alt"></i> Địa chỉ liên hệ</div>
+                    <div class="info-val" th:text="${info != null && info.address != null} ? ${info.address} : 'Chưa cập nhật'">---</div>
+                </div>
+
+                <!-- Nếu là Y tá -->
+                <div class="info-item full-width" th:if="${user.role.name() == 'NURSE'}">
+                    <div class="info-label"><i class="fas fa-award"></i> Kinh nghiệm công tác</div>
+                    <div class="info-val" th:text="${info != null && info.experience != null} ? ${info.experience} : 'Chưa cập nhật'">---</div>
+                </div>
+
+                <!-- Nếu là Admin: Quyền hạn hệ thống -->
+                <div class="info-item full-width" th:if="${user.role.name() == 'ADMIN'}">
+                    <div class="info-label"><i class="fas fa-key"></i> Phạm vi quyền hạn</div>
+                    <div class="info-val" style="color: #475569; font-size: 13px;">Toàn quyền quản trị cơ sở dữ liệu, quản lý và phân quyền người dùng, giám sát báo cáo thống kê y tế học đường.</div>
+                </div>
+            </div>
+
+            <!-- Hành động -->
+            <div class="profile-actions">
+                <a th:href="@{'/' + ${user.role.name().toLowerCase()} + '/edit-profile'}" class="btn-primary-action">
+                    <i class="fas fa-edit"></i> Chỉnh sửa hồ sơ
+                </a>
+                <a th:href="@{${homeUrl}}" class="btn-secondary-action">
+                    <i class="fas fa-arrow-left"></i> Quay lại trang chủ
+                </a>
+            </div>
+        </section>
     </div>
-</div>
+</main>
+
+<script th:src="@{/assets/js/fragments/header.js}"></script>
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
-

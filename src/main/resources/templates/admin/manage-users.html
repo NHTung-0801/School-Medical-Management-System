@@ -2,61 +2,100 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/admin/listUser.css}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Người Dùng | School Medical</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" th:href="@{/assets/css/fragments/header.css}" type="text/css"/>
     <link rel="stylesheet" th:href="@{/assets/css/fragments/footer.css}" type="text/css"/>
-    <title>Quản Lý Người Dùng</title>
-
+    <link rel="stylesheet" th:href="@{/assets/css/admin/listUser.css}"/>
 </head>
 <body>
 <div th:replace="fragments/header :: Header"></div>
 <div th:replace="fragments/header :: Nav-Admin"></div>
-<div class="container">
-    <h2>Quản lý người dùng</h2>
 
-<!-- Thông báo thành công / lỗi -->
-<div th:if="${success}" class="message" th:text="${success}"></div>
-<div th:if="${errorMessage}" class="message error" th:text="${errorMessage}"></div>
+<main class="container">
+    <!-- Page Header & Action Toolbar -->
+    <div class="page-header">
+        <div class="page-title-group">
+            <h2><i class="fas fa-users-cog"></i> Danh Sách Người Dùng</h2>
+            <p class="subtitle">Quản lý và phân quyền tài khoản trên toàn hệ thống</p>
+        </div>
+        <div class="header-actions">
+            <a th:href="@{/admin/add-user}" class="add-button">
+                <i class="fas fa-user-plus"></i> Thêm người dùng mới
+            </a>
+        </div>
+    </div>
 
-<a th:href="@{/admin/add-user}">
-    <button type="button" class="add-button" >➕ Thêm người dùng</button>
-</a>
+    <!-- Thông báo thành công / lỗi -->
+    <div th:if="${success}" class="message">
+        <i class="fas fa-check-circle"></i> <span th:text="${success}"></span>
+    </div>
+    <div th:if="${errorMessage}" class="message error">
+        <i class="fas fa-exclamation-circle"></i> <span th:text="${errorMessage}"></span>
+    </div>
 
-<table>
-    <thead>
-    <tr>
-        <th>STT</th>
-        <th>Tên đăng nhập</th>
-        <th>Email</th>
-        <th>Vai trò</th>
-        <th>Hành động</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${#lists.isEmpty(users)}">
-        <td colspan="4">Không có bản ghi nào.</td>
-    </tr>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.id}">1</td>
-        <td th:text="${user.username}">example</td>
-        <td th:text="${user.email}">example</td>
-        <td th:text="${user.role}">ROLE_PARENT</td>
-        <td class="actions">
-            <a th:href="@{'/admin/edit-user/' + ${user.id}}">Sửa</a>
-            <form th:action="@{'/admin/delete-user/' + ${user.id}}" method="post" style="display:inline;"
-                  onsubmit="return confirm('Bạn có chắc chắn muốn xoá người dùng này không?');">
-                <button type="submit" style="background:none;border:none;color:#dc3545;cursor:pointer;padding:0;font:inherit;">Xoá</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-    <br>
-    <a th:href="@{/admin/dashboard}" class="back-link">← Quay về trang chính</a>
-</div>
+    <!-- Table Responsive Container -->
+    <div class="table-responsive">
+        <table>
+            <thead>
+            <tr>
+                <th style="width: 80px;">STT</th>
+                <th>Tên đăng nhập</th>
+                <th>Địa chỉ Email</th>
+                <th style="width: 180px;">Vai trò</th>
+                <th style="width: 160px; text-align: center;">Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${#lists.isEmpty(users)}">
+                <td colspan="5" style="text-align: center; padding: 30px; color: #94a3b8;">Không có bản ghi người dùng nào trong hệ thống.</td>
+            </tr>
+            <tr th:each="user, iterStat : ${users}">
+                <td th:text="${iterStat.index + 1}">1</td>
+                <td>
+                    <strong style="color: #0f172a;" th:text="${user.username}">example</strong>
+                </td>
+                <td th:text="${user.email}">example@gmail.com</td>
+                <td>
+                    <span th:if="${user.role.name() == 'ADMIN'}" class="role-badge role-admin">
+                        <i class="fas fa-shield-alt"></i> Quản trị viên
+                    </span>
+                    <span th:if="${user.role.name() == 'PARENT'}" class="role-badge role-parent">
+                        <i class="fas fa-user-friends"></i> Phụ huynh
+                    </span>
+                    <span th:if="${user.role.name() == 'NURSE'}" class="role-badge role-nurse">
+                        <i class="fas fa-user-md"></i> Nhân viên y tế
+                    </span>
+                    <span th:if="${user.role.name() == 'MANAGER'}" class="role-badge role-manager">
+                        <i class="fas fa-user-tie"></i> Quản lý
+                    </span>
+                </td>
+                <td>
+                    <div class="actions" style="justify-content: center;">
+                        <a th:href="@{'/admin/edit-user/' + ${user.id}}" class="btn-edit" title="Chỉnh sửa">
+                            <i class="fas fa-edit"></i> Sửa
+                        </a>
+                        <form th:action="@{'/admin/delete-user/' + ${user.id}}" method="post" style="display:inline;"
+                              onsubmit="return confirm('Bạn có chắc chắn muốn xoá người dùng này không?');">
+                            <button type="submit" class="btn-delete" title="Xoá tài khoản">
+                                <i class="fas fa-trash-alt"></i> Xoá
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a th:href="@{/admin/dashboard}" class="back-link">
+        <i class="fas fa-arrow-left"></i> Quay về trang tổng quan
+    </a>
+</main>
+
 <script th:src="@{/assets/js/fragments/header.js}"></script>
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
-

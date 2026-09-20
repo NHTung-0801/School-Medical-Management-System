@@ -1,141 +1,151 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Trường Học Khỏe Mạnh</title>
-    <link rel="stylesheet" th:href="@{/assets/css/admin/index.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Điều Khiển Quản Trị | School Medical</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script th:src="@{https://cdn.jsdelivr.net/npm/chart.js}"></script>
     <link rel="stylesheet" th:href="@{/assets/css/fragments/header.css}" type="text/css"/>
     <link rel="stylesheet" th:href="@{/assets/css/fragments/footer.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/assets/css/admin/index.css}">
+    <script th:src="@{https://cdn.jsdelivr.net/npm/chart.js}"></script>
 </head>
 <body>
 <div th:replace="fragments/header :: Header"></div>
 <div th:replace="fragments/header :: Nav-Admin"></div>
 
-<div class="dashboard-container">
-    <div class="dashboard-grid">
-
-        <!-- Charts Section -->
-        <div class="charts-container-top">
-            <div class="chart-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <h2 style="margin: 0;">Thống Kê Khám Bệnh & Tiêm Thuốc</h2>
-                    <div>
-                        <label for="yearSelect" style="font-weight: 600; margin-right: 8px;">Năm:</label>
-                        <select id="yearSelect" class="form-select" style="display: inline-block; width: auto; padding: 4px 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px;" onchange="location.href='?year=' + this.value">
-                            <option th:each="y : ${years}" th:value="${y}" th:text="'Năm ' + ${y}" th:selected="${y == selectedYear}"></option>
-                        </select>
-                    </div>
-                </div>
-                <canvas id="myChart" width="800" height="400"></canvas>
-            </div>
+<main class="dashboard-container">
+    <!-- Header Bar -->
+    <div class="dashboard-header-bar">
+        <div>
+            <h1><i class="fas fa-heartbeat"></i> Tổng Quan Quản Trị Y Tế</h1>
+            <p class="subtitle">Báo cáo số liệu thời gian thực và quản lý y tế học đường</p>
         </div>
-        <!--    Quick section-->
-        <div class="stats-container">
-            <div class="stat-card">
-                <i class="fas fa-users"></i>
+    </div>
+
+    <!-- 4-Column KPI Stats Grid -->
+    <section class="kpi-grid">
+        <div class="kpi-card parents">
+            <div class="kpi-icon-wrap">
+                <i class="fas fa-user-friends"></i>
+            </div>
+            <div class="kpi-content">
                 <h3>Phụ huynh</h3>
-                <p th:text="${counts.parents}">1,234</p>
+                <div class="kpi-value" th:text="${counts.parents}">0</div>
             </div>
-            <div class="stat-card">
+        </div>
+
+        <div class="kpi-card nurses">
+            <div class="kpi-icon-wrap">
                 <i class="fas fa-user-md"></i>
+            </div>
+            <div class="kpi-content">
                 <h3>Nhân Viên Y Tế</h3>
-                <p th:text="${counts.nurses}">45</p>
+                <div class="kpi-value" th:text="${counts.nurses}">0</div>
             </div>
-            <div class="stat-card">
-                <i class="fas fa-briefcase-medical"></i>
+        </div>
+
+        <div class="kpi-card students">
+            <div class="kpi-icon-wrap">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="kpi-content">
                 <h3>Học sinh</h3>
-                <p th:text="${counts.students}">2,345</p>
+                <div class="kpi-value" th:text="${counts.students}">0</div>
             </div>
-            <!--    </div>-->
-            <!--    <div class="stats-container">-->
-            <div class="stat-card">
+        </div>
+
+        <div class="kpi-card medicines">
+            <div class="kpi-icon-wrap">
                 <i class="fas fa-pills"></i>
+            </div>
+            <div class="kpi-content">
                 <h3>Thuốc Trong Kho</h3>
-                <p th:text="${counts.medicines}">1,890</p>
+                <div class="kpi-value" th:text="${counts.medicines}">0</div>
             </div>
-
         </div>
-    </div>
+    </section>
 
-    <div class="charts-container">
+    <!-- 2-Column Balanced Charts Grid -->
+    <section class="charts-grid">
+        <!-- Chart 1: Khám & Tiêm chủng -->
         <div class="chart-card">
-            <h2>Thống Kê Ca Sự Kiện Y Tế</h2>
-            <canvas id="eventStatsChart" width="800" height="400"></canvas>
-        </div>
-    </div>
-    <!-- Recent Students List -->
-    <div class="students-container">
-        <h2>Học Sinh Thêm Mới Nhất</h2>
-        <div class="tab-nav">
-            <button class="tab-button active" onclick="switchTab('thisMonth')">Tháng này</button>
-            <button class="tab-button" onclick="switchTab('lastMonth')">Tháng trước</button>
-        </div>
-        <table id="usersTable">
-            <thead>
-            <tr>
-                <th>STT</th>
-                <th>Họ và tên</th>
-                <th>Lớp</th>
-                <th>Họ tên phụ huynh</th>
-
-            </tr>
-            </thead>
-            <!-- Tháng này -->
-            <tbody id="thisMonthTable">
-            <tr th:each="student, iterStat : ${studentsThisMonth}">
-                <td th:text="${iterStat.index + 1}"></td>
-                <td th:text="${student.fullName}"></td>
-                <td th:text="${student.className}"></td>
-                <td th:text="${student.parent != null ? student.parent.fullName : '---'}"></td>
-<!--                <td th:text="${student.parent != null ? student.parent.phone : '-&#45;&#45;'}"></td>-->
-            </tr>
-            <tr th:if="${#lists.isEmpty(studentsThisMonth)}">
-                <td colspan="5" style="text-align:center;">Không có dữ liệu tháng này.</td>
-            </tr>
-            </tbody>
-
-            <!-- Tháng trước -->
-            <tbody id="lastMonthTable" style="display:none;">
-            <tr th:each="student, iterStat : ${studentsLastMonth}">
-                <td th:text="${iterStat.index + 1}"></td>
-                <td th:text="${student.fullName}"></td>
-                <td th:text="${student.className}"></td>
-                <td th:text="${student.parent != null ? student.parent.fullName : '---'}"></td>
-<!--                <td th:text="${student.parent != null ? student.parent.phone : '-&#45;&#45;'}"></td>-->
-            </tr>
-            <tr th:if="${#lists.isEmpty(studentsLastMonth)}">
-                <td colspan="5" style="text-align:center;">Không có dữ liệu tháng trước.</td>
-            </tr>
-            </tbody>
-        </table>
-
-
-        <div class="stats-container">
-            <div class="stat-card">
-                <i class="fas fa-eye"></i>
-                <h3>45.8k</h3>
-                <p>Lượt xem <span class="stat-change success"><br>+17.5%</span></p>
-                <div class="chart-placeholder line-chart"></div>
+            <div class="chart-card-header">
+                <h2><i class="fas fa-chart-line"></i> Khám Sức Khỏe & Tiêm Chủng</h2>
+                <div class="chart-filter">
+                    <label for="yearSelect">Năm:</label>
+                    <select id="yearSelect" class="year-select" onchange="location.href='?year=' + this.value">
+                        <option th:each="y : ${years}" th:value="${y}" th:text="'Năm ' + ${y}" th:selected="${y == selectedYear}"></option>
+                    </select>
+                </div>
             </div>
-            <div class="stat-card">
-                <i class="fas fa-users"></i>
-                <h3>17.2k</h3>
-                <p>Hồ sơ <span class="stat-change warning"><br>+175% <</span></p>
-                <div class="chart-placeholder area-chart"></div>
-            </div>
-            <div class="stat-card">
-                <i class="fas fa-file-alt"></i>
-                <h3>5.82k</h3>
-                <p>Tài liệu <span class="stat-change danger"><br>▼ 54.1%</span></p>
-                <div class="chart-placeholder bar-chart"></div>
+            <div class="chart-wrapper">
+                <canvas id="myChart"></canvas>
             </div>
         </div>
-        <div class="updated-at">Last Updated: <span id="updateTime">01:46 AM, 09/07/2025</span></div>
-    </div>
-</div>
+
+        <!-- Chart 2: Ca Sự Kiện Y Tế -->
+        <div class="chart-card">
+            <div class="chart-card-header">
+                <h2><i class="fas fa-chart-bar"></i> Sự Cố Y Tế</h2>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="eventStatsChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Students Table -->
+    <section class="students-card">
+        <div class="students-card-header">
+            <h2><i class="fas fa-user-plus"></i> Học Sinh Mới Thêm Vào Hệ Thống</h2>
+            <div class="tab-nav">
+                <button class="tab-button active" type="button" onclick="switchTab('thisMonth')">Tháng này</button>
+                <button class="tab-button" type="button" onclick="switchTab('lastMonth')">Tháng trước</button>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="custom-table" id="usersTable">
+                <thead>
+                <tr>
+                    <th style="width: 80px;">STT</th>
+                    <th>Họ và tên học sinh</th>
+                    <th style="width: 140px;">Lớp</th>
+                    <th>Họ tên phụ huynh</th>
+                </tr>
+                </thead>
+
+                <!-- Tháng này -->
+                <tbody id="thisMonthTable">
+                <tr th:each="student, iterStat : ${studentsThisMonth}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td style="font-weight: 600;" th:text="${student.fullName}"></td>
+                    <td><span class="class-badge" th:text="${student.className}"></span></td>
+                    <td th:text="${student.parent != null ? student.parent.fullName : 'Chưa liên kết'}"></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(studentsThisMonth)}">
+                    <td colspan="4" class="empty-row">Không có học sinh nào được thêm trong tháng này.</td>
+                </tr>
+                </tbody>
+
+                <!-- Tháng trước -->
+                <tbody id="lastMonthTable" style="display:none;">
+                <tr th:each="student, iterStat : ${studentsLastMonth}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td style="font-weight: 600;" th:text="${student.fullName}"></td>
+                    <td><span class="class-badge" th:text="${student.className}"></span></td>
+                    <td th:text="${student.parent != null ? student.parent.fullName : 'Chưa liên kết'}"></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(studentsLastMonth)}">
+                    <td colspan="4" class="empty-row">Không có học sinh nào được thêm trong tháng trước.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
 
 <script th:inline="javascript">
     let healthCheckCounts = /*[[${healthCheckCounts}]]*/ [];

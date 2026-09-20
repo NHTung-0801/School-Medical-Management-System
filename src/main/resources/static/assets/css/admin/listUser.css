@@ -1,151 +1,287 @@
+/* ==========================================================================
+   USER MANAGEMENT STYLESHEET (ADMIN)
+   Design System: Medical Rose & Clean Elevation
+   ========================================================================== */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', 'Arial', sans-serif;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #ffe6f0, #fff0f5);
-    display: contents;
-    justify-content: center;
-    align-items: center;
+    background: #fbf8fa;
+    color: #1e293b;
     min-height: 100vh;
-    padding: 20px;
+    padding: 0;
+    overflow-x: hidden;
 }
 
 .container {
     background: #ffffff;
-    padding: 30px;
+    padding: 28px 32px 40px;
     border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(255, 77, 136, 0.2);
+    box-shadow: 0 4px 25px rgba(255, 77, 136, 0.06);
     width: 100%;
-    max-width: 900px;
-    animation: fadeIn 0.5s ease-in-out;
-    margin: 20px auto;
+    max-width: 1240px;
+    margin: 24px auto;
+    border: 1px solid #fce7ef;
+    animation: fadeIn 0.4s ease-out;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-h2 {
-    color: #ff4d88;
-    font-size: 28px;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+/* --- PAGE HEADER & ACTIONS BAR --- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #fce7ef;
 }
 
-.message {
-    color: #28a745;
+.page-title-group h2 {
+    color: #0f172a;
+    font-size: 24px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-title-group h2 i {
+    color: #ff4d88;
+    font-size: 22px;
+}
+
+.page-title-group .subtitle {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.add-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    font-size: 14px;
     font-weight: 600;
-    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.add-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+    background: linear-gradient(135deg, #059669, #047857);
+}
+
+/* --- NOTIFICATION MESSAGES --- */
+.message {
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
     margin-bottom: 20px;
-    padding: 10px;
-    background-color: #e9f7ef;
-    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.message:not(.error) {
+    color: #047857;
+    background-color: #ecfdf5;
+    border: 1px solid #a7f3d0;
 }
 
 .message.error {
     color: #b91c1c;
     background-color: #fee2e2;
-    border: 1px solid #f87171;
+    border: 1px solid #fca5a5;
 }
 
-.add-button {
-    display: inline-block;
-    margin-bottom: 20px;
-    padding: 10px 20px;
-    background: linear-gradient(90deg, #18c474, #00703c);
-    color: #fff;
-    border: none;
-    border-radius: 25px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.3s, opacity 0.3s;
-    text-decoration: none;
-}
-
-.add-button:hover {
-    transform: translateY(-3px);
-    opacity: 0.95;
+/* --- MODERN DATA TABLE --- */
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 14px;
+    border: 1px solid #f1f5f9;
+    background: #ffffff;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(255, 77, 136, 0.1);
+    font-size: 14px;
+    text-align: left;
 }
 
-th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
+thead {
+    background: #fdf2f6;
 }
 
 th {
-    background-color: #ffecf4;
-    color: #ff4d88;
-    font-weight: 600;
+    padding: 14px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #831843;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: 1px solid #fce7ef;
+    white-space: nowrap;
 }
 
 td {
-    color: #333;
+    padding: 16px 20px;
+    color: #334155;
+    border-bottom: 1px solid #f8fafc;
+    vertical-align: middle;
 }
 
-.actions a {
-    color: #ff1a66;
-    text-decoration: none;
-    margin-right: 15px;
-    transition: color 0.3s;
+tbody tr {
+    transition: background-color 0.15s ease;
 }
 
-.actions a:hover {
-    color: #e62020;
+tbody tr:hover {
+    background-color: #fff9fb;
 }
 
-.back-link {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: linear-gradient(90deg, #ff7182, #e62020);
-    color: #fff;
-    border-radius: 25px;
-    font-size: 16px;
+/* --- ROLE BADGES --- */
+.role-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+}
+
+.role-badge.role-admin {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+}
+
+.role-badge.role-parent {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+}
+
+.role-badge.role-nurse {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+}
+
+.role-badge.role-manager {
+    background: #f5f3ff;
+    color: #6d28d9;
+    border: 1px solid #ddd6fe;
+}
+
+/* --- ACTION BUTTONS --- */
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.btn-edit {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+    font-size: 13px;
     font-weight: 600;
     text-decoration: none;
-    transition: transform 0.3s, opacity 0.3s;
+    transition: all 0.2s ease;
+}
+
+.btn-edit:hover {
+    background: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+}
+
+.btn-delete {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-delete:hover {
+    background: #dc2626;
+    color: #ffffff;
+    border-color: #dc2626;
+}
+
+/* --- FOOTER BACK LINK --- */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    color: #64748b;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease;
 }
 
 .back-link:hover {
-    transform: translateY(-3px);
-    opacity: 0.95;
+    color: #ff4d88;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .container {
-        padding: 20px;
+        padding: 20px 16px;
+        margin: 12px auto;
     }
-
-    table {
-        display: block;
-        overflow-x: auto;
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
     }
-
-    th, td {
-        min-width: 120px;
-    }
-
-    .add-button, .back-link {
+    .header-actions {
         width: 100%;
-        text-align: center;
+    }
+    .add-button {
+        width: 100%;
+        justify-content: center;
     }
 }

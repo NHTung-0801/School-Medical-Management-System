@@ -1,137 +1,156 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Lấy dữ liệu từ Thymeleaf
-    const medicalData = [[/* labels */], [/* khám bệnh data */], [/* tiêm thuốc data */]];
-    const eventData = [[/* labels */], [/* ca sự kiện data */]];
+    // Nhãn 12 tháng tiếng Việt
+    const monthLabels = ['Thg 1', 'Thg 2', 'Thg 3', 'Thg 4', 'Thg 5', 'Thg 6', 'Thg 7', 'Thg 8', 'Thg 9', 'Thg 10', 'Thg 11', 'Thg 12'];
 
-    // Giả định dữ liệu mẫu nếu không có từ backend
-    if (!medicalData[0].length || !eventData[0].length) {
-        eventData[0] = ['01/06', '03/06', '05/06', '07/06', '09/06','11/06', '13/06', '15/06', '17/06', '19/06','21/06', '23/06', '25/06', '27/06', '29/06' ];
-        eventData[1] = [15, 20, 25, 18, 30, 12, 1, 8, 4, 13, 16, 20, 7, 2, 22];        // Ca sự kiện
+    // Dữ liệu an toàn
+    const safeHealthCounts = (typeof healthCheckCounts !== 'undefined' && Array.isArray(healthCheckCounts) && healthCheckCounts.length === 12)
+        ? healthCheckCounts : [0,0,0,0,0,0,0,0,0,0,0,0];
+    const safeVaccinationCounts = (typeof vaccinationCounts !== 'undefined' && Array.isArray(vaccinationCounts) && vaccinationCounts.length === 12)
+        ? vaccinationCounts : [0,0,0,0,0,0,0,0,0,0,0,0];
+    const safeEventCounts = (typeof medicalEventCounts !== 'undefined' && Array.isArray(medicalEventCounts) && medicalEventCounts.length === 12)
+        ? medicalEventCounts : [0,0,0,0,0,0,0,0,0,0,0,0];
+
+    // --- BIỂU ĐỒ 1: Khám sức khỏe & Tiêm chủng (Line Chart Đôi) ---
+    const chartCanvas1 = document.getElementById('myChart');
+    if (chartCanvas1) {
+        const ctx1 = chartCanvas1.getContext('2d');
+
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: monthLabels,
+                datasets: [
+                    {
+                        label: 'Khám sức khỏe',
+                        data: safeHealthCounts,
+                        borderColor: '#0d9488', // Medical Teal
+                        backgroundColor: 'rgba(13, 148, 136, 0.08)',
+                        fill: true,
+                        borderWidth: 2.5,
+                        tension: 0.35,
+                        pointBackgroundColor: '#ffffff',
+                        pointBorderColor: '#0d9488',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    },
+                    {
+                        label: 'Tiêm chủng',
+                        data: safeVaccinationCounts,
+                        borderColor: '#e11d48', // Medical Rose
+                        backgroundColor: 'rgba(225, 29, 72, 0.08)',
+                        fill: true,
+                        borderWidth: 2.5,
+                        tension: 0.35,
+                        pointBackgroundColor: '#ffffff',
+                        pointBorderColor: '#e11d48',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            boxWidth: 12,
+                            font: { family: 'Poppins', size: 12, weight: '500' },
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#0f172a',
+                        titleFont: { family: 'Poppins', size: 12 },
+                        bodyFont: { family: 'Poppins', size: 12 },
+                        padding: 10,
+                        cornerRadius: 8
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: { precision: 0 },
+                        grid: { color: 'rgba(0, 0, 0, 0.04)' }
+                    }
+                }
+            }
+        });
     }
 
-    // Biểu đồ thống kê khám bệnh & tiêm thuốc (Line Chart đôi)
-    const ctx = document.getElementById('myChart').getContext('2d');
+    // --- BIỂU ĐỒ 2: Ca Sự Kiện Y Tế (Bar Chart) ---
+    const chartCanvas2 = document.getElementById('eventStatsChart');
+    if (chartCanvas2) {
+        const ctx2 = chartCanvas2.getContext('2d');
 
-// Gradient cho khám sức khỏe (xanh)
-    const gradientBlue = ctx.createLinearGradient(0, 0, 0, 400);
-    gradientBlue.addColorStop(0, 'rgba(75, 192, 192, 0.4)');
-    gradientBlue.addColorStop(1, 'rgba(75, 192, 192, 0)');
-
-// Gradient cho chích thuốc (cam)
-    const gradientOrange = ctx.createLinearGradient(0, 0, 0, 400);
-    gradientOrange.addColorStop(0, 'rgba(255, 99, 132, 0.4)');
-    gradientOrange.addColorStop(1, 'rgba(255, 159, 64, 0)');
-
-    const data = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [
-            {
-                label: 'Khám sức khỏe',
-                data: healthCheckCounts,
-                borderColor: 'rgb(75, 192, 192)',
-                backgroundColor: 'rgba(75, 192, 192, 0.1)',
-                fill: true,
-                borderWidth: 3,
-                tension: 0.4,
-                pointBackgroundColor: '#fff',
-                pointBorderColor: 'rgb(75, 192, 192)',
-                pointRadius: 5,
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: monthLabels,
+                datasets: [{
+                    label: 'Số ca sự kiện',
+                    data: safeEventCounts,
+                    backgroundColor: 'rgba(139, 92, 246, 0.75)', // Soft Violet
+                    hoverBackgroundColor: '#8b5cf6',
+                    borderRadius: 6,
+                    borderSkipped: false,
+                    maxBarThickness: 28
+                }]
             },
-            {
-                label: 'Tiêm thuốc',
-                data: vaccinationCounts,
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.1)',
-                fill: true,
-                borderWidth: 3,
-                tension: 0.4,
-                pointBackgroundColor: '#fff',
-                pointBorderColor: 'rgb(255, 99, 132)',
-                pointRadius: 5,
-            }
-        ]
-    };
-
-    const config = {
-        type: 'line',
-        data: data,
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#0f172a',
+                        titleFont: { family: 'Poppins', size: 12 },
+                        bodyFont: { family: 'Poppins', size: 12 },
+                        padding: 10,
+                        cornerRadius: 8
+                    }
                 },
-                title: {
-                    display: true,
-                    text: 'Số lần Khám sức khỏe & Tiêm thuốc theo tháng'
+                scales: {
+                    x: {
+                        grid: { display: false }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: { precision: 0 },
+                        grid: { color: 'rgba(0, 0, 0, 0.04)' }
+                    }
                 }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-            animation: {
-                duration: 1500,
-                easing: 'easeOutQuart'
             }
-        }
-    };
-
-    new Chart(ctx, config);
-
-    // Biểu đồ thống kê ca sự kiện y tế (Bar Chart)
-    const eventCtx = document.getElementById('eventStatsChart').getContext('2d');
-    new Chart(eventCtx, {
-        type: 'bar',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June',
-                'July'],
-            datasets: [{
-                label: 'Ca Sự Kiện Y Tế',
-                data: medicalEventCounts,
-                backgroundColor: '#2ecc71',
-                borderRadius: 5
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: { display: true, text: 'Số Ca' }
-                },
-                x: {
-                    title: { display: false }
-                }
-            },
-            plugins: {
-                legend: { display: false }
-            },
-            animation: {
-                duration: 1000,
-                easing: 'easeInOutQuad'
-            }
-        }
-    });
+        });
+    }
 });
 
-// newStudent
+// Chuyển tab danh sách học sinh
 function switchTab(tab) {
     const buttons = document.querySelectorAll('.tab-button');
     buttons.forEach(btn => btn.classList.remove('active'));
 
+    const thisMonthTable = document.getElementById('thisMonthTable');
+    const lastMonthTable = document.getElementById('lastMonthTable');
+
     if (tab === 'thisMonth') {
-        document.getElementById('thisMonthTable').style.display = '';
-        document.getElementById('lastMonthTable').style.display = 'none';
-        buttons[0].classList.add('active');
+        if (thisMonthTable) thisMonthTable.style.display = '';
+        if (lastMonthTable) lastMonthTable.style.display = 'none';
+        if (buttons[0]) buttons[0].classList.add('active');
     } else if (tab === 'lastMonth') {
-        document.getElementById('thisMonthTable').style.display = 'none';
-        document.getElementById('lastMonthTable').style.display = '';
-        buttons[1].classList.add('active');
+        if (thisMonthTable) thisMonthTable.style.display = 'none';
+        if (lastMonthTable) lastMonthTable.style.display = '';
+        if (buttons[1]) buttons[1].classList.add('active');
     }
-
-    // Có thể thêm logic để tải dữ liệu khác cho từng tab nếu cần
 }
-
-

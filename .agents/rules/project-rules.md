@@ -16,9 +16,12 @@
    - You are allowed and actively encouraged to offer multiple optimal and alternative solutions (e.g., quick implementation vs. enterprise-grade scalability vs. balanced approach) for the user to compare, evaluate, and choose.
    - For each option, clearly explain the pros, cons, complexity, performance impact, and maintenance overhead, accompanied by your recommended choice and rationale.
 
-4. **No Unauthorized Git Push**:
-   - You are allowed to run `git status`, `git diff`, and create clean local commits.
-   - You MUST NEVER execute `git push` to GitHub or any remote repository without explicit user permission/instruction.
+4. **Git Commit & Push Discipline (Strict User Authorization Only)**:
+   - **NO AUTOMATIC COMMITS**: NEVER automatically create git commits after executing commands, building, or modifying files. Automatic commits clutter the git history and make changes difficult to manage.
+   - **ONLY COMMIT WHEN EXPLICITLY REQUESTED**: Only draft commit messages and execute `git commit` when the user explicitly requests it (e.g. "hãy commit", "soạn commit").
+   - When requested: inspect changes (`git status`, `git diff`), propose a clear commit message following Conventional Commits, and commit upon approval.
+   - **NO UNAUTHORIZED GIT PUSH**: NEVER run `git push` to remote repositories without explicit user permission/instruction.
+   - Non-destructive inspection commands (`git status`, `git diff`, `git log`) are allowed at any time.
 
 5. **Scope Discipline**:
    - Only modify files directly related to the approved task.

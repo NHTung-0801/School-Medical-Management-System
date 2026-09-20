@@ -44,12 +44,17 @@ Mọi AI khi tương tác với dự án này **BẮT BUỘC PHẢI TUÂN THỦ 
 
 ---
 
-### 4. Tuyệt Đối Không Tự Ý Push Lên GitHub (No Unauthorized Git Push)
-- Agent được phép:
-  - Chạy `git status`, `git diff`, kiểm tra trạng thái repo.
-  - Tạo commit local gọn gàng, nguyên tử (atomic commit) khi đã kiểm tra và hoàn thành một phần việc.
-- **CẤM TUYỆT ĐỐI** chạy lệnh `git push` lên GitHub (hoặc bất kỳ remote nào) nếu **chưa có sự đồng ý hoặc yêu cầu bằng văn bản rõ ràng từ User**.
-- Chỉ được thực hiện `git push` khi User yêu cầu trực tiếp (ví dụ: *"hãy push lên github"* hoặc *"tôi đồng ý push"*).
+### 4. Kỷ Luật Commit & Push Git Nghiêm Ngặt (Strict Commit & Push On User Request Only)
+- **CẤM TỰ Ý TẠO COMMIT (No Automatic Commits):**
+  - Tuyệt đối **KHÔNG ĐƯỢC TỰ Ý** chạy lệnh `git commit` sau mỗi lần chạy lệnh, sửa file hoặc hoàn thành một tác vụ.
+  - Việc tự động commit sau mỗi thao tác làm lịch sử git bị phân mảnh, dài dòng và khó kiểm soát rollback.
+  - **CHỈ ĐƯỢC SOẠN NỘI DUNG VÀ COMMIT KHI USER YÊU CẦU TRỰC TIẾP** (ví dụ khi User nói: *"hãy commit cho tôi"*, *"soạn commit cho phần này"*, v.v.).
+  - Khi User yêu cầu commit: Agent rà soát lại các thay đổi bằng `git status`/`git diff`, đề xuất nội dung commit message chuẩn mực (Conventional Commits: feat, fix, refactor,...) kèm danh sách file thay đổi để User duyệt rồi mới thực hiện `git commit`.
+- **CẤM TUYỆT ĐỐI TỰ Ý PUSH (No Unauthorized Git Push):**
+  - **CẤM TUYỆT ĐỐI** chạy lệnh `git push` lên GitHub (hoặc bất kỳ remote nào) nếu **chưa có sự đồng ý hoặc yêu cầu bằng văn bản rõ ràng từ User**.
+  - Chỉ được thực hiện `git push` khi User yêu cầu trực tiếp (ví dụ: *"hãy push lên github"* hoặc *"tôi đồng ý push"*).
+- **Các lệnh được phép chạy để kiểm tra:**
+  - Agent được phép chạy các lệnh kiểm tra trạng thái không làm thay đổi lịch sử git: `git status`, `git diff`, `git log`.
 
 ---
 

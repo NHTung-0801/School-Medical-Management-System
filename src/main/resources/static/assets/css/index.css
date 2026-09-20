@@ -12,9 +12,6 @@ body {
     background-size: 200% 200%;
     animation: gradientShift 10s ease infinite;
     overflow-x: hidden;
-    display: contents;
-    justify-content: center;
-    align-items: center;
 }
 
 @keyframes gradientShift {
