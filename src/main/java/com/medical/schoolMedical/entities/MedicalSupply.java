@@ -1,6 +1,8 @@
 package com.medical.schoolMedical.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,9 +28,11 @@ public class MedicalSupply {
     @OneToMany(mappedBy = "medicalSupply", cascade = CascadeType.ALL)
     private List<SupplyUsed> supplyUsed;
 
+    @NotBlank(message = "Tên vật tư không được để trống")
     @Column(name = "name", length = 50,nullable = false)
     private String name;
 
+    @Min(value = 0, message = "Số lượng trong kho không được âm")
     @Column(name = "quantity_in_stock", nullable = false)
     private int quantityInStock;
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 
@@ -35,8 +36,22 @@ public class ManagerStudentController {
                                 @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate birthDate,
                                 @RequestParam String address,
                                 @RequestParam String className,
-                                @RequestParam Long parentId) {
-        studentService.createStudent(fullName, gender, birthDate, address, className, parentId);
+                                @RequestParam Long parentId,
+                                RedirectAttributes redirectAttributes) {
+        if (fullName == null || fullName.trim().isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "Họ và tên học sinh không được để trống.");
+            return "redirect:/manager/students/create";
+        }
+        if (birthDate == null || birthDate.isAfter(LocalDate.now())) {
+            redirectAttributes.addFlashAttribute("error", "Ngày sinh không hợp lệ hoặc nằm trong tương lai.");
+            return "redirect:/manager/students/create";
+        }
+        if (className == null || className.trim().isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "Tên lớp không được để trống.");
+            return "redirect:/manager/students/create";
+        }
+        studentService.createStudent(fullName.trim(), gender, birthDate, address != null ? address.trim() : "", className.trim(), parentId);
+        redirectAttributes.addFlashAttribute("success", "Thêm học sinh thành công!");
         return "redirect:/manager/students/list";
     }
 

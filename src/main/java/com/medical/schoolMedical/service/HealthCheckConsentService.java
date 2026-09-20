@@ -71,6 +71,7 @@ public class HealthCheckConsentService {
     }
 
 //    Gửi lịch đến phụ huynh:
+    @Transactional
     public void sendCheckSchedule_toParent(HealthCheckScheduleDTO healthCheckScheduleDTO){
 
         //        Lấy HealthCheckSchedule tương ứng để cập nhật trạng thái dãd gửi cho parent
@@ -92,13 +93,15 @@ public class HealthCheckConsentService {
         String classPrefix = String.valueOf(healthCheckSchedule.getClassName());
 
         List<Student> students = studentRepository.findByClassNameStartingWith(classPrefix);
+        List<HealthCheckConsent> consentList = new ArrayList<>();
         for(Student student : students){
             HealthCheckConsent consent = createConsent(healthCheckSchedule,student);
-            try {
-                healthCheckConsentRepository.save(consent);
-            }catch (Exception e){
-                throw new BusinessException(ErrorCode.SAVE_HEALTH_CHECK_CONSENT_FAILED);
-            }
+            consentList.add(consent);
+        }
+        try {
+            healthCheckConsentRepository.saveAll(consentList);
+        }catch (Exception e){
+            throw new BusinessException(ErrorCode.SAVE_HEALTH_CHECK_CONSENT_FAILED);
         }
     }
 
@@ -164,7 +167,7 @@ public class HealthCheckConsentService {
     }
 
 //    Hàm tự động cập nhật trạng thái phiêú hết hạn nếu quá ngày
-
+    @Transactional
     public void update_SurveyExpired_HealthCheckConsent() {
         List<HealthCheckConsent> unconfirms = healthCheckConsentRepository.findByStatusWithSchedule(ConsentStatus.UNCONFIRMED);
         List<HealthCheckConsent> toUpdate = new ArrayList<>();

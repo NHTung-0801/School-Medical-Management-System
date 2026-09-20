@@ -1,6 +1,9 @@
 package com.medical.schoolMedical.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,12 +31,15 @@ public class Medicine {
     @OneToMany(mappedBy = "medicine", cascade = CascadeType.ALL)
     private List<MedicineUsed> medicineUsed;
 
+    @NotBlank(message = "Tên thuốc không được để trống")
     @Column(name = "name", length = 100,nullable = false)
     private String name;
 
+    @NotBlank(message = "Đơn vị không được để trống")
     @Column(name = "unit", length = 10,nullable = false)
     private String unit;
 
+    @Min(value = 0, message = "Số lượng trong kho không được âm")
     @Column(name = "quantity_in_stock", nullable = false)
     private int quantityInStock;
 
@@ -41,6 +47,7 @@ public class Medicine {
     @CreationTimestamp
     private LocalDate entryDate;
 
+    @NotNull(message = "Vui lòng chọn hạn sử dụng")
     @Column(name = "expiry_date",nullable = false)
     private LocalDate expiryDate;
 }

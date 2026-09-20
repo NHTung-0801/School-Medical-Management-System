@@ -64,18 +64,19 @@ graph TD
 
 ---
 
-### 🟢 Giai Đoạn 3: Tối Ưu Hiệu Năng & Kiểm Soát Dữ Liệu (Performance & Validation)
+### 🟢 Giai Đoạn 3: Tối Ưu Hiệu Năng & Kiểm Soát Dữ Liệu (Performance & Validation) *(Đã Hoàn Thành - 100%)*
 > *Mục tiêu: Đảm bảo hệ thống chạy nhanh, chịu tải tốt khi thao tác dữ liệu lớn và chặn đứng dữ liệu rác từ đầu vào.*
 
-- [ ] **3.1. Tối ưu hóa gửi lịch hàng loạt (Batch Processing):**
-  - **Hiện trạng:** [HealthCheckConsentService.java:105-112](file:///d:/Old_Project/School_Medical_Management_System/School-Medical-Management-System/src/main/java/com/medical/schoolMedical/service/HealthCheckConsentService.java#L105-L112) lưu từng consent trong vòng `for`, không có `@Transactional`.
-  - **Giải pháp:** Thêm `@Transactional`, thu thập toàn bộ consent vào `List` và gọi `healthCheckConsentRepository.saveAll(consents)`.
-- [ ] **3.2. Linh hoạt hóa năm thống kê:**
-  - **Hiện trạng:** [AdminController.java:49](file:///d:/Old_Project/School_Medical_Management_System/School-Medical-Management-System/src/main/java/com/medical/schoolMedical/controller/admin/AdminController.java#L49) đang fix cứng năm `2025`.
-  - **Giải pháp:** Cho phép nhận `year` từ `@RequestParam(required = false)`, mặc định lấy `Year.now().getValue()`.
-- [ ] **3.3. Chuẩn hóa Validation toàn diện:**
-  - Áp dụng Bean Validation (`@NotBlank`, `@NotNull`, `@Min`, `@Max`, `@Email`, `@Size`) cho toàn bộ DTO tiếp nhận dữ liệu từ Form.
-  - Sử dụng `@Valid` hoặc `@Validated` tại tất cả các phương thức Controller.
+- [x] **3.1. Tối ưu hóa gửi lịch hàng loạt (Batch Processing):**
+  - Đã thêm `@Transactional` vào `HealthCheckConsentService` và `VaccinationConsentService`.
+  - Đã chuyển cơ chế lưu từng bản ghi sang `saveAll(consentList)` giảm từ N câu query xuống batch insert.
+  - Đã kích hoạt cấu hình Hibernate batch insert (`batch_size=50`, `order_inserts=true`) trong `application.properties`.
+- [x] **3.2. Linh hoạt hóa năm thống kê:**
+  - `AdminController` và `ManagerController` đã nhận tham số `@RequestParam(value = "year", required = false)` linh hoạt, mặc định lấy năm hiện tại `LocalDate.now().getYear()`.
+  - Đã bổ sung dropdown chọn năm tiện lợi trên giao diện `dashboard.html` và `manager-home.html`.
+- [x] **3.3. Chuẩn hóa Validation toàn diện:**
+  - Đã áp dụng Jakarta Bean Validation (`@NotBlank`, `@NotNull`, `@Min`) cho `Medicine`, `MedicalSupply`, `StudentDTO`, `MedicalEventDTO`.
+  - Đã bổ sung `@Valid` và kiểm tra `BindingResult` hiển thị thông báo lỗi thân thiện tại `MedicineController`, `MedicalSupplyController`, `MedicalEventController`, và `ManagerStudentController`.
 
 ---
 

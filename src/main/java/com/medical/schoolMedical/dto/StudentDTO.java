@@ -3,6 +3,8 @@ package com.medical.schoolMedical.dto;
 import com.medical.schoolMedical.entities.Parent;
 import com.medical.schoolMedical.enums.Gender;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -17,11 +19,21 @@ public class StudentDTO {
     private long healthCheck_recordId;
     @ToString.Exclude
     private Parent parent;
-    private String fullName;
-    private Gender gender;
-    private LocalDate birthDate;
-    private String address;
-    private String className;
-    private LocalDate createAt;
 
+    @NotBlank(message = "Họ và tên học sinh không được để trống")
+    private String fullName;
+
+    @NotNull(message = "Vui lòng chọn giới tính")
+    private Gender gender;
+
+    @NotNull(message = "Vui lòng chọn ngày sinh")
+    private LocalDate birthDate;
+
+    @NotBlank(message = "Địa chỉ không được để trống")
+    private String address;
+
+    @NotBlank(message = "Vui lòng nhập tên lớp")
+    private String className;
+
+    private LocalDate createAt;
 }

@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -87,10 +88,19 @@ public class MedicalEventController {
 
 
     @PostMapping("/save")
-    public String saveMedicalEvent(@ModelAttribute("eventDTO") MedicalEventDTO dto,
+    public String saveMedicalEvent(@ModelAttribute("eventDTO") @Valid MedicalEventDTO dto,
+                                   BindingResult bindingResult,
                                    @AuthenticationPrincipal CustomUserDetails currentUser,
                                    RedirectAttributes redirectAttributes,
                                    Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("error", bindingResult.getAllErrors().get(0).getDefaultMessage());
+            model.addAttribute("eventDTO", dto);
+            model.addAttribute("students", studentService.getAllStudents());
+            model.addAttribute("medicines", medicineService.getAllMedicines());
+            model.addAttribute("supplies", medicalSupplyService.getAllMedicalSupplies());
+            return "nurse/create";
+        }
         try {
             // Tìm user và nurse đang login
             SchoolNurse nurse = userService.findNurseByUsername(currentUser.getUsername());

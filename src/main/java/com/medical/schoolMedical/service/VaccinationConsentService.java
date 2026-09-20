@@ -25,6 +25,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -44,6 +45,7 @@ public class VaccinationConsentService {
     VaccinationScheduleService vaccinationScheduleService;
 
     //    Gửi lịch đến phụ huynh:
+    @Transactional
     public void sendVaccinationSchedule_toParent(VaccinationScheduleDTO vaccinationScheduleDTO){
 //        Lấy VaccinationSchedule tương ứng để cập nhật trạng thái dãd gửi cho parent
         VaccinationSchedule vaccinationScheduleUpdate = vaccinationScheduleRepository.findById(vaccinationScheduleDTO.getId())
@@ -112,7 +114,7 @@ public class VaccinationConsentService {
     }
 
 //    Hàm tự động cập nhật trạng thái phiêú hết hạn nếu quá ngày
-
+    @Transactional
     public void update_SurveyExpired_VaccinationConsent() {
         List<VaccinationConsent> unconfirms = vaccinationConsentRepository.findByStatusWithSchedule(ConsentStatus.UNCONFIRMED);
         List<VaccinationConsent> toUpdate = new ArrayList<>();

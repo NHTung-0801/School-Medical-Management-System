@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -32,25 +34,26 @@ public class ManagerController {
     @Autowired
     private StudentService studentService;
     @GetMapping("/manager-home")
-    public String managerHome(Model model, Authentication authentication) {
+    public String managerHome(@RequestParam(value = "year", required = false) Integer year,
+                              Model model,
+                              Authentication authentication) {
         String username = (authentication != null) ? authentication.getName() : "Guest";// Lấy tên người đăng nhập
         model.addAttribute("username", username);
 
-        //        Tinhs toán thống kê
-//        List<Integer> years = List.of(2023, 2024, 2025);
-        List<Integer> vaccinationCounts = statisticsService.getMonthlyVaccinationCounts(2025);
-        List<Integer> healthCheckCounts = statisticsService.getMonthlyHealthCheckCounts(2025);
-        List<Integer> medicalEventCounts = statisticsService.getMonthlyMedicalEventCounts(2025);
+        int currentYear = LocalDate.now().getYear();
+        int selectedYear = (year != null && year >= 2020 && year <= 2100) ? year : currentYear;
+        List<Integer> years = List.of(currentYear - 2, currentYear - 1, currentYear, currentYear + 1);
 
-        log.info("medicalEventCounts in showChart {}:" , medicalEventCounts);
+        List<Integer> vaccinationCounts = statisticsService.getMonthlyVaccinationCounts(selectedYear);
+        List<Integer> healthCheckCounts = statisticsService.getMonthlyHealthCheckCounts(selectedYear);
+        List<Integer> medicalEventCounts = statisticsService.getMonthlyMedicalEventCounts(selectedYear);
 
-//        model.addAttribute("years", years);
-//        model.addAttribute("selectedYear", year);
+        log.info("selectedYear in managerHome: {}, medicalEventCounts: {}", selectedYear, medicalEventCounts);
 
-//        data biểu đồ healthCheck và Vaccination
+        model.addAttribute("selectedYear", selectedYear);
+        model.addAttribute("years", years);
         model.addAttribute("vaccinationCounts", vaccinationCounts);
         model.addAttribute("healthCheckCounts", healthCheckCounts);
-//        Biểu đồ medicalEventCounts
         model.addAttribute("medicalEventCounts", medicalEventCounts);
 
 //        thống kê số lượng phụ huynh, hs, nurse ... tronbg hệ thống

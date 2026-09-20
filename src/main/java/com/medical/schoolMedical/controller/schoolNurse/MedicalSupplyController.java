@@ -2,9 +2,11 @@ package com.medical.schoolMedical.controller.schoolNurse;
 
 import com.medical.schoolMedical.entities.MedicalSupply;
 import com.medical.schoolMedical.service.MedicalSupplyService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -53,8 +55,16 @@ public class MedicalSupplyController {
 
     // Xử lý lưu vật tư
     @PostMapping("/save")
-    public String saveSupply(@ModelAttribute("supply") MedicalSupply supply, RedirectAttributes redirectAttributes) {
+    public String saveSupply(@ModelAttribute("supply") @Valid MedicalSupply supply,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes) {
         boolean isNew = (supply.getId() == null);
+
+        if (bindingResult.hasErrors()) {
+            String errorMsg = bindingResult.getAllErrors().get(0).getDefaultMessage();
+            redirectAttributes.addFlashAttribute("error", errorMsg);
+            return isNew ? "redirect:/nurse/medical-supplies/new" : "redirect:/nurse/medical-supplies/edit/" + supply.getId();
+        }
 
         String normalizedName = supply.getName().trim();
 

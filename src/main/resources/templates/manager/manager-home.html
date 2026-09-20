@@ -20,7 +20,15 @@
         <!-- Charts Section -->
         <div class="charts-container-top">
             <div class="chart-card">
-                <h2>Thống Kê Khám Bệnh & Tiêm Thuốc</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h2 style="margin: 0;">Thống Kê Khám Bệnh & Tiêm Thuốc</h2>
+                    <div>
+                        <label for="yearSelectManager" style="font-weight: 600; margin-right: 8px;">Năm:</label>
+                        <select id="yearSelectManager" class="form-select" style="display: inline-block; width: auto; padding: 4px 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px;" onchange="location.href='?year=' + this.value">
+                            <option th:each="y : ${years}" th:value="${y}" th:text="'Năm ' + ${y}" th:selected="${y == selectedYear}"></option>
+                        </select>
+                    </div>
+                </div>
                 <canvas id="myChart" width="800" height="400"></canvas>
             </div>
         </div>

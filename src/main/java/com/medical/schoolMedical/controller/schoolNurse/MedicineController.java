@@ -2,9 +2,11 @@ package com.medical.schoolMedical.controller.schoolNurse;
 
 import com.medical.schoolMedical.entities.Medicine;
 import com.medical.schoolMedical.service.MedicineService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -35,11 +37,17 @@ public class MedicineController {
 
     // 3. Lưu thuốc mới
     @PostMapping("/save")
-    public String saveMedicine(@ModelAttribute("medicine") Medicine medicine, RedirectAttributes redirectAttributes) {
+    public String saveMedicine(@ModelAttribute("medicine") @Valid Medicine medicine,
+                               BindingResult bindingResult,
+                               RedirectAttributes redirectAttributes) {
 
-
-        // Kiểm tra nếu là thêm mới
         boolean isNew = (medicine.getId() == null);
+
+        if (bindingResult.hasErrors()) {
+            String errorMsg = bindingResult.getAllErrors().get(0).getDefaultMessage();
+            redirectAttributes.addFlashAttribute("error", errorMsg);
+            return isNew ? "redirect:/nurse/medicines/new" : "redirect:/nurse/medicines/edit/" + medicine.getId();
+        }
 
         // Kiểm tra trùng tên (bỏ qua khoảng trắng và chữ hoa)
         String normalizedName = medicine.getName().trim();
