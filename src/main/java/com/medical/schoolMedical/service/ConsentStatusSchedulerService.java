@@ -2,6 +2,7 @@ package com.medical.schoolMedical.service;
 
 import com.medical.schoolMedical.entities.ConsultationAppointment;
 import com.medical.schoolMedical.modules.healthcheck.services.HealthCheckConsentService;
+import com.medical.schoolMedical.modules.vaccination.services.VaccinationConsentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.context.event.EventListener;

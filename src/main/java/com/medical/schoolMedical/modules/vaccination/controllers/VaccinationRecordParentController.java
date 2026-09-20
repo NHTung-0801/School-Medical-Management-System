@@ -1,9 +1,8 @@
-package com.medical.schoolMedical.controller.parent;
+package com.medical.schoolMedical.modules.vaccination.controllers;
 
-import com.medical.schoolMedical.dto.VaccinationRecordDTO;
-import com.medical.schoolMedical.entities.VaccinationRecord;
 import com.medical.schoolMedical.exceptions.BusinessException;
-import com.medical.schoolMedical.service.VaccinationRecordService;
+import com.medical.schoolMedical.modules.vaccination.dto.VaccinationRecordDTO;
+import com.medical.schoolMedical.modules.vaccination.services.VaccinationRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,24 +20,21 @@ public class VaccinationRecordParentController {
     private VaccinationRecordService vaccinationRecordService;
 
     @GetMapping
-    public String getVaccinationRecordParent(Model model
-            , RedirectAttributes redirectAttributes
-            , @RequestParam(value = "idRecord", required = false ) Long idRecord){
-        if(idRecord == null){
-            redirectAttributes.addFlashAttribute("error","Vui lòng chọn bản ghi tiêm chủng phù hợp để xem chi tiết.");
+    public String getVaccinationRecordParent(Model model,
+                                             RedirectAttributes redirectAttributes,
+                                             @RequestParam(value = "idRecord", required = false) Long idRecord) {
+        if (idRecord == null) {
+            redirectAttributes.addFlashAttribute("error", "Vui lòng chọn bản ghi tiêm chủng phù hợp để xem chi tiết.");
             return "redirect:/parent/notification/VaccinationRecords";
         }
 
-        try{
+        try {
             VaccinationRecordDTO vaccinationRecordDTO = vaccinationRecordService.getVaccinationRecord_updateViewed(idRecord);
             model.addAttribute("vaccinationRecord", vaccinationRecordDTO);
-//            log.info("vaccinationRecordDTO in getHealthCheckRecordParent ==>: {}", vaccinationRecordDTO);
             return "parent/vaccinationRecordParent";
-        }catch (BusinessException e){
-            redirectAttributes.addFlashAttribute("error",e.getMessage());
+        } catch (BusinessException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/parent/notification/VaccinationRecords";
         }
-
-
     }
 }

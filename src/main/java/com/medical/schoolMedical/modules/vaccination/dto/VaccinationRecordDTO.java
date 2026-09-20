@@ -1,10 +1,7 @@
-package com.medical.schoolMedical.dto;
+package com.medical.schoolMedical.modules.vaccination.dto;
 
 import com.medical.schoolMedical.entities.SchoolNurse;
-import com.medical.schoolMedical.entities.VaccinationConsent;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -12,7 +9,6 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 public class VaccinationRecordDTO {
-
     private long id;
 
     @ToString.Exclude
@@ -24,5 +20,5 @@ public class VaccinationRecordDTO {
     private String postVaccinationCondition;
     private String notes;
     private boolean sentToParent = false;
-    private boolean viewedByParent  = false;
+    private boolean viewedByParent = false;
 }

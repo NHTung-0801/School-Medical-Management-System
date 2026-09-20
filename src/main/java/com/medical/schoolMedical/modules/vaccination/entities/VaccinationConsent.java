@@ -1,11 +1,10 @@
-package com.medical.schoolMedical.entities;
+package com.medical.schoolMedical.modules.vaccination.entities;
 
+import com.medical.schoolMedical.entities.Parent;
+import com.medical.schoolMedical.entities.Student;
 import com.medical.schoolMedical.enums.ConsentStatus;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Timer;
-
 
 @Entity
 @Getter
@@ -40,11 +39,10 @@ public class VaccinationConsent {
     private ConsentStatus status;
 
     @Builder.Default
-    @Column(name = "vaccinated",columnDefinition = "TINYINT DEFAULT 0",nullable = false)
+    @Column(name = "vaccinated", columnDefinition = "TINYINT DEFAULT 0", nullable = false)
     private boolean vaccinated = false;
 
     @ToString.Exclude
     @OneToOne(mappedBy = "vaccinationConsent", fetch = FetchType.LAZY)
     private VaccinationRecord vaccinationRecord;
-
 }

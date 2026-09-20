@@ -1,10 +1,9 @@
-package com.medical.schoolMedical.dto;
+package com.medical.schoolMedical.modules.vaccination.dto;
 
 import com.medical.schoolMedical.entities.Parent;
 import com.medical.schoolMedical.entities.Student;
-import com.medical.schoolMedical.entities.VaccinationSchedule;
 import com.medical.schoolMedical.enums.ConsentStatus;
-import jakarta.persistence.*;
+import com.medical.schoolMedical.modules.vaccination.entities.VaccinationSchedule;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -22,5 +21,4 @@ public class VaccinationConsentDTO {
     private ConsentStatus status;
     private boolean vaccinated = false;
     private Boolean sentToParent;
-
 }

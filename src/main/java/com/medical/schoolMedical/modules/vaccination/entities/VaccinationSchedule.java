@@ -1,5 +1,6 @@
-package com.medical.schoolMedical.entities;
+package com.medical.schoolMedical.modules.vaccination.entities;
 
+import com.medical.schoolMedical.entities.SchoolNurse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +11,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 
 @Entity
 @Getter
@@ -48,9 +48,6 @@ public class VaccinationSchedule {
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
 
-    @Column(name = "is_sent_to_parent",columnDefinition = "TINYINT DEFAULT 0",nullable = false)
+    @Column(name = "is_sent_to_parent", columnDefinition = "TINYINT DEFAULT 0", nullable = false)
     private boolean sentToParent = false;
-
-
 }
-

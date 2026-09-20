@@ -1,7 +1,7 @@
-package com.medical.schoolMedical.repositories;
+package com.medical.schoolMedical.modules.vaccination.repositories;
 
-import com.medical.schoolMedical.entities.VaccinationConsent;
-import com.medical.schoolMedical.entities.VaccinationRecord;
+import com.medical.schoolMedical.modules.vaccination.entities.VaccinationConsent;
+import com.medical.schoolMedical.modules.vaccination.entities.VaccinationRecord;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface VaccinationRecordRepository extends JpaRepository<VaccinationRecord,Long> {
+public interface VaccinationRecordRepository extends JpaRepository<VaccinationRecord, Long> {
     Optional<VaccinationRecord> findByVaccinationConsent(VaccinationConsent vaccinationConsent);
 
     @Query("SELECT r FROM VaccinationRecord r WHERE r.vaccinationConsent.id IN :consentIds")

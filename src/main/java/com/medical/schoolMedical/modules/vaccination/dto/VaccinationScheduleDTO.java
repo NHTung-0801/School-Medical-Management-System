@@ -1,7 +1,6 @@
-package com.medical.schoolMedical.dto;
+package com.medical.schoolMedical.modules.vaccination.dto;
 
 import com.medical.schoolMedical.entities.SchoolNurse;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

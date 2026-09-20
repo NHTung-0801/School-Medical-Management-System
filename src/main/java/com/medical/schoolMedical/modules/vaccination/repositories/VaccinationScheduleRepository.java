@@ -1,22 +1,20 @@
-package com.medical.schoolMedical.repositories;
+package com.medical.schoolMedical.modules.vaccination.repositories;
 
-import com.medical.schoolMedical.entities.VaccinationSchedule;
-import jakarta.persistence.Column;
-import org.springframework.data.domain.Limit;
+import com.medical.schoolMedical.modules.vaccination.entities.VaccinationSchedule;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface VaccinationScheduleRepository extends JpaRepository<VaccinationSchedule,Long> {
+@Repository
+public interface VaccinationScheduleRepository extends JpaRepository<VaccinationSchedule, Long> {
     Page<VaccinationSchedule> findBySentToParent(boolean sentToParent, Pageable pageable);
 
-//    Câu lệnh thuần SQL và để lấy thống kê số lượng lịch tiêm chủng theo tháng trong một năm
-
+    // Câu lệnh thuần SQL để lấy thống kê số lượng lịch tiêm chủng theo tháng trong một năm
     @Query(value = """
         SELECT m.month AS month, 
                COALESCE(COUNT(v.schedule_id), 0) AS total
@@ -29,5 +27,4 @@ public interface VaccinationScheduleRepository extends JpaRepository<Vaccination
         ORDER BY m.month
     """, nativeQuery = true)
     List<Object[]> getMonthlyVaccinationStats(@Param("year") int year);
-
 }

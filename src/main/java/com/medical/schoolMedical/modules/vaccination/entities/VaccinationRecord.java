@@ -1,5 +1,6 @@
-package com.medical.schoolMedical.entities;
+package com.medical.schoolMedical.modules.vaccination.entities;
 
+import com.medical.schoolMedical.entities.SchoolNurse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,18 +30,15 @@ public class VaccinationRecord {
     @ToString.Exclude
     private SchoolNurse schoolNurse;
 
-
-//    Tình trạng sau tiêm chủng
-    @Column(name = "post_vaccination_condition",nullable = false)
+    @Column(name = "post_vaccination_condition", nullable = false)
     private String postVaccinationCondition;
 
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
 
-    @Column(name = "is_sent_to_parent",columnDefinition = "TINYINT DEFAULT 0",nullable = false)
+    @Column(name = "is_sent_to_parent", columnDefinition = "TINYINT DEFAULT 0", nullable = false)
     private boolean sentToParent = false;
 
-    @Column(name = "is_viewed_by_parent ",columnDefinition = "TINYINT DEFAULT 0",nullable = false)
-    private boolean viewedByParent  = false;
+    @Column(name = "is_viewed_by_parent ", columnDefinition = "TINYINT DEFAULT 0", nullable = false)
+    private boolean viewedByParent = false;
 }
-

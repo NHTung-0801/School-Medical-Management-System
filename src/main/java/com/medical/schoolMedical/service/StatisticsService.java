@@ -4,6 +4,7 @@ import com.medical.schoolMedical.modules.healthcheck.entities.HealthCheckSchedul
 import com.medical.schoolMedical.modules.healthcheck.repositories.HealthCheckScheduleRepository;
 import com.medical.schoolMedical.modules.medical_event.repositories.MedicalEventRepository;
 import com.medical.schoolMedical.modules.pharmacy.repositories.MedicineRepository;
+import com.medical.schoolMedical.modules.vaccination.repositories.VaccinationScheduleRepository;
 import com.medical.schoolMedical.repositories.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

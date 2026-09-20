@@ -1,7 +1,7 @@
-package com.medical.schoolMedical.mapper;
+package com.medical.schoolMedical.modules.vaccination.mappers;
 
-import com.medical.schoolMedical.dto.VaccinationRecordDTO;
-import com.medical.schoolMedical.entities.VaccinationRecord;
+import com.medical.schoolMedical.modules.vaccination.dto.VaccinationRecordDTO;
+import com.medical.schoolMedical.modules.vaccination.entities.VaccinationRecord;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
@@ -10,7 +10,6 @@ public interface VaccinationRecordMapper {
     VaccinationRecordDTO toVaccinationRecordDTO(VaccinationRecord vaccinationRecord);
     VaccinationRecord toVaccinationRecord(VaccinationRecordDTO vaccinationRecordDTO);
 
-    //    update
+    // update
     void updateVaccinationRecord(@MappingTarget VaccinationRecord vaccinationRecord, VaccinationRecord vaccinationRecord_request);
-
 }
