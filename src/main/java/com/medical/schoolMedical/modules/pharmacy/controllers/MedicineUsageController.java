@@ -1,4 +1,4 @@
-package com.medical.schoolMedical.controller.schoolNurse;
+package com.medical.schoolMedical.modules.pharmacy.controllers;
 
 import com.medical.schoolMedical.entities.SchoolNurse;
 import com.medical.schoolMedical.entities.SentMedicine;
@@ -32,7 +32,6 @@ public class MedicineUsageController {
     private SchoolNurseService schoolNurseService;
 
     // 1. Danh sách thuốc phụ huynh đã gửi
-
     @GetMapping("/sent")
     public String listAllSentMedicines(Model model) {
         List<SentMedicine> sentList = sentMedicineService.getAll();
@@ -42,23 +41,17 @@ public class MedicineUsageController {
 
     @GetMapping("/use/{id}")
     public String showUsageForm(@PathVariable Long id, Model model) {
-        //Tạo đối tượng usage mới
         SentMedicineUsage usage = new SentMedicineUsage();
 
-        //Lấy thông tin gửi thuốc
         SentMedicine sentMedicine = sentMedicineService.getById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.SENT_MEDICINE_NOT_FOUND));
 
-
-        //Gán sentMedicine vào usage
         usage.setSentMedicine(sentMedicine);
 
-        //Tách danh sách thuốc thành List<String>
         List<String> medicineOptions = Arrays.stream(sentMedicine.getMedicineList().split(","))
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
                 .collect(Collectors.toList());
-
 
         model.addAttribute("usage", usage);
         model.addAttribute("medicineOptions", medicineOptions);
@@ -68,31 +61,23 @@ public class MedicineUsageController {
     @PostMapping("/use")
     public String submitUsage(@ModelAttribute SentMedicineUsage usage,
                               @AuthenticationPrincipal UserDetails userDetails) {
-        //Lấy username từ userDetails
         String username = userDetails.getUsername();
-
-        //Tìm SchoolNurse từ schoolNurseService
         SchoolNurse nurse = schoolNurseService.findNurseByUsername(username);
 
         if (nurse == null) {
             throw new RuntimeException("Không tìm thấy nhân viên y tế đăng nhập.");
         }
 
-        //Gán SchoolNurse cho usage
         usage.setSchoolNurse(nurse);
-
         usageService.create(usage);
         return "redirect:/nurse/sentMedicineUsage/sent";
     }
 
-
-
-    //2. Lịch sử liều thuốc đã cho uống
+    // 2. Lịch sử liều thuốc đã cho uống
     @GetMapping("/usage-history")
     public String usageHistory(Model model) {
         List<SentMedicineUsage> usageList = usageService.getAll();
         model.addAttribute("usageList", usageList);
         return "nurse/sent-medicine-usage/medicine_usage_history";
     }
-
 }

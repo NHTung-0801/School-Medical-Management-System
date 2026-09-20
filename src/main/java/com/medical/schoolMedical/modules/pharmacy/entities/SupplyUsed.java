@@ -1,5 +1,6 @@
-package com.medical.schoolMedical.entities;
+package com.medical.schoolMedical.modules.pharmacy.entities;
 
+import com.medical.schoolMedical.entities.MedicalEvent;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,10 +27,9 @@ public class SupplyUsed {
     @JoinColumn(name = "medical_event_id", nullable = false)
     private MedicalEvent medicalEvent;
 
-    @Column(name = "quantity",nullable = false)
+    @Column(name = "quantity", nullable = false)
     private int quantity;
 
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
 }
-

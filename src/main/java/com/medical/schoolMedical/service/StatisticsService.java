@@ -1,6 +1,7 @@
 package com.medical.schoolMedical.service;
 
 import com.medical.schoolMedical.entities.HealthCheckSchedule;
+import com.medical.schoolMedical.modules.pharmacy.repositories.MedicineRepository;
 import com.medical.schoolMedical.repositories.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

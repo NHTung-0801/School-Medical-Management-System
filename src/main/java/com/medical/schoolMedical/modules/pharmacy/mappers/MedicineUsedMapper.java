@@ -1,7 +1,7 @@
-package com.medical.schoolMedical.mapper;
+package com.medical.schoolMedical.modules.pharmacy.mappers;
 
-import com.medical.schoolMedical.dto.MedicineUsedDTO;
-import com.medical.schoolMedical.entities.MedicineUsed;
+import com.medical.schoolMedical.modules.pharmacy.dto.MedicineUsedDTO;
+import com.medical.schoolMedical.modules.pharmacy.entities.MedicineUsed;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
@@ -15,10 +15,8 @@ public interface MedicineUsedMapper {
         return dto;
     }
 
-    // Nếu bạn cần chuyển ngược lại từ DTO → Entity (ít dùng hơn)
     public static MedicineUsed toEntity(MedicineUsedDTO dto) {
         MedicineUsed entity = new MedicineUsed();
-        // Không set ID hoặc liên kết nếu dùng để tạo mới
         entity.setQuantity(dto.getQuantity());
         entity.setNotes(dto.getNotes());
         return entity;

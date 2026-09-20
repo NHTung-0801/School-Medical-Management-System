@@ -1,15 +1,15 @@
-package com.medical.schoolMedical.service;
+package com.medical.schoolMedical.modules.pharmacy.services;
 
-import com.medical.schoolMedical.dto.MedicineUsedDTO;
+import com.medical.schoolMedical.modules.pharmacy.dto.MedicineUsedDTO;
 import com.medical.schoolMedical.entities.MedicalEvent;
-import com.medical.schoolMedical.entities.Medicine;
-import com.medical.schoolMedical.entities.MedicineUsed;
+import com.medical.schoolMedical.modules.pharmacy.entities.Medicine;
+import com.medical.schoolMedical.modules.pharmacy.entities.MedicineUsed;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
-import com.medical.schoolMedical.mapper.MedicineUsedMapper;
+import com.medical.schoolMedical.modules.pharmacy.mappers.MedicineUsedMapper;
 import com.medical.schoolMedical.repositories.MedicalEventRepository;
-import com.medical.schoolMedical.repositories.MedicineRepository;
-import com.medical.schoolMedical.repositories.MedicineUsedRepository;
+import com.medical.schoolMedical.modules.pharmacy.repositories.MedicineRepository;
+import com.medical.schoolMedical.modules.pharmacy.repositories.MedicineUsedRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -48,8 +48,6 @@ public class MedicineUsedService {
         medicineUsedRepository.save(used);
     }
 
-
-
     public List<MedicineUsedDTO> getUsedMedicinesByEvent(Long eventId) {
         List<MedicineUsed> usedList = medicineUsedRepository.findByMedicalEventId(eventId);
 
@@ -57,5 +55,4 @@ public class MedicineUsedService {
                 .map(MedicineUsedMapper::toDTO)
                 .collect(Collectors.toList());
     }
-
 }

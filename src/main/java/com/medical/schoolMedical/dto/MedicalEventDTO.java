@@ -1,6 +1,8 @@
 package com.medical.schoolMedical.dto;
 
 
+import com.medical.schoolMedical.modules.pharmacy.dto.MedicineUsedDTO;
+import com.medical.schoolMedical.modules.pharmacy.dto.SupplyUsedDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

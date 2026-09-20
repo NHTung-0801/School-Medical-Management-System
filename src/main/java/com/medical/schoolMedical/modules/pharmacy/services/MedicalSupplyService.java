@@ -1,9 +1,9 @@
-package com.medical.schoolMedical.service;
+package com.medical.schoolMedical.modules.pharmacy.services;
 
-import com.medical.schoolMedical.entities.MedicalSupply;
+import com.medical.schoolMedical.modules.pharmacy.entities.MedicalSupply;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
-import com.medical.schoolMedical.repositories.MedicalSupplyRepository;
+import com.medical.schoolMedical.modules.pharmacy.repositories.MedicalSupplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,8 +38,6 @@ public class MedicalSupplyService {
         medicalSupplyRepository.deleteById(id);
     }
 
-
-
     public boolean existsByName(String name) {
         return medicalSupplyRepository.findByNameIgnoreCase(name.trim()).isPresent();
     }
@@ -47,6 +45,4 @@ public class MedicalSupplyService {
     public boolean isNameTakenByOtherId(String name, Long id) {
         return medicalSupplyRepository.existsByNameIgnoreCaseAndIdNot(name.trim(), id);
     }
-
-
 }

@@ -1,7 +1,7 @@
-package com.medical.schoolMedical.controller.schoolNurse;
+package com.medical.schoolMedical.modules.pharmacy.controllers;
 
-import com.medical.schoolMedical.entities.Medicine;
-import com.medical.schoolMedical.service.MedicineService;
+import com.medical.schoolMedical.modules.pharmacy.entities.Medicine;
+import com.medical.schoolMedical.modules.pharmacy.services.MedicineService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/nurse/medicines")
@@ -80,18 +79,13 @@ public class MedicineController {
             medicine.setEntryDate(existing.getEntryDate());
         }
 
-
-
         medicine.setName(normalizedName);
-        medicineService.saveMedicine(medicine); // sử dụng service để lưu luôn
-        System.out.println("DEBUG: Đã lưu thành công thuốc, ID = " + medicine.getId());
+        medicineService.saveMedicine(medicine);
 
         redirectAttributes.addFlashAttribute("success", isNew ? "Thêm thuốc thành công." : "Cập nhật thuốc thành công.");
 
         return "redirect:/nurse/medicines";
     }
-
-
 
     // 4. Hiển thị form chỉnh sửa thuốc
     @GetMapping("/edit/{id}")
@@ -108,5 +102,4 @@ public class MedicineController {
         redirectAttributes.addFlashAttribute("success", "Xóa thuốc thành công!");
         return "redirect:/nurse/medicines";
     }
-
 }

@@ -1,5 +1,4 @@
-package com.medical.schoolMedical.dto;
-
+package com.medical.schoolMedical.modules.pharmacy.dto;
 
 import lombok.Data;
 

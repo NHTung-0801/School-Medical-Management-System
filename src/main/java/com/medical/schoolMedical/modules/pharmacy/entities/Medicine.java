@@ -1,8 +1,9 @@
-package com.medical.schoolMedical.entities;
+package com.medical.schoolMedical.modules.pharmacy.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,20 +18,24 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "medical_supply")
-public class MedicalSupply {
+@Table(name = "medicine")
+public class Medicine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "medical_supply_id")
+    @Column(name = "medicine_id")
     private Long id;
 
     // Quan hệ với bảng trung gian
-    @OneToMany(mappedBy = "medicalSupply", cascade = CascadeType.ALL)
-    private List<SupplyUsed> supplyUsed;
+    @OneToMany(mappedBy = "medicine", cascade = CascadeType.ALL)
+    private List<MedicineUsed> medicineUsed;
 
-    @NotBlank(message = "Tên vật tư không được để trống")
-    @Column(name = "name", length = 50,nullable = false)
+    @NotBlank(message = "Tên thuốc không được để trống")
+    @Column(name = "name", length = 100, nullable = false)
     private String name;
+
+    @NotBlank(message = "Đơn vị không được để trống")
+    @Column(name = "unit", length = 10, nullable = false)
+    private String unit;
 
     @Min(value = 0, message = "Số lượng trong kho không được âm")
     @Column(name = "quantity_in_stock", nullable = false)
@@ -40,4 +45,7 @@ public class MedicalSupply {
     @CreationTimestamp
     private LocalDate entryDate;
 
+    @NotNull(message = "Vui lòng chọn hạn sử dụng")
+    @Column(name = "expiry_date", nullable = false)
+    private LocalDate expiryDate;
 }

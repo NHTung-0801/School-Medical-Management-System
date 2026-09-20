@@ -1,9 +1,14 @@
 package com.medical.schoolMedical.controller.schoolNurse;
 
 import com.medical.schoolMedical.dto.MedicalEventDTO;
-import com.medical.schoolMedical.dto.MedicineUsedDTO;
-import com.medical.schoolMedical.dto.MedicineUsedRequestDTO;
-import com.medical.schoolMedical.dto.SupplyUsedDTO;
+import com.medical.schoolMedical.modules.pharmacy.dto.MedicineUsedDTO;
+import com.medical.schoolMedical.modules.pharmacy.dto.MedicineUsedRequestDTO;
+import com.medical.schoolMedical.modules.pharmacy.dto.SupplyUsedDTO;
+import com.medical.schoolMedical.modules.pharmacy.entities.MedicalSupply;
+import com.medical.schoolMedical.modules.pharmacy.entities.Medicine;
+import com.medical.schoolMedical.modules.pharmacy.services.MedicalSupplyService;
+import com.medical.schoolMedical.modules.pharmacy.services.MedicineService;
+import com.medical.schoolMedical.modules.pharmacy.services.MedicineUsedService;
 import com.medical.schoolMedical.entities.*;
 import com.medical.schoolMedical.security.CustomUserDetails;
 import com.medical.schoolMedical.service.*;

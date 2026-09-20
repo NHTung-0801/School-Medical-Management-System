@@ -2,8 +2,14 @@ package com.medical.schoolMedical.service;
 
 
 import com.medical.schoolMedical.dto.MedicalEventDTO;
-import com.medical.schoolMedical.dto.MedicineUsedDTO;
-import com.medical.schoolMedical.dto.SupplyUsedDTO;
+import com.medical.schoolMedical.modules.pharmacy.dto.MedicineUsedDTO;
+import com.medical.schoolMedical.modules.pharmacy.dto.SupplyUsedDTO;
+import com.medical.schoolMedical.modules.pharmacy.entities.MedicalSupply;
+import com.medical.schoolMedical.modules.pharmacy.entities.Medicine;
+import com.medical.schoolMedical.modules.pharmacy.entities.MedicineUsed;
+import com.medical.schoolMedical.modules.pharmacy.entities.SupplyUsed;
+import com.medical.schoolMedical.modules.pharmacy.repositories.MedicalSupplyRepository;
+import com.medical.schoolMedical.modules.pharmacy.repositories.MedicineRepository;
 import com.medical.schoolMedical.entities.*;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;

@@ -1,16 +1,14 @@
-package com.medical.schoolMedical.service;
+package com.medical.schoolMedical.modules.pharmacy.services;
 
-
-import com.medical.schoolMedical.entities.Medicine;
+import com.medical.schoolMedical.modules.pharmacy.entities.Medicine;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
-import com.medical.schoolMedical.repositories.MedicineRepository;
+import com.medical.schoolMedical.modules.pharmacy.repositories.MedicineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +28,6 @@ public class MedicineService {
     public void saveMedicine(Medicine medicine) {
         medicineRepository.save(medicine);
     }
-
 
     public void deleteMedicine(Long id) {
         medicineRepository.deleteById(id);
@@ -52,5 +49,4 @@ public class MedicineService {
     public boolean isNameTakenByOtherId(String name, Long id) {
         return medicineRepository.existsByNameIgnoreCaseAndIdNot(name.trim(), id);
     }
-
 }

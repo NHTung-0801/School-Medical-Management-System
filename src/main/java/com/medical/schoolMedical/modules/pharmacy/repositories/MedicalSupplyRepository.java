@@ -1,7 +1,6 @@
-package com.medical.schoolMedical.repositories;
+package com.medical.schoolMedical.modules.pharmacy.repositories;
 
-
-import com.medical.schoolMedical.entities.MedicalSupply;
+import com.medical.schoolMedical.modules.pharmacy.entities.MedicalSupply;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +13,4 @@ public interface MedicalSupplyRepository extends JpaRepository<MedicalSupply, Lo
 
     // Kiểm tra xem tên đã tồn tại cho một id khác chưa (dùng khi cập nhật)
     boolean existsByNameIgnoreCaseAndIdNot(String name, Long id);
-
 }

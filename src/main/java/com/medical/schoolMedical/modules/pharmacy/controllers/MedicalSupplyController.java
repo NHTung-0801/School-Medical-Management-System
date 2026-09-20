@@ -1,7 +1,7 @@
-package com.medical.schoolMedical.controller.schoolNurse;
+package com.medical.schoolMedical.modules.pharmacy.controllers;
 
-import com.medical.schoolMedical.entities.MedicalSupply;
-import com.medical.schoolMedical.service.MedicalSupplyService;
+import com.medical.schoolMedical.modules.pharmacy.entities.MedicalSupply;
+import com.medical.schoolMedical.modules.pharmacy.services.MedicalSupplyService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,6 @@ public class MedicalSupplyController {
 
     @Autowired
     private MedicalSupplyService medicalSupplyService;
-
 
     @GetMapping
     public String showMedicalSupplies(Model model) {
@@ -40,7 +39,6 @@ public class MedicalSupplyController {
         model.addAttribute("supply", supply);
         return "nurse/medicalSupply/supply_form";
     }
-
 
     // Hiển thị form sửa vật tư
     @GetMapping("/edit/{id}")
@@ -85,8 +83,7 @@ public class MedicalSupplyController {
         medicalSupplyService.save(supply);
         redirectAttributes.addFlashAttribute("success", isNew ? "Thêm vật tư thành công." : "Cập nhật vật tư thành công.");
 
-
-        return "redirect:/nurse/medical-supplies"; // quay lại danh sách sau khi lưu
+        return "redirect:/nurse/medical-supplies";
     }
 
     // Xóa vật tư
@@ -95,5 +92,4 @@ public class MedicalSupplyController {
         medicalSupplyService.deleteById(id);
         return "redirect:/nurse/medical-supplies";
     }
-
 }

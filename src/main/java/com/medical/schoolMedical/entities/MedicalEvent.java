@@ -1,5 +1,7 @@
 package com.medical.schoolMedical.entities;
 
+import com.medical.schoolMedical.modules.pharmacy.entities.MedicineUsed;
+import com.medical.schoolMedical.modules.pharmacy.entities.SupplyUsed;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
