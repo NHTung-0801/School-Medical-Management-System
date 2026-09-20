@@ -1,27 +1,30 @@
 // Back to Top functionality
 const backToTop = document.getElementById('backToTop');
 
-// Show/hide button on scroll
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 200) { // Show after scrolling 200px
-        backToTop.style.display = 'block';
-    } else {
-        backToTop.style.display = 'none';
-    }
-});
-
-// Scroll to top on click
-backToTop.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth' // Smooth scrolling
+if (backToTop) {
+    // Show/hide button on scroll
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 200) { // Show after scrolling 200px
+            backToTop.style.display = 'block';
+        } else {
+            backToTop.style.display = 'none';
+        }
     });
-});
+
+    // Scroll to top on click
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Smooth scrolling
+        });
+    });
+}
 
 //print
 document.addEventListener('DOMContentLoaded', () => {
     const printButton = document.querySelector('.print-button');
-    printButton.addEventListener('click', () => {
+    if (printButton) {
+        printButton.addEventListener('click', () => {
         // Add a temporary style to hide everything except .container
         const style = document.createElement('style');
         style.id = 'print-style';

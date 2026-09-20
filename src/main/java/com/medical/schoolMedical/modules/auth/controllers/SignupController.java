@@ -28,22 +28,26 @@ public class SignupController {
 
     @GetMapping("/add-user")
     public String showAddUserForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new UserDTO());
         model.addAttribute("roles", Role.values());
         return "admin/add-user";
     }
 
     @PostMapping("/add-user")
     public String addUser(@ModelAttribute("user") @Valid UserDTO user,
-                          BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+                          BindingResult bindingResult,
+                          Model model,
+                          RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("roles", Role.values());
             return "admin/add-user";
         }
         // kiểm tra dữ liệu đầu vào
         try {
             userService.validateUserInput(user);
         } catch (BusinessException ex) {
+            model.addAttribute("roles", Role.values());
             bindingResult.rejectValue("password", null, ex.getMessage());
             return "admin/add-user";
         }
@@ -53,7 +57,8 @@ public class SignupController {
             redirectAttributes.addFlashAttribute("success", "Đăng kí người dùng thành công");
             return "redirect:/admin/manage-users";
         } catch (BusinessException ex) {
-            bindingResult.rejectValue("password", null, ex.getMessage());
+            model.addAttribute("roles", Role.values());
+            bindingResult.rejectValue("username", null, ex.getMessage());
             return "admin/add-user";
         }
     }
