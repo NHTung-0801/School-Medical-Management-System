@@ -33,7 +33,18 @@ Mọi AI khi tương tác với dự án này **BẮT BUỘC PHẢI TUÂN THỦ 
 
 ---
 
-### 3. Tuyệt Đối Không Tự Ý Push Lên GitHub (No Unauthorized Git Push)
+### 3. Chủ Động Đề Xuất Nhiều Phương Án Tối Ưu Để User Tham Khảo & Lựa Chọn (Proactive Multi-Option Solutions)
+- Agent **được phép và luôn được khuyến khích** chủ động đề xuất **nhiều phương án tối ưu khác nhau** (thay vì chỉ đưa ra một cách duy nhất) để User có góc nhìn toàn diện và tự do lựa chọn giải pháp phù hợp nhất:
+  - *Ví dụ:* Phương án 1 (Triển khai nhanh, ít rủi ro) vs Phương án 2 (Tối ưu hiệu năng, kiến trúc chuẩn mực lâu dài) vs Phương án 3 (Cân bằng).
+- Với mỗi phương án, Agent cần so sánh đa chiều:
+  - **Ưu điểm & Nhược điểm.**
+  - **Độ phức tạp triển khai & Rủi ro tiềm ẩn.**
+  - **Tác động đến hệ thống hiện tại & Khả năng mở rộng.**
+- Sau khi liệt kê các phương án, Agent phải đưa ra **đề xuất khuyến nghị (Recommended)** từ góc độ kỹ sư phần mềm cao cấp (Senior Engineer) cùng lý do rõ ràng, để User dễ dàng đưa ra quyết định.
+
+---
+
+### 4. Tuyệt Đối Không Tự Ý Push Lên GitHub (No Unauthorized Git Push)
 - Agent được phép:
   - Chạy `git status`, `git diff`, kiểm tra trạng thái repo.
   - Tạo commit local gọn gàng, nguyên tử (atomic commit) khi đã kiểm tra và hoàn thành một phần việc.
@@ -42,7 +53,7 @@ Mọi AI khi tương tác với dự án này **BẮT BUỘC PHẢI TUÂN THỦ 
 
 ---
 
-### 4. Kỷ Luật Phạm Vi (Scope Discipline)
+### 5. Kỷ Luật Phạm Vi (Scope Discipline)
 - **Chỉ can thiệp vào các file trong phạm vi công việc đã thỏa thuận:**
   - Không tự ý "tiện tay" sửa code, đổi format ở các file xung quanh.
   - Không tự ý refactor những đoạn code không liên quan đến task hiện tại.
@@ -51,7 +62,7 @@ Mọi AI khi tương tác với dự án này **BẮT BUỘC PHẢI TUÂN THỦ 
 
 ---
 
-### 5. Cổng Xác Thực Bắt Buộc (Mandatory Verification Gate)
+### 6. Cổng Xác Thực Bắt Buộc (Mandatory Verification Gate)
 - **Không bao giờ tuyên bố hoàn thành khi chưa kiểm chứng:**
   - Sau khi sửa mã nguồn Java, bắt buộc phải chạy lệnh biên dịch kiểm tra:
     ```powershell
@@ -62,7 +73,7 @@ Mọi AI khi tương tác với dự án này **BẮT BUỘC PHẢI TUÂN THỦ 
 
 ---
 
-### 6. Quản Lý Bí Mật & Bảo Mật Tuyệt Đối (Security & Secrets Hygiene)
+### 7. Quản Lý Bí Mật & Bảo Mật Tuyệt Đối (Security & Secrets Hygiene)
 - **CẤM** hardcode mật khẩu, email cá nhân, API keys, database credentials vào mã nguồn (`application.properties`, file Java, scripts,...).
 - Mọi thông tin nhạy cảm phải:
   - Dùng biến môi trường (Environment Variables: `${SPRING_MAIL_USERNAME}`, `${DB_PASSWORD}`,...).
@@ -71,7 +82,7 @@ Mọi AI khi tương tác với dự án này **BẮT BUỘC PHẢI TUÂN THỦ 
 
 ---
 
-### 7. Đồng Bộ Tài Liệu & Báo Cáo (Documentation & Progress Sync)
+### 8. Đồng Bộ Tài Liệu & Báo Cáo (Documentation & Progress Sync)
 - Mọi kế hoạch triển khai phải được lưu trữ trong thư mục `docs/plans/`.
 - Khi hoàn thành bất kỳ giai đoạn nào:
   - Cập nhật dấu tick `[x]` vào file kế hoạch tổng thể [docs/plans/master-upgrade-plan.md](file:///d:/Old_Project/School_Medical_Management_System/School-Medical-Management-System/docs/plans/master-upgrade-plan.md).
@@ -83,8 +94,9 @@ Mọi AI khi tương tác với dự án này **BẮT BUỘC PHẢI TUÂN THỦ 
 
 Trước khi gõ bất kỳ dòng code nào, Agent hãy tự rà soát:
 - [ ] Mình đã có bản kế hoạch chi tiết chưa?
+- [ ] Đã đề xuất các phương án tối ưu để User tham khảo và lựa chọn chưa?
 - [ ] User đã phê duyệt kế hoạch này chưa?
-- [ ] Có vấn đề nào cần User lựa chọn phương án không?
+- [ ] Có vấn đề nào phát sinh cần User lựa chọn phương án không?
 - [ ] Mình có đang chạm vào file nào ngoài phạm vi không?
 - [ ] Mình đã chạy build kiểm tra (`BUILD SUCCESS`) chưa?
 - [ ] Mình có đang chuẩn bị push lên git mà chưa xin phép không?
