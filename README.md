@@ -59,24 +59,34 @@ Hệ thống cung cấp 4 phân hệ tính năng chuyên biệt tương ứng v�
 
 ## 🏗️ Kiến Trúc & Công Nghệ (Architecture & Tech Stack)
 
-### Kiến trúc phân tầng (Layered Architecture)
+### Kiến Trúc Modular Monolith (Package-by-Feature)
+Hệ thống được thiết kế theo mô hình **Modular Monolith (Package-by-Feature)** kết hợp với phân lớp nội bộ (Controller - Service - Repository - Entity - DTO - Mapper) trong từng module độc lập:
+
 ```
-Browser / Client (Thymeleaf, Bootstrap, JS)
-       │
-       ▼
-Controller Layer (Spring MVC Controllers, Spring Security Filter)
-       │
-       ▼
-Service Layer (Business Logic, Transaction Management, Notification)
-       │
-       ▼
-Mapper Layer (MapStruct DTO <-> Entity)
-       │
-       ▼
-Repository Layer (Spring Data JPA / Hibernate)
-       │
-       ▼
-Database (MySQL 8.0)
+                      Browser / Client (Thymeleaf, Bootstrap 5, JS)
+                                            │
+                                            ▼
+                    Spring Security 6 (RBAC, Authentication Filter)
+                                            │
+                                            ▼
+┌─────────────────────────────────────── Modules ──────────────────────────────────────┐
+│                                                                                      │
+│  ┌────────────────┐  ┌─────────────────┐  ┌──────────────┐  ┌─────────────────────┐  │
+│  │      Auth      │  │ User Management │  │   Pharmacy   │  │    Medical Event    │  │
+│  └────────────────┘  └─────────────────┘  └──────────────┘  └─────────────────────┘  │
+│  ┌────────────────┐  ┌─────────────────┐  ┌──────────────┐  ┌─────────────────────┐  │
+│  │  Health Check  │  │   Vaccination   │  │ Consultation │  │    Health Record    │  │
+│  └────────────────┘  └─────────────────┘  └──────────────┘  └─────────────────────┘  │
+│                                                                                      │
+└──────────────────────────────────────────┬───────────────────────────────────────────┘
+                                           │
+                         ┌─────────────────┴─────────────────┐
+                         │ Common (Schedulers, Controllers)  │
+                         │ Core (Enums, Exceptions, Util)    │
+                         └─────────────────┬─────────────────┘
+                                           │
+                                           ▼
+                                 Database (MySQL 8.0)
 ```
 
 ### Công nghệ sử dụng
@@ -86,7 +96,7 @@ Database (MySQL 8.0)
 | **Framework lõi** | Spring Boot | 3.5.0 |
 | **Bảo mật** | Spring Security, BCrypt | 6.x |
 | **ORM & Data** | Spring Data JPA, Hibernate, MySQL Driver | 3.5.0 |
-| **Giao diện** | Thymeleaf, Thymeleaf Extras Spring Security 6, Bootstrap | - |
+| **Giao diện** | Thymeleaf, Thymeleaf Extras Spring Security 6, Bootstrap | 5.x |
 | **Mapping & Boilerplate** | MapStruct, Project Lombok | 1.5.5.Final / 1.18.30 |
 | **Email Service** | Jakarta Mail, JavaMailSender | - |
 | **Cơ sở dữ liệu** | MySQL Server | 8.0+ |
@@ -100,33 +110,29 @@ School-Medical-Management-System/
 ├── src/
 │   ├── main/
 │   │   ├── java/com/medical/schoolMedical/
-│   │   │   ├── controller/          # Tầng Controller tiếp nhận HTTP Request
-│   │   │   │   ├── admin/           # Điều hướng & Quản trị Dashboard
-│   │   │   │   ├── auth/            # Xác thực, OTP, Đăng nhập
-│   │   │   │   ├── manager/         # Quản lý học sinh, lớp học
-│   │   │   │   ├── parent/          # Tiếp nhận thông báo, gửi thuốc, xác nhận khám
-│   │   │   │   ├── schoolNurse/     # Nghiệp vụ y tá, tiêm chủng, khám bệnh
-│   │   │   │   └── user/            # Trang thông tin cá nhân, đổi mật khẩu
-│   │   │   ├── dto/                 # Data Transfer Objects (Payloads)
-│   │   │   ├── entities/            # JPA Entities (Ánh xạ bảng CSDL)
-│   │   │   ├── enums/               # Enums (Role, Gender, ConsentStatus)
-│   │   │   ├── exceptions/          # Xử lý lỗi toàn cục (Global Exception Handler)
-│   │   │   ├── mapper/              # MapStruct interfaces chuyển đổi DTO-Entity
-│   │   │   ├── repositories/        # Spring Data JPA Repositories
-│   │   │   ├── security/            # Cấu hình Spring Security & UserDetails
-│   │   │   ├── service/             # Xử lý nghiệp vụ (Business Logic)
-│   │   │   └── util/                # Tiện ích bổ trợ (Validation, Helpers)
+│   │   │   ├── common/                  # Thành phần dùng chung toàn hệ thống
+│   │   │   │   ├── controllers/         # HomeController, ErrorController, ErrorPageController
+│   │   │   │   └── schedulers/          # ConsentStatusSchedulerService (Cronjob quét phiếu hết hạn)
+│   │   │   ├── enums/                   # Enums hệ thống (Role, Gender, ConsentStatus, BloodType...)
+│   │   │   ├── exceptions/              # Bắt lỗi toàn cục (GlobalExceptionHandler, BusinessException, ErrorCode)
+│   │   │   ├── security/                # Spring Security, CustomUserDetails, CustomSuccessHandler
+│   │   │   ├── util/                    # Tiện ích bổ trợ (ValidationUtil, Helpers)
+│   │   │   └── modules/                 # Các lát cắt nghiệp vụ độc lập (Package-by-Feature)
+│   │   │       ├── auth/                # Đăng nhập, đăng ký, cấp lại mật khẩu OTP, UserDetails
+│   │   │       ├── user_management/     # Quản trị tài khoản, phân quyền, học sinh, phụ huynh, y tá
+│   │   │       ├── pharmacy/            # Kho thuốc, vật tư y tế, quản lý gửi thuốc & nhật ký uống thuốc
+│   │   │       ├── medical_event/       # Xử lý sự cố sơ cứu, cấp cứu y tế học đường
+│   │   │       ├── healthcheck/         # Kế hoạch khám sức khỏe định kỳ, duyệt phiếu & nhập kết quả
+│   │   │       ├── vaccination/         # Kế hoạch tiêm chủng, gửi phiếu xin ý kiến & sổ tiêm
+│   │   │       ├── consultation/        # Đăng ký & điều phối lịch hẹn tư vấn sức khỏe
+│   │   │       └── health_record/       # Hồ sơ sức khỏe học sinh, bệnh nền, dị ứng
 │   │   └── resources/
-│   │       ├── static/              # CSS, JS, hình ảnh, tài nguyên tĩnh
-│   │       ├── templates/           # Thymeleaf HTML Templates
-│   │       │   ├── admin/           # Giao diện Admin
-│   │       │   ├── nurse/           # Giao diện Y tá
-│   │       │   ├── parent/          # Giao diện Phụ huynh
-│   │       │   ├── manager/         # Giao diện Quản lý
-│   │       │   └── common/          # Giao diện dùng chung & Email templates
-│   │       └── application.properties # Cấu hình ứng dụng, Database, Mail
-├── pom.xml                          # Khai báo thư viện & cấu hình build Maven
-└── README.md                        # Tài liệu hướng dẫn dự án
+│   │       ├── static/                  # CSS, JS, hình ảnh, tài nguyên tĩnh
+│   │       ├── templates/               # Giao diện Thymeleaf HTML Templates theo từng vai trò
+│   │       └── application.properties   # Cấu hình Hibernate Batch, Database, Mail SMTP
+│   └── test/                            # Bộ kiểm thử Unit Test & Integration Test (JUnit 5, Mockito)
+├── pom.xml                              # Khai báo thư viện & cấu hình build Maven
+└── README.md                            # Tài liệu hướng dẫn dự án
 ```
 
 ---
@@ -201,13 +207,14 @@ http://localhost:8080/yte/
 
 ---
 
-## 🛠️ Lộ Trình Nâng Cấp Tiếp Theo (Roadmap)
+## 🛠️ Lộ Trình Nâng Cấp Hệ Thống (Roadmap)
 
-- [ ] **Vá bảo mật:** Triển khai cơ chế Reset Password an toàn với Signed Token/OTP, kích hoạt lại CSRF.
-- [ ] **Sửa lỗi Hibernate:** Tối ưu hóa truy vấn chi tiết sự kiện y tế tránh `MultipleBagFetchException`.
-- [ ] **Tái cấu trúc thư mục (Refactoring):** Chuẩn hóa toàn bộ package Controller và sửa lỗi chính tả ở Repositories.
-- [ ] **Kiểm thử tự động:** Xây dựng bộ Unit Test & Integration Test đạt độ phủ trên 70% với JUnit 5 & Mockito.
-- [ ] **Xuất báo cáo:** Tích hợp xuất file Excel / PDF cho hồ sơ sức khỏe và sổ theo dõi tiêm chủng định kỳ.
+- [x] **Giai đoạn 1 - Vá lỗi bảo mật & Sửa lỗi nghiêm trọng:** Cấu hình xác thực an toàn, vá lỗi `MultipleBagFetchException` trên Hibernate.
+- [x] **Giai đoạn 2 - Chuẩn hóa Email Service:** Tách cấu hình nhạy cảm ra Environment Variables (`.env.example`), xây dựng template HTML email hiện đại.
+- [x] **Giai đoạn 3 - Tối ưu hóa hiệu năng & Ràng buộc dữ liệu:** Kích hoạt Hibernate Batch Processing (batch size = 50), bảo toàn ACID với `@Transactional`, dynamic year cho thống kê, chuẩn hóa Bean Validation trên tất cả entity & DTO.
+- [x] **Tái cấu trúc kiến trúc (Refactoring):** Chuyển đổi toàn diện từ Package-by-Layer sang **Modular Monolith (Package-by-Feature)** gồm 8 module độc lập.
+- [ ] **Giai đoạn 4 - Kiểm thử tự động (Testing):** Xây dựng bộ Unit Test & Integration Test toàn diện với JUnit 5, Mockito & MockMvc cho các module nghiệp vụ lõi (đạt độ phủ > 70%).
+- [ ] **Giai đoạn 5 - Xuất báo cáo & Hoàn thiện:** Tích hợp xuất báo cáo Excel / PDF cho hồ sơ sức khỏe và sổ theo dõi tiêm chủng định kỳ.
 
 ---
 
