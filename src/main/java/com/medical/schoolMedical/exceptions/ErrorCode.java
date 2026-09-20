@@ -15,7 +15,7 @@ public enum ErrorCode {
     HEALTH_CHECK_CONSENT_NOT_FOUND("ERR050", "Phiếu đồng ý kiểm tra sức khỏe không tồn tại."),
     SURVEY_EXPIRED("ERR051", "Phiếu đã hết hạn."),
     SAVE_HEALTH_CHECK_CONSENT_FAILED("ERR052", "Lưu phiếu đồng ý kiểm tra sức khỏe thất bại."),
-    CHECK_DATE_INVALID("ERR057", "Ngày kiểm tra không được là ngày trong quá khứ"),
+    CHECK_DATE_INVALID("ERR048", "Ngày kiểm tra không được là ngày trong quá khứ"),
 
 //    Mã lỗi của health check record
     SCHOOL_NURSE_NOT_EXISTS("ERR053", "School nurse không tồn tại."),
@@ -40,7 +40,7 @@ public enum ErrorCode {
     SAVE_VACCINATION_CONSENT_FAILED("ERR062", "Lưu phiếu xác nhận tiêm chủng thất bại."),
     SAVE_VACCINATION_RECORD_FAILED("ERR063", "Lưu kết quả sau tiêm chủng thất bại."),
     VACCINATION_RECORD_NOT_EXISTS("ERR064", "Bản ghi kết quả tiêm chủng không tồn tại."),
-    VACCINATION_SCHEDULE_NOT_EXISTS("ERR059", "lịch tiêm chủng không tồn tại."),
+    VACCINATION_SCHEDULE_NOT_EXISTS("ERR068", "lịch tiêm chủng không tồn tại."),
 
 //    lỗi của student
     STUDENT_NOT_EXISTS("ERR065", "Học sinh không tồn tại."),

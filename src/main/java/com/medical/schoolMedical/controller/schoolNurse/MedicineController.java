@@ -1,4 +1,4 @@
-package com.medical.schoolMedical.controller.user;
+package com.medical.schoolMedical.controller.schoolNurse;
 
 import com.medical.schoolMedical.entities.Medicine;
 import com.medical.schoolMedical.service.MedicineService;

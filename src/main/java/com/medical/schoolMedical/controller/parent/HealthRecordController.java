@@ -1,4 +1,4 @@
-package com.medical.schoolMedical.controller.user;
+package com.medical.schoolMedical.controller.parent;
 
 import com.medical.schoolMedical.entities.HealthRecord;
 import com.medical.schoolMedical.entities.Parent;
@@ -106,10 +106,16 @@ public class HealthRecordController {
     }
 
     // Xoá hồ sơ sức khỏe
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteHealthRecord(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        Parent currentParent = userService.getCurrentParent();
+        Optional<HealthRecord> recordOpt = healthRecordService.findByIdWithStudentAndParent(id);
+        if (recordOpt.isEmpty() || recordOpt.get().getParent().getId() != currentParent.getId()) {
+            redirectAttributes.addFlashAttribute("error", "Bạn không có quyền xoá hồ sơ này.");
+            return "redirect:/parent/health-record/select-student";
+        }
         healthRecordService.deleteById(id);
         redirectAttributes.addFlashAttribute("success", "Đã xoá hồ sơ.");
-        return "redirect:/parent/health-records/select-student";
+        return "redirect:/parent/health-record/select-student";
     }
 }

@@ -8,7 +8,8 @@ import java.util.Timer;
 
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -38,6 +39,7 @@ public class VaccinationConsent {
     @Enumerated(EnumType.STRING)
     private ConsentStatus status;
 
+    @Builder.Default
     @Column(name = "vaccinated",columnDefinition = "TINYINT DEFAULT 0",nullable = false)
     private boolean vaccinated = false;
 

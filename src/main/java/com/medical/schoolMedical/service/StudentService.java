@@ -9,7 +9,7 @@ import com.medical.schoolMedical.mapper.StudentMapper;
 import com.medical.schoolMedical.enums.Gender;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
-import com.medical.schoolMedical.repositories.ParentRepositoty;
+import com.medical.schoolMedical.repositories.ParentRepository;
 import com.medical.schoolMedical.repositories.StudentRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class StudentService {
     StudentRepository studentRepository;
     StudentMapper studentMapper;
 
-    ParentRepositoty parentRepositoty;
+    ParentRepository parentRepository;
 
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
@@ -48,7 +48,7 @@ public class StudentService {
     public void createStudent(String fullName, Gender gender, LocalDate birthDate,
                               String address, String className, Long parentId) {
 
-        Parent parent = parentRepositoty.findById(parentId)
+        Parent parent = parentRepository.findById(parentId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.PARENT_NOT_EXISTS));
 
 

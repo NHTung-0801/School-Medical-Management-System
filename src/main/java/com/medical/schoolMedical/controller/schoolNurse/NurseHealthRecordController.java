@@ -1,4 +1,4 @@
-package com.medical.schoolMedical.controller.user;
+package com.medical.schoolMedical.controller.schoolNurse;
 
 import com.medical.schoolMedical.entities.HealthRecord;
 import com.medical.schoolMedical.service.HealthRecordService;
@@ -45,6 +45,5 @@ public class NurseHealthRecordController {
         model.addAttribute("record", optionalRecord.get());
         return "nurse/health-records/health_record_view";
     }
-
 
 }

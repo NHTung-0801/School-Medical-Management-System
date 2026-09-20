@@ -19,7 +19,7 @@ public class StatisticsService {
     @Autowired
     private StudentRepository studentRepository;
     @Autowired
-    private ParentRepositoty parentRepositoty;
+    private ParentRepository parentRepository;
     @Autowired
     private SchoolNurseRepository schoolNurseRepository;
     @Autowired
@@ -51,7 +51,7 @@ public class StatisticsService {
 
     public Map<String, Long> getUserCountsByRole() {
         long studentCount = studentRepository.count();
-        long parentCount = parentRepositoty.count();
+        long parentCount = parentRepository.count();
         long nurseCount = schoolNurseRepository.count();
         long medicineCount = medicineRepository.count();
 

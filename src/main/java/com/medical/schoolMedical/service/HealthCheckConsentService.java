@@ -26,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.*;
 import org.springframework.data.repository.query.Param;
@@ -51,16 +50,7 @@ public class HealthCheckConsentService {
     final HealthCheckScheduleMapper healthCheckScheduleMapper;
     final HealthCheckConsentRepository healthCheckConsentRepository;
     final StudentRepository studentRepository;
-
-    @Lazy
-    final HealthCheckScheduleService healthCheckScheduleService;
-
-    @Lazy
-    @Autowired
-    HealthCheckRecordService healthCheckRecordService;
-    @Autowired
-    private HealthCheckScheduleRepository healthCheckScheduleRepository;
-
+    final HealthCheckScheduleRepository healthCheckScheduleRepository;
 
     public HealthCheckConsentService(
             StudentService studentService,
@@ -68,16 +58,16 @@ public class HealthCheckConsentService {
             StudentMapper studentMapper,
             HealthCheckScheduleMapper healthCheckScheduleMapper,
             HealthCheckConsentRepository healthCheckConsentRepository,
-            HealthCheckScheduleService healthCheckScheduleService,
-            StudentRepository studentRepository
+            StudentRepository studentRepository,
+            HealthCheckScheduleRepository healthCheckScheduleRepository
     ) {
         this.studentService = studentService;
         this.healthCheckConsentMapper = healthCheckConsentMapper;
         this.studentMapper = studentMapper;
         this.healthCheckScheduleMapper = healthCheckScheduleMapper;
         this.healthCheckConsentRepository = healthCheckConsentRepository;
-        this.healthCheckScheduleService = healthCheckScheduleService;
         this.studentRepository = studentRepository;
+        this.healthCheckScheduleRepository = healthCheckScheduleRepository;
     }
 
 //    Gửi lịch đến phụ huynh:
@@ -201,13 +191,8 @@ public class HealthCheckConsentService {
         Pageable pageable = pagination(page, 10);
 
 //        Lấy lịch phù hợp với scheduleId
-        HealthCheckSchedule schedule =  null;
-        try{
-            HealthCheckScheduleDTO scheduleDTO = healthCheckScheduleService.getHealthCheckScheduleById(scheduleId);
-            schedule = healthCheckScheduleMapper.toHealthCheckSchedule(scheduleDTO);
-        }catch (BusinessException e){
-            throw new BusinessException(e.getErrorCode());
-        }
+        HealthCheckSchedule schedule = healthCheckScheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.HEALTH_CHECK_SCHEDULE_NOT_EXISTS));
         log.info("schedule in getStudentsHealthCheck: {}", schedule);
 
 
@@ -244,13 +229,8 @@ public class HealthCheckConsentService {
         Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id"));
 
 //        Lấy lịch phù hợp với scheduleId
-        HealthCheckSchedule schedule =  null;
-        try{
-            HealthCheckScheduleDTO scheduleDTO = healthCheckScheduleService.getHealthCheckScheduleById(scheduleId);
-            schedule = healthCheckScheduleMapper.toHealthCheckSchedule(scheduleDTO);
-        }catch (BusinessException e){
-            throw new BusinessException(e.getErrorCode());
-        }
+        HealthCheckSchedule schedule = healthCheckScheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.HEALTH_CHECK_SCHEDULE_NOT_EXISTS));
         log.info("schedule in getStudentsHealthCheck_needsConsultation: {}", schedule);
 
 

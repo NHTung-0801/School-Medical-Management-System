@@ -9,9 +9,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Builder
 @Table(name = "consultation_appointment")
 public class ConsultationAppointment {
@@ -48,9 +49,11 @@ public class ConsultationAppointment {
     @Column(name = "content",columnDefinition = "TEXT")
     private String content;
 
+    @Builder.Default
     @Column(name = "is_sent_to_parent",columnDefinition = "TINYINT DEFAULT 0",nullable = false)
     private boolean sentToParent = false;
 
+    @Builder.Default
     @Column(name = "is_viewed_by_parent",columnDefinition = "TINYINT DEFAULT 0",nullable = false)
     private boolean viewedByParent  = false;
 

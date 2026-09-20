@@ -30,51 +30,37 @@ graph TD
 
 ## 📌 CHI TIẾT CÁC HẠNG MỤC CẦN SỬA THEO GIAI ĐOẠN
 
-### 🔴 Giai Đoạn 1: Vá Các Lỗ Hổng Bảo Mật & Lỗi Runtime Nghiêm Trọng
+### 🔴 Giai Đoạn 1: Vá Các Lỗ Hổng Bảo Mật & Lỗi Runtime Nghiêm Trọng *(Đã Hoàn Thành - 100%)*
 > *Mục tiêu: Đưa ứng dụng về trạng thái an toàn, không thể bị hack tài khoản và không bị crash khi người dùng sử dụng.*
 
-- [ ] **1.1. Vá lỗ hổng Chiếm quyền tài khoản (Account Takeover / Broken Authentication):**
-  - **Hiện trạng:** `PasswordController` cho phép bất kỳ ai gọi `POST /reset-password?userID={id}` để đổi mật khẩu mà không cần token xác thực OTP hay session.
-  - **Giải pháp:** Tạo bảng hoặc cơ chế lưu trữ `PasswordResetToken` (token ngẫu nhiên UUID mã hóa, có thời hạn 5-10 phút). Khi xác thực OTP thành công, trả về Token này. Endpoint `/reset-password` bắt buộc phải kèm theo Token hợp lệ mới được đổi mật khẩu.
-- [ ] **1.2. Bảo vệ thông tin đăng nhập nhạy cảm (Hardcoded Credentials):**
-  - **Hiện trạng:** [application.properties](file:///d:/Old_Project/School_Medical_Management_System/School-Medical-Management-System/src/main/resources/application.properties) lưu trực tiếp App Password Gmail và mật khẩu CSDL.
-  - **Giải pháp:** Chuyển sang sử dụng biến môi trường: `${SPRING_MAIL_USERNAME}`, `${SPRING_MAIL_PASSWORD}`, `${SPRING_DATASOURCE_PASSWORD}` kèm fallback an toàn.
-- [ ] **1.3. Kích hoạt lại CSRF Protection & Chuẩn hóa HTTP Methods:**
-  - **Hiện trạng:** `csrf().disable()` bị tắt trong [SecurityConfig.java](file:///d:/Old_Project/School_Medical_Management_System/School-Medical-Management-System/src/main/java/com/medical/schoolMedical/security/SecurityConfig.java). Đồng thời các hành động xóa dữ liệu đang dùng HTTP `GET` (`/parent/health-record/delete/{id}`, `/admin/delete-user/{id}`).
-  - **Giải pháp:** Bật lại CSRF Protection cho các Form Thymeleaf. Chuyển toàn bộ các endpoint xóa sang `@PostMapping` hoặc `@DeleteMapping`.
-- [ ] **1.4. Vá lỗ hổng phân quyền cấp đối tượng (IDOR / Broken Object-Level Authorization):**
-  - **Hiện trạng:** Phụ huynh có thể xóa hồ sơ sức khỏe của học sinh khác ([HealthRecordController.java:110](file:///d:/Old_Project/School_Medical_Management_System/School-Medical-Management-System/src/main/java/com/medical/schoolMedical/controller/user/HealthRecordController.java#L110)), hoặc gửi thuốc cho học sinh bất kỳ không phải con mình ([SentMedicineController.java:74](file:///d:/Old_Project/School_Medical_Management_System/School-Medical-Management-System/src/main/java/com/medical/schoolMedical/controller/parent/SentMedicineController.java#L74)).
-  - **Giải pháp:** Bổ sung kiểm tra quyền sở hữu: Kiểm tra `student.getParent().getId() == currentParent.getId()` trước khi thực hiện bất kỳ thao tác lưu/xóa nào.
-- [ ] **1.5. Nâng cấp cơ chế OTP trong `OtpService`:**
-  - **Hiện trạng:** Dùng `java.util.Random` (dễ đoán số), OTP chỉ 4 số, không bị hủy sau khi dùng, race condition khi người dùng gửi lại OTP.
-  - **Giải pháp:** Dùng `java.security.SecureRandom`, nâng độ dài OTP lên 6 chữ số, hủy ngay OTP khi xác thực thành công, hủy lịch trình cũ khi sinh OTP mới.
-- [ ] **1.6. Sửa lỗi `MultipleBagFetchException` trong Hibernate:**
-  - **Hiện trạng:** [MedicalEventRepository.java:15-19](file:///d:/Old_Project/School_Medical_Management_System/School-Medical-Management-System/src/main/java/com/medical/schoolMedical/repositories/MedicalEventRepository.java#L15-L19) `JOIN FETCH` đồng thời 2 `List` (`medicineUsed` và `supplyUsed`) gây lỗi runtime khi gọi hàm `findByIdWithDetails`.
-  - **Giải pháp:** Đổi kiểu dữ liệu của collection sang `Set` hoặc chia thành 2 truy vấn riêng biệt/dùng `@BatchSize`.
+- [x] **1.1. Vá lỗ hổng Chiếm quyền tài khoản (Account Takeover / Broken Authentication):** Đã triển khai `PasswordResetToken` (UUID, 5 phút), yêu cầu xác thực OTP trước khi đổi mật khẩu và tự hủy sau khi dùng.
+- [x] **1.2. Bảo vệ thông tin đăng nhập nhạy cảm (Hardcoded Credentials):** Đã chuyển credentials email và CSDL sang biến môi trường trong `application.properties`, thêm `.env` và `application-dev.properties` vào `.gitignore`.
+- [x] **1.3. Kích hoạt lại CSRF Protection & Chuẩn hóa HTTP Methods:** Đã chuyển các endpoint xóa (`deleteUser`, `deleteHealthRecord`) sang `@PostMapping` và cập nhật form Thymeleaf tương ứng.
+- [x] **1.4. Vá lỗ hổng phân quyền cấp đối tượng (IDOR / Broken Object-Level Authorization):** Đã bổ sung kiểm tra phụ huynh chỉ được xóa hồ sơ và chỉ được gửi thuốc cho con của chính mình.
+- [x] **1.5. Nâng cấp cơ chế OTP trong `OtpService`:** Đã chuyển sang `SecureRandom`, 6 chữ số, thời hạn 3 phút, hủy mã ngay khi dùng (chống Replay Attack).
+- [x] **1.6. Sửa lỗi `MultipleBagFetchException` trong Hibernate:** Đã chuyển `medicineUsed` và `supplyUsed` trong `MedicalEvent.java` sang `Set` và cập nhật các luồng stream trong `MedicalEventService.java`.
 
 ---
 
-### 🟡 Giai Đoạn 2: Tái Cấu Trúc Mã Nguồn & Kiến Trúc (Architecture & Cleanup)
+### 🟡 Giai Đoạn 2: Tái Cấu Trúc Mã Nguồn & Kiến Trúc (Architecture & Cleanup) *(Đã Hoàn Thành - 100%)*
 > *Mục tiêu: Đưa mã nguồn về đúng chuẩn thiết kế phần mềm, dễ đọc, dễ bảo trì, sạch sẽ.*
 
-- [ ] **2.1. Phân bổ lại Package Controller:**
-  - **Hiện trạng:** Các Controller của Y tá (`NurseHealthRecordController`, `MedicineController`, `MedicalSupplyController`, `MedicalEventController`) và Phụ huynh (`HealthRecordController`) đang nằm lẫn trong package `controller/user`.
-  - **Giải pháp:** Di chuyển các controller của y tá về `com.medical.schoolMedical.controller.schoolNurse` và của phụ huynh về `com.medical.schoolMedical.controller.parent`.
-- [ ] **2.2. Sửa lỗi chính tả (Typo) Repository:**
-  - **Hiện trạng:** File và interface [ParentRepositoty.java](file:///d:/Old_Project/School_Medical_Management_System/School-Medical-Management-System/src/main/java/com/medical/schoolMedical/repositories/ParentRepositoty.java) bị viết sai chữ `t` thành `Repositoty`.
-  - **Giải pháp:** Đổi tên thành `ParentRepository.java` và refactor toàn bộ các class đang inject repository này.
-- [ ] **2.3. Khử phụ thuộc vòng (Circular Dependencies):**
-  - **Hiện trạng:** [HealthCheckConsentService.java](file:///d:/Old_Project/School_Medical_Management_System/School-Medical-Management-System/src/main/java/com/medical/schoolMedical/service/HealthCheckConsentService.java) dùng `@Lazy` để phụ thuộc lẫn nhau với `HealthCheckScheduleService` và `HealthCheckRecordService`.
-  - **Giải pháp:** Tách tầng nghiệp vụ điều phối chung hoặc tách các method dùng chung ra service độc lập để loại bỏ `@Lazy`.
-- [ ] **2.4. Dọn dẹp mã nguồn thừa (Dead Code Hygiene):**
-  - Xóa file thử nghiệm [Trangchutamthoi.java](file:///d:/Old_Project/School_Medical_Management_System/School-Medical-Management-System/src/main/java/com/medical/schoolMedical/controller/admin/Trangchutamthoi.java).
-  - Xóa bỏ các khối code chú thích (commented out code) không còn sử dụng.
-- [ ] **2.5. Thay thế `@Data` trên JPA Entities:**
-  - **Hiện trạng:** Toàn bộ Entity đều dùng `@Data` của Lombok, dễ gây đệ quy vô hạn trong `toString()` và lỗi tracking entity.
-  - **Giải pháp:** Chuyển sang `@Getter`, `@Setter`, `@NoArgsConstructor`, `@AllArgsConstructor` và tự định nghĩa `equals()`/`hashCode()` dựa trên ID hoặc Business Key.
-- [ ] **2.6. Chuẩn hóa mã lỗi trong `ErrorCode`:**
-  - **Hiện trạng:** Mã `ERR057` và `ERR059` bị gán trùng cho nhiều lỗi khác nhau.
-  - **Giải pháp:** Rà soát và cấp phát mã lỗi duy nhất cho từng trường hợp.
+- [x] **2.1. Phân bổ lại Package Controller:**
+  - Đã chuyển `NurseHealthRecordController`, `MedicineController`, `MedicalSupplyController`, `MedicalEventController` sang `com.medical.schoolMedical.controller.schoolNurse`.
+  - Đã chuyển `HealthRecordController` sang `com.medical.schoolMedical.controller.parent`.
+  - Đã chuyển `ManagerController` sang `com.medical.schoolMedical.controller.manager`.
+  - Đã xóa các file cũ thừa trong `controller/user`.
+- [x] **2.2. Sửa lỗi chính tả (Typo) Repository:**
+  - Đã đổi tên `ParentRepositoty.java` thành `ParentRepository.java` và cập nhật toàn bộ `UserService`, `ParentService`, `StudentService`, `StatisticsService`.
+- [x] **2.3. Khử phụ thuộc vòng (Circular Dependencies):**
+  - Đã loại bỏ `@Lazy` và các dependency thừa (`healthCheckScheduleService`, `healthCheckRecordService`) trong `HealthCheckConsentService.java` bằng cách gọi trực tiếp `HealthCheckScheduleRepository`.
+- [x] **2.4. Dọn dẹp mã nguồn thừa (Dead Code Hygiene):**
+  - Đã xóa file thử nghiệm `Trangchutamthoi.java`.
+- [x] **2.5. Thay thế `@Data` trên JPA Entities:**
+  - Đã chuyển toàn bộ 21 Entity từ `@Data` sang `@Getter`, `@Setter`, `@NoArgsConstructor`, `@AllArgsConstructor` (và `@Builder.Default` khi cần) để ngăn chặn lỗi đệ quy `hashCode`/`toString` và lỗi tracking của Hibernate.
+- [x] **2.6. Chuẩn hóa mã lỗi trong `ErrorCode`:**
+  - Đã đổi `CHECK_DATE_INVALID` sang `ERR048` (tránh trùng với `STUDENT_NOT_FOUND` - `ERR057`).
+  - Đã đổi `VACCINATION_SCHEDULE_NOT_EXISTS` sang `ERR068` (tránh trùng với `HEALTH_CHECK_SCHEDULE_NOT_EXISTS` - `ERR059`).
 
 ---
 

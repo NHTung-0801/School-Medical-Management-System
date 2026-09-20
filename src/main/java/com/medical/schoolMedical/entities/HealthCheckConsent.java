@@ -9,7 +9,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(exclude = {"student", "parent"})
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,6 +41,7 @@ public class HealthCheckConsent {
     @OneToOne(mappedBy = "healthCheckConsent", fetch = FetchType.LAZY)
     private HealthCheckRecord healthCheckRecord;
 
+    @Builder.Default
     @Column(name = "is_checked_health",columnDefinition = "TINYINT DEFAULT 0",nullable = false)
     private boolean checkedHealth = false;
 

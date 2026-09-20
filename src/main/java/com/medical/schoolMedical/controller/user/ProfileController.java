@@ -3,10 +3,6 @@ package com.medical.schoolMedical.controller.user;
 
 import com.medical.schoolMedical.entities.*;
 import com.medical.schoolMedical.enums.Role;
-import com.medical.schoolMedical.repositories.AdminRepository;
-import com.medical.schoolMedical.repositories.ManagerRepository;
-import com.medical.schoolMedical.repositories.ParentRepositoty;
-import com.medical.schoolMedical.repositories.SchoolNurseRepository;
 import com.medical.schoolMedical.security.CustomUserDetails;
 import com.medical.schoolMedical.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;

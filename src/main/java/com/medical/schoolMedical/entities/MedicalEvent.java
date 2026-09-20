@@ -1,17 +1,23 @@
 package com.medical.schoolMedical.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "medical_event")
 public class MedicalEvent {
     @Id
@@ -53,12 +59,9 @@ public class MedicalEvent {
 
 
     @OneToMany(mappedBy = "medicalEvent", cascade = CascadeType.ALL)
-    private List<MedicineUsed> medicineUsed;
-
+    private Set<MedicineUsed> medicineUsed = new HashSet<>();
 
     @OneToMany(mappedBy = "medicalEvent", cascade = CascadeType.ALL)
-    private List<SupplyUsed> supplyUsed;
-
-
-
+    private Set<SupplyUsed> supplyUsed = new HashSet<>();
 }
+

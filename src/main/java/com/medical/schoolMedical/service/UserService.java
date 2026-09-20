@@ -28,7 +28,7 @@ import java.util.Optional;
 @FieldDefaults(level = AccessLevel.PRIVATE,  makeFinal = true)
 public class UserService {
     UserRepository userRepository;
-    ParentRepositoty parentRepositoty;
+    ParentRepository parentRepository;
     AdminRepository adminRepository;
     SchoolNurseRepository schoolNurseRepository;
     ManagerRepository managerRepository;
@@ -86,7 +86,7 @@ public class UserService {
                 case PARENT:
                     Parent parent = new Parent();
                     parent.setUser(user);
-                    parentRepositoty.save(parent);
+                    parentRepository.save(parent);
                     break;
             }
             return user;
@@ -173,11 +173,11 @@ public class UserService {
     }
 
     public Parent findParentByUsername(String username) {
-        return parentRepositoty.findByUser_Username(username).orElse(null);
+        return parentRepository.findByUser_Username(username).orElse(null);
     }
 
     public void saveParent(Parent parent) {
-        parentRepositoty.save(parent);
+        parentRepository.save(parent);
     }
 
     public Manager findManagerByUsername(String username) {
@@ -210,7 +210,7 @@ public class UserService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();  // hoặc username nếu không dùng email
 
-        return parentRepositoty.findByUser_Username(username)
+        return parentRepository.findByUser_Username(username)
                 .orElseThrow(() -> new BusinessException(ErrorCode.PARENT_NOT_EXISTS));
     }
 

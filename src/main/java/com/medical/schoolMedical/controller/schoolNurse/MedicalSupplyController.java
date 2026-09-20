@@ -1,4 +1,4 @@
-package com.medical.schoolMedical.controller.user;
+package com.medical.schoolMedical.controller.schoolNurse;
 
 import com.medical.schoolMedical.entities.MedicalSupply;
 import com.medical.schoolMedical.service.MedicalSupplyService;
@@ -53,7 +53,7 @@ public class MedicalSupplyController {
 
     // Xử lý lưu vật tư
     @PostMapping("/save")
-        public String saveSupply(@ModelAttribute("supply") MedicalSupply supply, RedirectAttributes redirectAttributes) {
+    public String saveSupply(@ModelAttribute("supply") MedicalSupply supply, RedirectAttributes redirectAttributes) {
         boolean isNew = (supply.getId() == null);
 
         String normalizedName = supply.getName().trim();

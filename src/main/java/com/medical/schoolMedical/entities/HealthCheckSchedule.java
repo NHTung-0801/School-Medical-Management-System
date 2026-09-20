@@ -2,8 +2,10 @@ package com.medical.schoolMedical.entities;
 
 import com.medical.schoolMedical.enums.ConsentStatus;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -12,8 +14,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "Health_check_schedule")
 public class HealthCheckSchedule {
     @Id

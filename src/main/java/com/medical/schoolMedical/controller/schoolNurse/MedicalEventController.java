@@ -1,5 +1,4 @@
-package com.medical.schoolMedical.controller.user;
-
+package com.medical.schoolMedical.controller.schoolNurse;
 
 import com.medical.schoolMedical.dto.MedicalEventDTO;
 import com.medical.schoolMedical.dto.MedicineUsedDTO;
