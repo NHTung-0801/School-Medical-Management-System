@@ -1,187 +1,275 @@
+/* Confirmation Forms (Vaccination & Health Check Consents) - Modern Redesign */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', 'Arial', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #ffe6f0, #fff0f5);
-    display: contents;
-    justify-content: center;
-    align-items: center;
+    background: linear-gradient(135deg, #fff5f7 0%, #fdf2f4 100%);
+    color: #1e293b;
     min-height: 100vh;
-    padding: 20px;
 }
 
-.container {
+.confirm-page-container {
+    max-width: 760px;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.confirm-card {
     background: #ffffff;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(255, 77, 136, 0.2);
-    width: 100%;
-    max-width: 600px;
-    animation: fadeIn 0.5s ease-in-out;
-    margin: 20px auto;
+    border-radius: 24px;
+    box-shadow: 0 12px 35px rgba(225, 29, 72, 0.08);
+    border: 1px solid #ffe4e6;
+    overflow: hidden;
+    animation: fadeIn 0.4s ease-out;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-h2 {
-    color: #ff4d88;
-    font-size: 28px;
-    font-weight: 700;
-    line-height: 1.5;
-    text-align: center;
-    margin-bottom: 40px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+.confirm-header-banner {
+    background: linear-gradient(135deg, #e11d48, #ff4d88);
+    color: #ffffff;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
-.info-group {
-    margin-bottom: 15px;
-    padding: 10px;
+.confirm-header-icon {
+    width: 54px;
+    height: 54px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.confirm-header-titles h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.3px;
+    text-transform: none;
+}
+
+.confirm-header-titles p {
+    font-size: 13.5px;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.confirm-body {
+    padding: 32px;
+}
+
+/* Status Pill */
+.status-pill-wrap {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #f1f5f9;
 }
 
-.info-group strong {
-    color: #ff4d88;
-    font-weight: 600;
-    flex: 1;
-}
-
-.info-group span {
-    color: #333;
-    flex: 2;
-    text-align: right;
-}
-
-.question {
+.student-tag-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14.5px;
     font-weight: 700;
-    color: #ff4d88;
-    font-size: 18px;
+    color: #0f172a;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.status-badge.accepted {
+    background: #dcfce7;
+    color: #15803d;
+    border: 1px solid #86efac;
+}
+
+.status-badge.declined {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+}
+
+.status-badge.overdue {
+    background: #ffedd5;
+    color: #c2410c;
+    border: 1px solid #fed7aa;
+}
+
+.status-badge.unconfirmed {
+    background: #fff1f2;
+    color: #be123c;
+    border: 1px solid #fecdd3;
+}
+
+/* Info Details List */
+.details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 16px;
+    background: #f8fafc;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    gap: 16px;
+}
+
+.detail-label {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #64748b;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.detail-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    text-align: right;
+    word-break: break-word;
+}
+
+/* Question Callout */
+.question-callout {
+    background: #fff5f7;
+    border: 1.5px dashed #fda4af;
+    border-radius: 16px;
+    padding: 24px;
     text-align: center;
+    margin-top: 10px;
+}
+
+.question-text {
+    font-size: 16px;
+    font-weight: 700;
+    color: #9f1239;
     margin-bottom: 20px;
-    padding: 12px;
-    background: linear-gradient(135deg, #fff5f5, #ffe6f0);
-    border-radius: 12px;
-    display: block;
-    box-shadow: 0 4px 10px rgba(255, 77, 136, 0.1);
-    transition: transform 0.3s;
 }
 
-.question:hover {
-    transform: scale(1.02);
-}
-
-.buttons {
-    text-align: center;
-    margin-top: 20px;
+.action-button-group {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 16px;
 }
 
-button {
-    padding: 10px 25px;
-    font-size: 16px;
+.btn-agree-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #059669, #047857);
+    color: #ffffff;
     border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: transform 0.3s, opacity 0.3s;
-    width: 180px;
-}
-
-.agree {
-    background: linear-gradient(90deg, #18c474, #00703c);
-    color: #fff;
-    font-weight: 600;
-}
-
-.disagree {
-    background: linear-gradient(90deg, #ff7182, #e62020);
-    color: #fff;
-    font-weight: 600;
-}
-
-button:hover {
-    transform: translateY(-3px);
-    opacity: 0.95;
-}
-
-.error {
-    color: #e62020;
-    background-color: #ffe6e6;
-    border: 1px solid #e62020;
-    padding: 10px;
     border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+    transition: all 0.2s ease;
+}
+
+.btn-agree-action:hover {
+    background: linear-gradient(135deg, #10b981, #059669);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(5, 150, 105, 0.35);
+}
+
+.btn-disagree-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: #ffffff;
+    color: #b91c1c;
+    border: 1.5px solid #fca5a5;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-disagree-action:hover {
+    background: #fef2f2;
+    border-color: #f87171;
+    transform: translateY(-1px);
+}
+
+.back-to-notifications {
+    display: block;
     text-align: center;
-    margin-bottom: 20px;
+    margin-top: 24px;
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
-.status {
-    font-weight: bold;
-    margin-bottom: 12px;
-    padding: 8px 12px;
-    border-radius: 4px;
-    display: inline-block;
+.back-to-notifications:hover {
+    color: #e11d48;
+    text-decoration: none;
 }
 
-.accepted {
-    color: #2e7d32;
-    background-color: #c8e6c9;
-}
-.declined{
-    color: #512323;
-    background-color: #c8e6c9;
-}
-.overdue{
-    color: rgba(53, 22, 104, 0.64);
-    background-color: #c8e6c9;
-}
-.unconfirmed{
-    color: #e42222;
-    background-color: #c8e6c9;
-}
-
-@media (max-width: 600px) {
-    .container {
-        padding: 20px;
-    }
-
-    .buttons {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-
-    button {
-        width: 80%;
-        margin: 0;
-    }
-
-    .question {
-        font-size: 16px;
-        padding: 8px;
-    }
-
-    .info-group {
+@media (max-width: 640px) {
+    .confirm-header-banner {
         flex-direction: column;
         align-items: flex-start;
-        padding: 10px;
+        padding: 20px;
     }
-
-    .info-group strong, .info-group span {
+    .confirm-body {
+        padding: 20px;
+    }
+    .status-pill-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .detail-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    .detail-value {
         text-align: left;
-        width: 100%;
     }
-
-    .info-group span {
-        margin-top: 5px;
+    .action-button-group {
+        flex-direction: column;
+    }
+    .btn-agree-action, .btn-disagree-action {
+        width: 100%;
+        justify-content: center;
     }
 }

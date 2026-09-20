@@ -2,7 +2,8 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Khai báo hồ sơ sức khỏe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${record.id == null} ? 'Khai báo hồ sơ sức khỏe' : 'Cập nhật hồ sơ sức khỏe'">Khai báo hồ sơ sức khỏe</title>
 
     <!-- Bootstrap + FontAwesome -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/5.3.0/dist/css/bootstrap.min.css">
@@ -16,67 +17,102 @@
 <body>
 <div th:replace="fragments/header :: Header"></div>
 <div th:replace="fragments/header :: Nav-Parent"></div>
-<div class="container">
 
-        <!-- Tiêu đề -->
-        <h3 th:text="${record.id == null} ? 'Khai báo hồ sơ sức khỏe' : 'Cập nhật hồ sơ sức khỏe'">
-            Khai báo hồ sơ sức khỏe
-        </h3>
+<div class="form-page-container">
+    <div class="form-card">
+        <!-- Header -->
+        <div class="form-header">
+            <div class="form-header-icon">
+                <i class="fas fa-notes-medical"></i>
+            </div>
+            <h2 th:text="${record.id == null} ? 'Khai báo hồ sơ sức khỏe' : 'Cập nhật hồ sơ sức khỏe'">Khai báo hồ sơ sức khỏe</h2>
+            <p>Vui lòng cập nhật đầy đủ và chính xác thông tin để nhà trường theo dõi sức khỏe học sinh chu đáo nhất</p>
+            
+            <div class="student-tag" th:if="${record.student != null}">
+                <i class="fas fa-user-graduate"></i>
+                <span>Học sinh: <strong th:text="${record.student.fullName}">Nguyễn Văn A</strong></span>
+                <span th:if="${record.student.className != null}"> - Lớp: <strong th:text="${record.student.className}">1A</strong></span>
+            </div>
+        </div>
 
         <!-- Thông báo lỗi -->
-        <div th:if="${error}" class="alert-success red" th:text="${error}"></div>
+        <div th:if="${error}" class="alert-feedback red">
+            <i class="fas fa-exclamation-circle"></i>
+            <span th:text="${error}">Đã xảy ra lỗi</span>
+        </div>
 
         <!-- Form -->
         <form th:action="@{/parent/health-record/save}" th:object="${record}" method="post">
             <input type="hidden" th:field="*{id}" />
             <input type="hidden" th:field="*{student.id}" />
 
-            <div class="form-group">
-                <label for="allergies" >Dị ứng</label>
-                <input type="text" id="allergies" th:field="*{allergies}"  required />
+            <!-- Nhóm 1: Thể trạng & Giác quan -->
+            <div class="form-section">
+                <div class="section-legend">
+                    <i class="fas fa-eye"></i> Thị lực & Thính giác
+                </div>
+                <div class="grid-row-2">
+                    <div class="field-group">
+                        <label for="vision">Thị lực (Thang điểm 10/10) <span class="required-mark">*</span></label>
+                        <input type="number" id="vision" th:field="*{vision}" min="0" max="10" placeholder="VD: 10" required />
+                    </div>
+
+                    <div class="field-group">
+                        <label for="hearing">Thính giác <span class="required-mark">*</span></label>
+                        <select id="hearing" th:field="*{hearing}" required>
+                            <option value="">-- Chọn khả năng nghe --</option>
+                            <option value="Tốt">Tốt</option>
+                            <option value="Bình thường">Bình thường</option>
+                            <option value="Kém">Kém</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="chronicDisease" >Bệnh mãn tính</label>
-                <textarea id="chronicDisease" th:field="*{chronicDisease}" rows="2" required></textarea>
+            <!-- Nhóm 2: Tiền sử & Bệnh lý -->
+            <div class="form-section">
+                <div class="section-legend">
+                    <i class="fas fa-stethoscope"></i> Tiền sử y tế & Tiêm chủng
+                </div>
+                <div class="field-group">
+                    <label for="chronicDisease">Bệnh mãn tính (nếu có) <span class="required-mark">*</span></label>
+                    <textarea id="chronicDisease" th:field="*{chronicDisease}" rows="2" placeholder="Ghi rõ các bệnh mãn tính như hen suyễn, tim mạch... (hoặc ghi 'Không')" required></textarea>
+                </div>
+
+                <div class="field-group">
+                    <label for="treatmentHistory">Tiền sử điều trị / Phẫu thuật <span class="required-mark">*</span></label>
+                    <textarea id="treatmentHistory" th:field="*{treatmentHistory}" rows="2" placeholder="Các đợt điều trị hoặc phẫu thuật lớn trước đây (hoặc ghi 'Không')" required></textarea>
+                </div>
+
+                <div class="field-group">
+                    <label for="vaccination">Lịch sử tiêm chủng <span class="required-mark">*</span></label>
+                    <textarea id="vaccination" th:field="*{vaccination}" rows="2" placeholder="Các mũi vaccine đã tiêm (hoặc ghi 'Đầy đủ theo độ tuổi')" required></textarea>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="treatmentHistory">Tiền sử điều trị</label>
-                <textarea id="treatmentHistory" th:field="*{treatmentHistory}" rows="3" required></textarea>
+            <!-- Nhóm 3: Dị ứng & Lưu ý -->
+            <div class="form-section">
+                <div class="section-legend">
+                    <i class="fas fa-shield-virus"></i> Dị ứng & Lưu ý khác
+                </div>
+                <div class="field-group">
+                    <label for="allergies">Dị ứng thực phẩm / Thuốc <span class="required-mark">*</span></label>
+                    <input type="text" id="allergies" th:field="*{allergies}" placeholder="VD: Dị ứng hải sản, kháng sinh Penicillin... (hoặc ghi 'Không')" required />
+                </div>
+
+                <div class="field-group">
+                    <label for="other_health_info">Thông tin sức khỏe cần lưu ý thêm</label>
+                    <textarea id="other_health_info" th:field="*{other_health_info}" rows="2" placeholder="Bất kỳ thông tin bổ sung nào khác cho nhân viên y tế..."></textarea>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="vision" >Thị lực</label>
-                <input type="number" id="vision" th:field="*{vision}"  min="0" max="10" required />
-            </div>
-
-            <div class="form-group">
-                <label for="hearing" >Thính lực</label>
-                <select id="hearing" th:field="*{hearing}" required>
-                    <option value="">-- Chọn --</option>
-                    <option value="Tốt">Tốt</option>
-                    <option value="Bình thường">Bình thường</option>
-                    <option value="Kém">Kém</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="vaccination" >Tiêm chủng</label>
-                <textarea id="vaccination" th:field="*{vaccination}"  rows="2" required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="other_health_info" >Thông tin khác</label>
-                <textarea id="other_health_info" th:field="*{other_health_info}" rows="3"></textarea>
-            </div>
-
-            <div class="buttons">
-                <button class="btn-back"><a th:href="@{/parent/health-record/select-student}">
-                    <i class="fas fa-arrow-left me-1"></i> Quay lại
-                </a></button>
-                <button type="submit" class="btn-save">
-                    <i class="fas fa-save me-1"></i> Lưu hồ sơ
+            <!-- Action buttons -->
+            <div class="form-actions">
+                <a th:href="@{/parent/health-record/select-student}" class="btn-secondary-custom">
+                    <i class="fas fa-arrow-left"></i> Quay lại
+                </a>
+                <button type="submit" class="btn-save-custom">
+                    <i class="fas fa-save"></i> Lưu hồ sơ sức khỏe
                 </button>
             </div>
         </form>
@@ -89,4 +125,3 @@
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
-

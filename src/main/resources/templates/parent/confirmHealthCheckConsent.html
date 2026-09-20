@@ -2,84 +2,106 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiếu xác nhận khám sức khỏe</title>
+
+    <!-- Bootstrap & FontAwesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CSS -->
     <link rel="stylesheet" th:href="@{/assets/css/parent/confirmHealth.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/fragments/header.css}" type="text/css"/>
     <link rel="stylesheet" th:href="@{/assets/css/fragments/footer.css}" type="text/css"/>
-    <title>Phiếu Khám Sức Khỏe</title>
 </head>
 <body>
 <div th:replace="fragments/header :: Header"></div>
 <div th:replace="fragments/header :: Nav-Parent"></div>
 
-<!-- Hiển thị lỗi nếu có -->
-<div th:if="${error}" class="error" style="display: none;">
-    <p th:text="${error}" style="color: red"></p>
-</div>
-
-<div class="container" th:if="${healthCheckConsent != null}">
-    <h2>Phiếu khám sức khỏe của học sinh <span th:text="${healthCheckConsent.student.fullName}"></span></h2>
-
-    <!-- Hiển thị trạng thái -->
-    <div th:switch="${healthCheckConsent.status.name()}">
-        <span th:case="'ACCEPTED'" class="status accepted">Đã đồng ý</span>
-        <span th:case="'DECLINED'" class="status declined">Đã từ chối</span>
-        <span th:case="'OVERDUE'" class="status overdue">Đã hết hạn</span>
-        <span th:case="*" class="status unconfirmed">Chưa xác nhận</span>
-    </div>
-
-
-    <div>
-        <div class="info-group"><strong>Ngày kiểm tra:</strong>
-            <span th:text="${#temporals.format(healthCheckConsent.schedule.checkDate, 'HH:mm - dd/MM/yyyy')}"></span></div>
-
-        <div class="info-group"><strong>Nội dung:</strong>
-            <span th:text="${healthCheckConsent.schedule.content}"></span></div>
-
-        <div class="info-group"><strong>Ghi chú:</strong>
-            <Span th:text="${healthCheckConsent.schedule.notes}"></Span></div>
-    </div>
-
-    <div th:if="${healthCheckConsent.status.name() == 'UNCONFIRMED'}">
-        <form th:action="@{/parent/confirm/confirm-health-check}" method="post">
-            <input type="hidden" name="consentId" th:value="${healthCheckConsent.id}" />
-
-            <div class="question">Bạn có đồng ý cho con em tham gia khám sức khỏe?</div>
-            <div class="buttons">
-            <!-- Nút Đồng ý -->
-            <button type="submit" name="response" value="agree">
-                Đồng ý
-            </button>
-
-            <!-- Nút Không đồng ý -->
-            <button type="submit" name="response" value="disagree"
-                    class="disagree">
-                Không đồng ý
-            </button>
+<div class="confirm-page-container" th:if="${healthCheckConsent != null}">
+    <div class="confirm-card">
+        <div class="confirm-header-banner">
+            <div class="confirm-header-icon">
+                <i class="fas fa-stethoscope"></i>
             </div>
-        </form>
+            <div class="confirm-header-titles">
+                <h2>Phiếu lấy ý kiến khám sức khỏe</h2>
+                <p>Khảo sát ý kiến phụ huynh về kế hoạch kiểm tra sức khỏe định kỳ cho học sinh</p>
+            </div>
+        </div>
+
+        <div class="confirm-body">
+            <!-- Hiển thị lỗi nếu có -->
+            <div th:if="${error}" class="alert alert-danger mb-4" th:text="${error}"></div>
+
+            <!-- Student & Status Strip -->
+            <div class="status-pill-wrap">
+                <div class="student-tag-pill">
+                    <i class="fas fa-user-graduate text-danger"></i>
+                    <span>Học sinh: <strong th:text="${healthCheckConsent.student.fullName}">Nguyễn Văn A</strong></span>
+                </div>
+
+                <div th:switch="${healthCheckConsent.status.name()}">
+                    <span th:case="'ACCEPTED'" class="status-badge accepted">
+                        <i class="fas fa-check-circle"></i> Đã đồng ý
+                    </span>
+                    <span th:case="'DECLINED'" class="status-badge declined">
+                        <i class="fas fa-times-circle"></i> Đã từ chối
+                    </span>
+                    <span th:case="'OVERDUE'" class="status-badge overdue">
+                        <i class="fas fa-clock"></i> Đã hết hạn
+                    </span>
+                    <span th:case="*" class="status-badge unconfirmed">
+                        <i class="fas fa-question-circle"></i> Chưa xác nhận
+                    </span>
+                </div>
+            </div>
+
+            <!-- Details -->
+            <div class="details-list">
+                <div class="detail-row">
+                    <span class="detail-label"><i class="far fa-calendar-alt text-danger"></i> Ngày kiểm tra dự kiến:</span>
+                    <span class="detail-value" th:text="${#temporals.format(healthCheckConsent.schedule.checkDate, 'HH:mm - dd/MM/yyyy')}">08:00 - 01/07/2025</span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-label"><i class="fas fa-heart-pulse text-danger"></i> Nội dung khám:</span>
+                    <span class="detail-value" th:text="${healthCheckConsent.schedule.content}">Khám chuyên khoa mắt, tai mũi họng, răng hàm mặt, tim phổi</span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-label"><i class="fas fa-info-circle text-danger"></i> Ghi chú của nhà trường:</span>
+                    <span class="detail-value" th:text="${healthCheckConsent.schedule.notes != null && !healthCheckConsent.schedule.notes.isEmpty() ? healthCheckConsent.schedule.notes : 'Học sinh mặc đồng phục gọn gàng'}">Học sinh mặc đồng phục</span>
+                </div>
+            </div>
+
+            <!-- Action Form -->
+            <div th:if="${healthCheckConsent.status.name() == 'UNCONFIRMED'}" class="question-callout">
+                <div class="question-text">
+                    Bạn có đồng ý cho con em tham gia buổi khám sức khỏe này?
+                </div>
+
+                <form th:action="@{/parent/confirm/confirm-health-check}" method="post">
+                    <input type="hidden" name="consentId" th:value="${healthCheckConsent.id}" />
+
+                    <div class="action-button-group">
+                        <button type="submit" name="response" value="agree" class="btn-agree-action">
+                            <i class="fas fa-check"></i> Đồng ý khám
+                        </button>
+                        <button type="submit" name="response" value="disagree" class="btn-disagree-action">
+                            <i class="fas fa-times"></i> Không đồng ý
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <a th:href="@{/parent/notification/HealthCheckConsents}" class="back-to-notifications">
+                <i class="fas fa-arrow-left me-1"></i> Quay lại danh sách thông báo
+            </a>
+        </div>
     </div>
-
-
-
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Loại bỏ logic kiểm tra trạng thái và disabled vì không cần thiết
-        const consentForm = document.getElementById('consentForm');
-
-        // Xử lý submit form (có thể mở rộng)
-        consentForm.addEventListener('submit', (e) => {
-            // Logic xử lý submit nếu cần (hiện tại giữ nguyên hiển thị lỗi nếu muốn)
-            const errorDiv = document.querySelector('.error');
-            // if (errorCondition) {
-            //     e.preventDefault();
-            //     errorDiv.style.display = 'block';
-            // }
-        });
-    });
-</script>
 <script th:src="@{/assets/js/fragments/header.js}"></script>
 <div th:replace="fragments/footer :: footer"></div>
 </body>

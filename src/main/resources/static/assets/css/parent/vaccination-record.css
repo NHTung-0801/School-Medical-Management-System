@@ -1,67 +1,249 @@
-/* Đặt font và nền trang */
-body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #fff0f5;
+/* Vaccination Record Certificate - Modern Redesign */
+* {
     margin: 0;
-    padding: 40px 0;
-    display: contents;
-    justify-content: center;
-    align-items: flex-start;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* Khung chính bao toàn bộ nội dung */
-.wrapper {
+body {
+    background: linear-gradient(135deg, #fff5f7 0%, #fdf2f4 100%);
+    color: #1e293b;
+    min-height: 100vh;
+}
+
+.record-page-wrapper {
+    max-width: 760px;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.certificate-card {
     background: #ffffff;
-    padding: 40px 32px;
+    border-radius: 24px;
+    box-shadow: 0 12px 35px rgba(225, 29, 72, 0.08);
+    border: 1px solid #ffe4e6;
+    overflow: hidden;
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.cert-header-banner {
+    background: linear-gradient(135deg, #e11d48, #ff4d88);
+    color: #ffffff;
+    padding: 30px 32px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.cert-header-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 16px;
-    max-width: 720px;
-    width: 100%;
-    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
 }
 
-/* Tiêu đề */
-h2.text-pink {
-    color: #e91e63;
+.cert-header-titles h2 {
+    font-size: 22px;
     font-weight: 700;
-    text-align: center;
-    margin-bottom: 36px;
-    text-transform: uppercase;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.3px;
 }
 
-/* Mục thông tin học sinh, y tá, ngày tiêm */
-.section-title {
+.cert-header-titles p {
+    font-size: 13.5px;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.cert-body {
+    padding: 32px;
+}
+
+.student-hero-box {
+    background: #fff5f7;
+    border: 1px solid #fecdd3;
+    border-radius: 14px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.student-hero-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.student-hero-avatar {
+    width: 44px;
+    height: 44px;
+    background: #ffe4e6;
+    color: #e11d48;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    color: #444;
 }
 
-/* Khung thông tin sức khỏe */
-.health-card {
-    background: #fff;
-    padding: 24px;
+.student-hero-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.nurse-pill {
+    font-size: 13px;
+    color: #64748b;
+    background: #ffffff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    font-weight: 500;
+}
+
+.info-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.result-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-    border-left: 4px solid #e91e63;
+    padding: 18px 20px;
 }
 
-.field-label {
+.result-card.success-card {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+}
+
+.result-card-label {
+    font-size: 13px;
     font-weight: 600;
-    color: #e91e63;
+    color: #64748b;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.field-value {
-    color: #333;
+.result-card.success-card .result-card-label {
+    color: #15803d;
 }
 
-/* Responsive mobile */
-@media (max-width: 576px) {
-    .wrapper {
-        padding: 24px 16px;
+.result-card-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: #0f172a;
+    line-height: 1.5;
+}
+
+.result-card.success-card .result-card-value {
+    color: #14532d;
+}
+
+.cert-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding-top: 20px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.btn-cert-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    background: #f8fafc;
+    color: #475569;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-cert-back:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+    text-decoration: none;
+}
+
+.btn-cert-print {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 24px;
+    background: linear-gradient(135deg, #e11d48, #ff4d88);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(225, 29, 72, 0.25);
+    transition: all 0.2s ease;
+}
+
+.btn-cert-print:hover {
+    background: linear-gradient(135deg, #be123c, #e11d48);
+    transform: translateY(-1px);
+}
+
+@media print {
+    body {
+        background: #ffffff;
+        padding: 0;
     }
+    .cert-actions, header, nav, footer {
+        display: none !important;
+    }
+    .record-page-wrapper {
+        margin: 0;
+        max-width: 100%;
+    }
+    .certificate-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}
 
-    .section-title {
-        font-size: 16px;
+@media (max-width: 640px) {
+    .cert-header-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+    }
+    .cert-body {
+        padding: 20px;
+    }
+    .cert-actions {
+        flex-direction: column-reverse;
+    }
+    .btn-cert-back, .btn-cert-print {
+        width: 100%;
+        justify-content: center;
     }
 }

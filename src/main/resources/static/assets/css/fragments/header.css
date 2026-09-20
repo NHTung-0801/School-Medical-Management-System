@@ -102,13 +102,13 @@
 /* Navigation Styles (Unchanged) */
 /* Navigation Styles */
 .nav {
-    background: linear-gradient(90deg, rgba(255, 77, 136, 0.56), rgba(255, 26, 102, 0.86));
-    color: rgb(255, 255, 255);
-    padding: 15px 50px;
+    background: linear-gradient(90deg, #ff4d88 0%, #ff1a66 100%);
+    color: #ffffff;
+    padding: 12px 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(255, 26, 102, 0.15);
     position: relative;
     z-index: 1000;
 }
@@ -122,25 +122,26 @@
 }
 
 .nav-item {
-    margin: 0 25px;
+    margin: 0 18px;
     position: relative; /* Ensure relative positioning for submenu */
 }
 
 .nav-item a {
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.75);
-    font-family: 'Arial', sans-serif;
-    font-size: 16px;
+    color: rgba(255, 255, 255, 0.88);
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 15px;
     font-weight: 600;
-    padding: 8px 10px;
+    padding: 8px 12px;
     position: relative;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.8px;
+    display: inline-block;
 }
 
 .nav-item a:hover {
-    color: #512323;
+    color: #ffffff;
 }
 
 .nav-item a::after {
@@ -148,10 +149,11 @@
     position: absolute;
     width: 0;
     height: 3px;
-    bottom: -5px;
+    bottom: -2px;
     left: 50%;
-    background-color: #e74c3c;
-    transition: width 0.3s ease, left 0.3s ease;
+    background-color: #ffffff;
+    border-radius: 2px;
+    transition: width 0.25s ease, left 0.25s ease;
 }
 
 .nav-item a:hover::after,
@@ -164,42 +166,65 @@
 .submenu {
     display: none;
     position: absolute;
-    top: 150%; /* Position below the parent <a> */
-    left: 0; /* Align with the left edge of the parent */
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(17, 17, 17, 0.562);
+    top: 100%;
+    margin-top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(255, 77, 136, 0.15), 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #fce7ef;
     list-style: none;
-    width: 200px; /* Adjusted width for better visibility */
-    z-index: 1500; /* Higher z-index to ensure it appears above other elements */
-    padding: 8px 0;
+    min-width: 210px;
+    z-index: 1500;
+    padding: 6px;
+    animation: submenuFade 0.2s ease-out;
+}
+
+@keyframes submenuFade {
+    from { opacity: 0; transform: translate(-50%, -6px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
 }
 
 .nav-item:hover .submenu {
-    display: block; /* Show submenu on hover of .nav-item */
+    display: block;
 }
 
 .submenu li {
-    border-bottom: 1px solid #ddd;
+    border-bottom: none;
+    margin-bottom: 2px;
+}
+
+.submenu li:last-child {
+    margin-bottom: 0;
 }
 
 .submenu li a {
     text-decoration: none;
-    color: #333;
-    display: block;
-    padding: 10px;
-    transition: background-color 0.3s;
-    text-transform: capitalize;
+    color: #334155;
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    text-transform: none;
+    letter-spacing: normal;
 }
 
 .submenu li a i {
-    color: #e74c3c; /* Match theme color */
+    color: #ff4d88;
     margin-right: 10px;
+    font-size: 14px;
+    width: 16px;
+    text-align: center;
 }
 
 .submenu li a:hover {
-    background: linear-gradient(90deg, rgba(255, 77, 136, 0.56), rgba(255, 26, 102, 0.86));
-    color: #ffffff;
+    background: #fff0f5;
+    color: #e11d48;
+    font-weight: 600;
 }
 
 /* Responsive (Unchanged) */

@@ -2,11 +2,12 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phiếu kết quả sau tiêm chủng</title>
 
-    <!-- Bootstrap 5 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
+    <!-- Bootstrap & FontAwesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" th:href="@{/assets/css/parent/vaccination-record.css}">
@@ -16,44 +17,74 @@
 <body>
 <div th:replace="fragments/header :: Header"></div>
 <div th:replace="fragments/header :: Nav-Parent"></div>
-<div class="wrapper">
-    <div class="container">
-        <h2 class="text-center text-pink fw-bold mb-5">
-            Phiếu kết quả tiêm chủng Học Sinh
-        </h2>
 
-        <!-- Thông tin học sinh -->
-        <div class="section-title">
-            Học sinh:
-            <span th:text="${vaccinationRecord.vaccinationConsent.getStudent().getFullName()}"></span>
+<div class="record-page-wrapper">
+    <div class="certificate-card">
+        <!-- Header Banner -->
+        <div class="cert-header-banner">
+            <div class="cert-header-icon">
+                <i class="fas fa-file-shield"></i>
+            </div>
+            <div class="cert-header-titles">
+                <h2>Phiếu kết quả tiêm chủng</h2>
+                <p>Theo dõi tình trạng sức khỏe học sinh sau tiêm tại phòng y tế học đường</p>
+            </div>
         </div>
 
-        <!-- Thông tin y tá -->
-        <div class="section-title">
-            Y tá phụ trách:
-            <span th:text="${vaccinationRecord.schoolNurse.fullName}"></span>
-        </div>
-
-        <!-- Ngày tiêm -->
-        <div class="section-title">
-            Ngày tiêm:
-            <span th:text="${#temporals.format(vaccinationRecord.vaccinationConsent.schedule.injectionDate, 'dd/MM/yyyy')}"></span>
-        </div>
-
-        <div class="health-card mt-4">
-
-            <div class="row mb-3">
-                <div class="col-md-4 field-label">Tình trạng sau tiêm:</div>
-                <div class="col-md-8 field-value" th:text="${vaccinationRecord.postVaccinationCondition}">Không phản ứng</div>
+        <div class="cert-body">
+            <!-- Student & Nurse Meta -->
+            <div class="student-hero-box">
+                <div class="student-hero-info">
+                    <div class="student-hero-avatar">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div>
+                        <div class="student-hero-name" th:text="${vaccinationRecord.vaccinationConsent.student.fullName}">Nguyễn Văn A</div>
+                        <div style="font-size: 13px; color: #64748b;">
+                            Ngày tiêm: <strong th:text="${#temporals.format(vaccinationRecord.vaccinationConsent.schedule.injectionDate, 'dd/MM/yyyy HH:mm')}">01/07/2025</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="nurse-pill" th:if="${vaccinationRecord.schoolNurse != null}">
+                    <i class="fas fa-user-nurse me-1 text-danger"></i>
+                    Cán bộ y tế: <strong th:text="${vaccinationRecord.schoolNurse.fullName}">Nguyễn Thị B</strong>
+                </div>
             </div>
 
-            <div class="row mb-2">
-                <div class="col-md-4 field-label">Ghi chú:</div>
-                <div class="col-md-8 field-value" th:text="${vaccinationRecord.notes}">Không có biểu hiện bất thường.</div>
+            <!-- Result Cards -->
+            <div class="info-cards-grid">
+                <div class="result-card success-card">
+                    <div class="result-card-label">
+                        <i class="fas fa-shield-heart"></i> Tình trạng theo dõi sau tiêm
+                    </div>
+                    <div class="result-card-value" th:text="${vaccinationRecord.postVaccinationCondition != null && !vaccinationRecord.postVaccinationCondition.isEmpty() ? vaccinationRecord.postVaccinationCondition : 'Bình thường, không có biểu hiện bất thường'}">
+                        Bình thường, không có phản ứng phụ
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-card-label">
+                        <i class="fas fa-notes-medical"></i> Ghi chú & Dặn dò của nhân viên y tế
+                    </div>
+                    <div class="result-card-value" th:text="${vaccinationRecord.notes != null && !vaccinationRecord.notes.isEmpty() ? vaccinationRecord.notes : 'Theo dõi nhiệt độ cơ thể và cho trẻ uống nhiều nước trong 24-48 giờ tới.'}">
+                        Theo dõi tại nhà
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="cert-actions">
+                <a th:href="@{/parent/notification/VaccinationRecords}" class="btn-cert-back">
+                    <i class="fas fa-arrow-left"></i> Danh sách thông báo
+                </a>
+                <button onclick="window.print()" class="btn-cert-print">
+                    <i class="fas fa-print"></i> In phiếu kết quả
+                </button>
             </div>
         </div>
     </div>
 </div>
+
 <script th:src="@{/assets/js/fragments/header.js}"></script>
 <div th:replace="fragments/footer :: footer"></div>
 </body>

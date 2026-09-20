@@ -1,97 +1,208 @@
+/* Sent Medicine Form - Modern Redesign */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* Body + Container căn giữa */
 body {
-    background-color: #fff0f5;
+    background: linear-gradient(135deg, #fff5f7 0%, #fdf2f4 100%);
+    color: #1e293b;
     min-height: 100vh;
-    display: contents;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
 }
 
-.container {
-    background-color: #ffffff;
-    padding: 30px 40px;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(233, 30, 99, 0.2);
-    max-width: 600px;
-    width: 100%;
-    margin: 20px auto;
+.page-wrapper {
+    max-width: 760px;
+    margin: 36px auto;
+    padding: 0 20px;
 }
 
-/* Tiêu đề */
-.form-title {
+.form-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(225, 29, 72, 0.08);
+    border: 1px solid #ffe4e6;
+    padding: 36px 40px;
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.form-header {
     text-align: center;
-    color: #e91e63;
-    text-transform: uppercase;
-    font-size: 1.8rem;
-    font-weight: 700;
     margin-bottom: 30px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #f1f5f9;
 }
 
-/* Nhóm form */
-.form-group {
-    margin-bottom: 20px;
+.form-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #ff4d88, #e11d48);
+    color: #ffffff;
+    border-radius: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 20px rgba(225, 29, 72, 0.25);
 }
 
-.form-group label {
+.form-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+}
+
+.form-header p {
+    color: #64748b;
+    font-size: 14px;
+    margin: 0;
+}
+
+.field-group {
+    margin-bottom: 22px;
+}
+
+.field-group label {
     display: block;
+    font-size: 14px;
     font-weight: 600;
+    color: #334155;
     margin-bottom: 8px;
-    color: #333;
 }
 
-.form-group select,
-.form-group textarea {
+.field-group label .required-mark {
+    color: #e11d48;
+    margin-left: 2px;
+}
+
+.field-group select,
+.field-group textarea {
     width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    font-size: 1rem;
-    resize: none;
+    padding: 12px 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #1e293b;
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+    outline: none;
 }
 
-/* Hành động */
+.field-group select:focus,
+.field-group textarea:focus {
+    border-color: #ff4d88;
+    box-shadow: 0 0 0 3px rgba(255, 77, 136, 0.15);
+}
+
+.field-group textarea {
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.field-hint {
+    display: block;
+    margin-top: 6px;
+    font-size: 12.5px;
+    color: #94a3b8;
+}
+
+/* Notice Box */
+.notice-box {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.notice-box i {
+    color: #16a34a;
+    font-size: 18px;
+    margin-top: 2px;
+}
+
+.notice-box p {
+    font-size: 13px;
+    color: #166534;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Buttons */
 .form-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 30px;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid #f1f5f9;
 }
 
-/* Nút chung */
-button {
-    padding: 10px 20px;
-    border-radius: 12px;
-    border: none;
+.btn-cancel {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    background: #f8fafc;
+    color: #475569;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 14px;
     font-weight: 600;
-    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+    text-decoration: none;
+}
+
+.btn-submit-medicine {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 26px;
+    background: linear-gradient(135deg, #e11d48, #ff4d88);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
+    box-shadow: 0 4px 14px rgba(225, 29, 72, 0.25);
+    transition: all 0.2s ease;
 }
 
-/* Nút gửi */
-button[type="submit"] {
-    background: linear-gradient(to right, #e91e63, #ff6090);
-    color: white;
+.btn-submit-medicine:hover {
+    background: linear-gradient(135deg, #be123c, #e11d48);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(225, 29, 72, 0.35);
 }
 
-button[type="submit"]:hover {
-    background: linear-gradient(to right, #d81b60, #f06292);
+@media (max-width: 640px) {
+    .form-card {
+        padding: 24px 20px;
+    }
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+    .btn-cancel, .btn-submit-medicine {
+        width: 100%;
+        justify-content: center;
+    }
 }
-
-/* Nút hủy */
-.cancel-btn {
-    background-color: #e0e0e0;
-    color: #333;
-}
-
-.cancel-btn:hover {
-    background-color: #d5d5d5;
-}
-

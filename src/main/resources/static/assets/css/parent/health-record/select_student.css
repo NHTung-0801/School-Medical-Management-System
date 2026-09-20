@@ -1,69 +1,271 @@
+/* ==========================================================================
+   SELECT STUDENT HEALTH RECORD STYLESHEET
+   Design System: Medical Rose & Clean Elevation
+   ========================================================================== */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', 'Arial', sans-serif;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #ffe6f0, #fff0f5);
-    display: contents;
-    justify-content: center;
-    align-items: center;
+    background: #fbf8fa;
+    color: #1e293b;
     min-height: 100vh;
-    padding: 20px;
-}
-.text-pink { color:#e91e63; }
-
-.table-pink th{
-    background:#e91e63;
-    color:#fff;
+    padding: 0;
+    overflow-x: hidden;
 }
 
-/* STT căn giữa toàn bộ */
-.table tbody td:first-child,
-.table thead th:first-child{
-    text-align:center;
+.select-student-container {
+    background: #ffffff;
+    padding: 32px 36px 44px;
+    border-radius: 20px;
+    box-shadow: 0 4px 25px rgba(255, 77, 136, 0.06);
+    width: 100%;
+    max-width: 1060px;
+    margin: 32px auto;
+    border: 1px solid #fce7ef;
+    animation: fadeIn 0.4s ease-out;
 }
 
-/* ===== Nút hồng viền ngoài (mặc định trắng) ===== */
-.btn-pink {
-    background: #fff;
-    color: #e91e63;
-    border: 1px solid #e91e63;
-    transition: all .25s;
-}
-.btn-pink:hover {
-    background: #e91e63;
-    color: #fff;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== Bo tròn toàn bảng ===== */
-.table-rounded {
-    border-collapse: separate;
-    border-spacing: 0;
-    border: 1px solid #ddd;
+/* --- PAGE HEADER --- */
+.page-header {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #fce7ef;
+    text-align: center;
+}
+
+.page-header h2 {
+    color: #0f172a;
+    font-size: 24px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.page-header h2 i {
+    color: #ff4d88;
+    font-size: 22px;
+}
+
+.page-header .subtitle {
+    font-size: 14px;
+    color: #64748b;
+    margin-top: 6px;
+}
+
+/* --- TABLE CONTAINER --- */
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 14px;
+    border: 1px solid #f1f5f9;
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    text-align: left;
+}
+
+thead {
+    background: #fdf2f6;
+}
+
+th {
+    padding: 14px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #831843;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: 1px solid #fce7ef;
+    white-space: nowrap;
+}
+
+td {
+    padding: 16px 20px;
+    color: #334155;
+    border-bottom: 1px solid #f8fafc;
+    vertical-align: middle;
+}
+
+tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+tbody tr:hover {
+    background-color: #fff9fb;
+}
+
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.student-avatar-badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #fdf2f8;
+    color: #db2777;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    border: 1px solid #fbcfe8;
+    flex-shrink: 0;
+}
+
+.student-name {
+    font-weight: 600;
+    color: #0f172a;
+    font-size: 15px;
+}
+
+.student-class {
+    display: inline-block;
+    padding: 4px 10px;
     border-radius: 8px;
-    overflow: hidden;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 8px;
 }
 
-/* Giữ phần đầu bảng bo tròn phía trên */
-.table-rounded thead th:first-child {
-    border-top-left-radius: 8px;
-}
-.table-rounded thead th:last-child {
-    border-top-right-radius: 8px;
+/* --- ACTION BUTTONS --- */
+.action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    white-space: nowrap;
 }
 
-/* Giữ phần cuối bảng bo tròn phía dưới */
-.table-rounded tbody tr:last-child td:first-child {
-    border-bottom-left-radius: 8px;
+.btn-update {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #ffffff !important;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 3px 10px rgba(16, 185, 129, 0.2);
+    transition: all 0.2s ease;
 }
-.table-rounded tbody tr:last-child td:last-child {
-    border-bottom-right-radius: 8px;
+
+.btn-update:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
 }
-.table-wrapper {
-    max-width: 950px;
-    width: 80%;
-    margin: 0 auto;
+
+.btn-view {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: #ffffff;
+    color: #475569 !important;
+    border: 1px solid #cbd5e1;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-view:hover {
+    background: #f8fafc;
+    color: #0f172a !important;
+    border-color: #94a3b8;
+}
+
+/* --- EMPTY STATE --- */
+.empty-state {
+    text-align: center;
+    padding: 48px 24px;
+}
+
+.empty-state-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #fff0f5;
+    color: #ff4d88;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin: 0 auto 16px;
+}
+
+.empty-state-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 6px;
+}
+
+.empty-state-hint {
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+/* --- FOOTER BACK LINK --- */
+.back-container {
+    text-align: center;
+    margin-top: 28px;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #64748b;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+    background: #ffffff;
+}
+
+.back-link:hover {
+    color: #ff4d88;
+    border-color: #fbcfe8;
+    background: #fff9fb;
+}
+
+@media (max-width: 640px) {
+    .select-student-container {
+        padding: 20px 16px;
+        margin: 16px auto;
+    }
+    .action-buttons {
+        flex-direction: column;
+        gap: 6px;
+    }
+    .btn-update, .btn-view {
+        width: 100%;
+        justify-content: center;
+    }
 }

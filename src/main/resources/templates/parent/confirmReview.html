@@ -2,76 +2,104 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác nhận lịch hẹn tư vấn</title>
+
+    <!-- Bootstrap & FontAwesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CSS -->
     <link rel="stylesheet" th:href="@{/assets/css/parent/confirmReview.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/fragments/header.css}" type="text/css"/>
     <link rel="stylesheet" th:href="@{/assets/css/fragments/footer.css}" type="text/css"/>
-    <title>Xác nhận Lịch Hẹn Tư Vấn</title>
-
 </head>
 <body>
 <div th:replace="fragments/header :: Header"></div>
 <div th:replace="fragments/header :: Nav-Parent"></div>
-<div class="container">
-    <h2>Phiếu Xác Nhận Lịch Tư Vấn</h2>
-    <!-- Hiển thị trạng thái -->
-    <div th:switch="${consultationAppointmentDTO.status.name()}">
-        <span th:case="'ACCEPTED'" class="status accepted">Đã đồng ý</span>
-        <span th:case="'DECLINED'" class="status declined">Đã từ chối</span>
-        <span th:case="'OVERDUE'" class="status overdue">Đã hết hạn</span>
-        <span th:case="*" class="status unconfirmed">Chưa xác nhận</span>
-    </div>
 
-    <div class="info-group">
-        <strong>Tên Học Sinh:</strong>
-        <span th:text="${consultationAppointmentDTO.studentDTO != null ? consultationAppointmentDTO.studentDTO.fullName : '---'}">Nguyễn Văn A</span>
-    </div>
-
-    <div class="info-group">
-        <strong>Y tá phụ trách:</strong>
-        <span th:text="${consultationAppointmentDTO.schoolNurseDTO != null ? consultationAppointmentDTO.schoolNurseDTO.fullName : '---'}">Nguyễn Thị C</span>
-    </div>
-
-    <div class="info-group">
-        <strong>Thời Gian Lịch Hẹn:</strong>
-        <span th:text="${#temporals.format(consultationAppointmentDTO.scheduledTime, 'HH:mm - dd/MM/yyyy')}">2025-07-02 14:00</span>
-    </div>
-
-    <div class="info-group">
-        <strong>Nội dung lịch hẹn:</strong>
-        <span th:text="${consultationAppointmentDTO.content}">Yêu cầu kiểm tra sức khỏe định kỳ.</span>
-    </div>
-
-    <div th:if="${consultationAppointmentDTO.status.name() == 'UNCONFIRMED'}">
-        <div class="question">
-            Bạn có đồng ý tham gia buổi hẹn tư vấn sức khỏe này không?
+<div class="confirm-page-container">
+    <div class="confirm-card">
+        <!-- Banner -->
+        <div class="confirm-header-banner">
+            <div class="confirm-header-icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="confirm-header-titles">
+                <h2>Phiếu xác nhận lịch tư vấn</h2>
+                <p>Trao đổi trực tiếp giữa phụ huynh và nhân viên y tế về sức khỏe học sinh</p>
+            </div>
         </div>
 
-        <div class="buttons">
-            <!-- Form luôn hiển thị nhưng nút sẽ được vô hiệu hóa nếu không phải UNCONFIRMED -->
-            <form th:action="@{/parent/consultationAppointment/confirmReview}" method="post">
-                <input type="hidden" name="appointmentId" th:value="${consultationAppointmentDTO.id}" />
+        <div class="confirm-body">
+            <!-- Student & Status Strip -->
+            <div class="status-pill-wrap">
+                <div class="student-tag-pill">
+                    <i class="fas fa-user-graduate text-danger"></i>
+                    <span>Học sinh: <strong th:text="${consultationAppointmentDTO.studentDTO != null ? consultationAppointmentDTO.studentDTO.fullName : '---'}">Nguyễn Văn A</strong></span>
+                </div>
 
-                <!-- Nút Đồng ý -->
-                <button class="print-button" onclick="printVoucher()" type="submit" name="response" value="agree"
-                        th:classappend="${consultationAppointmentDTO.status.name() != 'UNCONFIRMED'} ? 'disabled'"
-                        th:disabled="${consultationAppointmentDTO.status.name() != 'UNCONFIRMED'}">
-                    Đồng ý
-                </button>
+                <div th:switch="${consultationAppointmentDTO.status.name()}">
+                    <span th:case="'ACCEPTED'" class="status-badge accepted">
+                        <i class="fas fa-check-circle"></i> Đã đồng ý
+                    </span>
+                    <span th:case="'DECLINED'" class="status-badge declined">
+                        <i class="fas fa-times-circle"></i> Đã từ chối
+                    </span>
+                    <span th:case="'OVERDUE'" class="status-badge overdue">
+                        <i class="fas fa-clock"></i> Đã hết hạn
+                    </span>
+                    <span th:case="*" class="status-badge unconfirmed">
+                        <i class="fas fa-question-circle"></i> Chưa xác nhận
+                    </span>
+                </div>
+            </div>
 
-                <!-- Nút Không đồng ý -->
-                <button class="back-button" type="submit" name="response" value="disagree">
-                    Không đồng ý
-                </button>
-            </form>
+            <!-- Details List -->
+            <div class="details-list">
+                <div class="detail-row">
+                    <span class="detail-label"><i class="fas fa-user-nurse text-danger"></i> Cán bộ y tế phụ trách:</span>
+                    <span class="detail-value" th:text="${consultationAppointmentDTO.schoolNurseDTO != null ? consultationAppointmentDTO.schoolNurseDTO.fullName : '---'}">Nguyễn Thị C</span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-label"><i class="far fa-clock text-danger"></i> Thời gian lịch hẹn:</span>
+                    <span class="detail-value" th:text="${#temporals.format(consultationAppointmentDTO.scheduledTime, 'HH:mm - dd/MM/yyyy')}">14:00 - 02/07/2025</span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-label"><i class="fas fa-clipboard-list text-danger"></i> Nội dung trao đổi:</span>
+                    <span class="detail-value" th:text="${consultationAppointmentDTO.content}">Yêu cầu kiểm tra sức khỏe và chế độ dinh dưỡng</span>
+                </div>
+            </div>
+
+            <!-- Form xác nhận nếu chưa xác nhận -->
+            <div th:if="${consultationAppointmentDTO.status.name() == 'UNCONFIRMED'}" class="question-callout">
+                <div class="question-text">
+                    Bạn có đồng ý tham gia buổi hẹn tư vấn sức khỏe này không?
+                </div>
+
+                <form th:action="@{/parent/consultationAppointment/confirmReview}" method="post">
+                    <input type="hidden" name="appointmentId" th:value="${consultationAppointmentDTO.id}" />
+
+                    <div class="action-button-group">
+                        <button type="submit" name="response" value="agree" class="btn-agree-action">
+                            <i class="fas fa-check"></i> Đồng ý tham gia
+                        </button>
+                        <button type="submit" name="response" value="disagree" class="btn-disagree-action">
+                            <i class="fas fa-times"></i> Không thể tham gia
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <a th:href="@{/parent/notification/ConsultationAppointments}" class="back-to-notifications">
+                <i class="fas fa-arrow-left me-1"></i> Quay lại danh sách thông báo
+            </a>
         </div>
-
     </div>
-
-
-
 </div>
-<script th:src="@{/assets/js/nurse/listReview.js}"></script>
+
 <script th:src="@{/assets/js/fragments/header.js}"></script>
 <div th:replace="fragments/footer :: footer"></div>
 </body>

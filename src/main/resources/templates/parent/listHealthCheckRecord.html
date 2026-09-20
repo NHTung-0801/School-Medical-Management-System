@@ -2,62 +2,70 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả khám sức khỏe học sinh</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" th:href="@{/assets/css/parent/notification.css}"/>
-    <link rel="stylesheet" th:href="@{/assets/css/pages/phanTrang.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/fragments/header.css}" type="text/css"/>
     <link rel="stylesheet" th:href="@{/assets/css/fragments/footer.css}" type="text/css"/>
-    <title>Thông Báo Khám Sức Khỏe </title>
 </head>
 <body>
 <div th:replace="fragments/header :: Header"></div>
 <div th:replace="fragments/header :: Nav-Parent"></div>
+
 <div class="notification-panel">
     <div class="notification-header">
-        Thông Báo Kết Quả Khám Sức Khỏe
+        <i class="fas fa-heart-pulse"></i>
+        <span>Kết quả kiểm tra sức khỏe học sinh</span>
     </div>
 
-    <div th:if="${error}" class="alert-success red" style="color: green; padding: 16px; font-size: 16px;">
-        <p th:text="${error}"></p>
+    <div th:if="${error}" class="alert-feedback red">
+        <i class="fas fa-exclamation-circle"></i>
+        <span th:text="${error}">Đã xảy ra lỗi</span>
     </div>
 
-    <div class="notification-item unconfirmed" th:each="record : ${listHealthCheckRecord}"
+    <div class="notification-item" th:each="record : ${listHealthCheckRecord}"
          th:onclick="|window.location.href='@{/parent/healthCheckRecord(idRecord=${record.id})}'|"
          th:classappend="${!record.isViewedByParent()} ? ' noseen'">
 
         <div class="notification-icon">
-            <i class="fas fa-notes-medical"></i>
+            <i class="fas fa-file-medical-alt"></i>
         </div>
         <div class="notification-content">
+            <div th:if="${!record.isViewedByParent()}">
+                <span class="status-tag unconfirmed"><i class="fas fa-circle-exclamation"></i> Mới cập nhật</span>
+            </div>
             <p>
-                Kính gửi Quý Phụ Huynh, học sinh
-                <strong th:text="${record.healthCheckConsentDTO.student.fullName}">Nguyễn Văn A</strong>
-                có kết quả khám sức khỏe.
+                Đã có kết quả khám sức khỏe định kỳ của học sinh
+                <strong th:text="${record.healthCheckConsentDTO.student.fullName}">Nguyễn Văn A</strong>.
             </p>
-
-            <p class="time" th:text="${#temporals.format(record.healthCheckConsentDTO.schedule.sentDate, 'dd/MM/yyyy')}">
-                23/06/2025
-            </p>
+            <div class="time">
+                <i class="far fa-calendar-alt"></i>
+                <span>Ngày gửi: <span th:text="${#temporals.format(record.healthCheckConsentDTO.schedule.sentDate, 'dd/MM/yyyy')}">23/06/2025</span></span>
+            </div>
         </div>
     </div>
 
-    <div class="no-notification" th:if="${#lists.isEmpty(listHealthCheckRecord)}" >
-        Không có thông báo kết quả khám sức khỏe nào.
+    <div class="no-notification" th:if="${#lists.isEmpty(listHealthCheckRecord)}">
+        <div class="empty-bell-icon">
+            <i class="fas fa-notes-medical"></i>
+        </div>
+        <div class="empty-title">Chưa có kết quả khám sức khỏe nào</div>
+        <div class="empty-desc">Sau các đợt khám sức khỏe định kỳ tại trường, bác sĩ và y tá sẽ gửi kết quả chi tiết đến tài khoản phụ huynh tại đây.</div>
     </div>
-    <div th:if="${#lists.isEmpty(listHealthCheckConsent)}"
-         class="no-notification" style="display: none;">
-        Không có thông báo khám sức khỏe nào.
-    </div>
-
 </div>
+
 <!-- Phân trang -->
 <div class="pagination" th:if="${totalPages > 0}">
     <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
        th:href="@{/parent/notification/HealthCheckRecords(page=${i})}"
        th:text="${i + 1}"
-       th:classappend="${i == currentPage} ? ' current'">1</a>
+       class="page-link-custom"
+       th:classappend="${i == currentPage} ? ' current-page' : ''">1</a>
 </div>
-<script th:src="@{/assets/js/phanTrang.js}"></script>
+
 <script th:src="@{/assets/js/fragments/header.js}"></script>
 <div th:replace="fragments/footer :: footer"></div>
 </body>

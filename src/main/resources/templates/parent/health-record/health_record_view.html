@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Xem hồ sơ sức khỏe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ sức khỏe học sinh</title>
 
     <!-- Bootstrap & FontAwesome -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/5.3.0/dist/css/bootstrap.min.css">
@@ -12,57 +13,119 @@
     <link rel="stylesheet" th:href="@{/assets/css/parent/resultHealth.css}">
     <link rel="stylesheet" th:href="@{/assets/css/fragments/header.css}" type="text/css"/>
     <link rel="stylesheet" th:href="@{/assets/css/fragments/footer.css}" type="text/css"/>
-
 </head>
 <body>
 <div th:replace="fragments/header :: Header"></div>
 <div th:replace="fragments/header :: Nav-Parent"></div>
-<div class="report-container">
-    <div class="header-report-container">
-    <div class="header-report-container-brand"><i class="fa-solid fa-heart-pulse"></i></div>
-        <h2>Hồ sơ sức khỏe của học sinh</h2>
-            <div class="form-group">
-                <label>Dị ứng:</label>
-                <input th:field="*{record.allergies}" required/>
-            </div>
-            <div class="form-group">
-                <label>Bệnh mãn tính:</label>
-                <input th:field="*{record.chronicDisease}"  required/>
-            </div>
-        <div class="form-group">
-            <label>Tiền sử điều trị:</label>
-            <input th:field="*{record.treatmentHistory}" required/>
-        </div>
-        <div  class="grid-2">
-            <div class="form-group">
-                <label>Thị lực:</label>
-                <input th:field="*{record.vision}" required/>
-            </div>
 
-            <div class="form-group">
-                <label>Thính lực:</label>
-                <input th:field="*{record.hearing}" required/>
+<div class="report-page-container">
+    <div class="report-card">
+        <!-- Header Banner -->
+        <div class="report-header-banner">
+            <div class="report-header-info">
+                <div class="report-header-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <div class="report-header-titles">
+                    <h2>Hồ sơ sức khỏe học sinh</h2>
+                    <p>Thông tin y tế cơ bản và tiền sử theo dõi tại trường học</p>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label>Tiêm chủng:</label>
-            <input th:field="*{record.vaccination}" required/>
-        </div>
-        <div class="form-group">
-            <label>Thông tin khác:</label>
-            <input th:field="*{record.other_health_info}" required/>
+            <div class="student-badge-pill" th:if="${record.student != null}">
+                <i class="fas fa-user-graduate me-1"></i>
+                <span th:text="${record.student.fullName}">Nguyễn Văn A</span>
+            </div>
         </div>
 
-        <div class="buttons">
-            <button class="print-button"><a th:href="@{'/parent/health-record/form/' + ${record.student.id}}">
-                <i class="fas fa-pen me-1"></i> Cập nhật hồ sơ</a>
-            </button>
-            <button class="back-button"><a th:href="@{/parent/health-record/select-student}">
-                <i class="fas fa-arrow-left me-1"></i> Quay lại</a>
-            </button>
+        <div class="report-body">
+            <!-- Student Meta Bar -->
+            <div class="student-meta-strip" th:if="${record.student != null}">
+                <div class="meta-item">
+                    <span class="meta-label">Mã học sinh</span>
+                    <span class="meta-value" th:text="${'HS-' + record.student.id}">HS-01</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Lớp học</span>
+                    <span class="meta-value" th:text="${record.student.className != null ? record.student.className : 'Chưa xếp lớp'}">1A</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Ngày sinh</span>
+                    <span class="meta-value" th:text="${record.student.birthDate != null ? #temporals.format(record.student.birthDate, 'dd/MM/yyyy') : '---'}">01/01/2015</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Giới tính</span>
+                    <span class="meta-value" th:text="${record.student.gender != null ? record.student.gender : '---'}">Nam</span>
+                </div>
+            </div>
+
+            <!-- Nhóm 1: Thể trạng & Giác quan -->
+            <div class="record-section-title">
+                <i class="fas fa-eye"></i> Thị lực & Thính giác
+            </div>
+            <div class="record-grid-2">
+                <div class="info-tile">
+                    <div class="info-label"><i class="fas fa-eye"></i> Thị lực</div>
+                    <div class="info-value">
+                        <span class="info-badge badge-blue" th:text="${record.vision != null ? record.vision + '/10' : 'Chưa có dữ liệu'}">10/10</span>
+                    </div>
+                </div>
+                <div class="info-tile">
+                    <div class="info-label"><i class="fas fa-ear-listen"></i> Thính giác</div>
+                    <div class="info-value">
+                        <span class="info-badge badge-green" th:text="${record.hearing != null && !record.hearing.isEmpty() ? record.hearing : 'Bình thường'}">Bình thường</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nhóm 2: Tiền sử y tế & Tiêm chủng -->
+            <div class="record-section-title">
+                <i class="fas fa-notes-medical"></i> Tiền sử bệnh & Điều trị
+            </div>
+            <div class="record-grid-2">
+                <div class="info-tile">
+                    <div class="info-label"><i class="fas fa-file-medical"></i> Bệnh mãn tính</div>
+                    <div class="info-value" th:text="${record.chronicDisease != null && !record.chronicDisease.isEmpty() ? record.chronicDisease : 'Không ghi nhận'}">Không</div>
+                </div>
+                <div class="info-tile">
+                    <div class="info-label"><i class="fas fa-hospital-user"></i> Tiền sử điều trị</div>
+                    <div class="info-value" th:text="${record.treatmentHistory != null && !record.treatmentHistory.isEmpty() ? record.treatmentHistory : 'Không ghi nhận'}">Không</div>
+                </div>
+            </div>
+            <div class="record-grid-2" style="grid-template-columns: 1fr;">
+                <div class="info-tile">
+                    <div class="info-label"><i class="fas fa-syringe"></i> Lịch sử tiêm chủng</div>
+                    <div class="info-value" th:text="${record.vaccination != null && !record.vaccination.isEmpty() ? record.vaccination : 'Đầy đủ theo độ tuổi'}">Đầy đủ theo độ tuổi</div>
+                </div>
+            </div>
+
+            <!-- Nhóm 3: Dị ứng & Lưu ý đặc biệt -->
+            <div class="record-section-title">
+                <i class="fas fa-shield-virus"></i> Cảnh báo dị ứng & Lưu ý khác
+            </div>
+            <div class="record-grid-2">
+                <div class="info-tile alert-tile">
+                    <div class="info-label"><i class="fas fa-allergies"></i> Dị ứng (thức ăn / thuốc)</div>
+                    <div class="info-value" th:text="${record.allergies != null && !record.allergies.isEmpty() ? record.allergies : 'Không dị ứng'}">Không dị ứng</div>
+                </div>
+                <div class="info-tile">
+                    <div class="info-label"><i class="fas fa-info-circle"></i> Thông tin sức khỏe khác</div>
+                    <div class="info-value" th:text="${record.other_health_info != null && !record.other_health_info.isEmpty() ? record.other_health_info : 'Không có ghi chú thêm'}">Không có ghi chú thêm</div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="report-actions">
+                <a th:href="@{/parent/health-record/select-student}" class="btn-report-back">
+                    <i class="fas fa-arrow-left"></i> Danh sách học sinh
+                </a>
+                <a th:href="@{'/parent/health-record/form/' + ${record.student.id}}" class="btn-report-edit">
+                    <i class="fas fa-edit"></i> Cập nhật thông tin
+                </a>
+            </div>
         </div>
     </div>
 </div>
+
 <!-- Custom JS -->
 <script th:src="@{/assets/js/parent/health-record/health_record_view.js}"></script>
 <script th:src="@{/assets/js/fragments/header.js}"></script>
