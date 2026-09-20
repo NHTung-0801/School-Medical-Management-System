@@ -1,13 +1,13 @@
 package com.medical.schoolMedical.modules.pharmacy.controllers;
 
 import com.medical.schoolMedical.entities.SchoolNurse;
-import com.medical.schoolMedical.entities.SentMedicine;
-import com.medical.schoolMedical.entities.SentMedicineUsage;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
+import com.medical.schoolMedical.modules.pharmacy.entities.SentMedicine;
+import com.medical.schoolMedical.modules.pharmacy.entities.SentMedicineUsage;
+import com.medical.schoolMedical.modules.pharmacy.services.SentMedicineService;
+import com.medical.schoolMedical.modules.pharmacy.services.SentMedicineUsageService;
 import com.medical.schoolMedical.service.SchoolNurseService;
-import com.medical.schoolMedical.service.SentMedicineService;
-import com.medical.schoolMedical.service.SentMedicineUsageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;

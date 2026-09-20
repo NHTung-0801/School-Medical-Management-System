@@ -1,7 +1,7 @@
-package com.medical.schoolMedical.service;
+package com.medical.schoolMedical.modules.pharmacy.services;
 
-import com.medical.schoolMedical.entities.SentMedicineUsage;
-import com.medical.schoolMedical.repositories.SentMedicineUsageRepository;
+import com.medical.schoolMedical.modules.pharmacy.entities.SentMedicineUsage;
+import com.medical.schoolMedical.modules.pharmacy.repositories.SentMedicineUsageRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -13,11 +13,10 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE,  makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SentMedicineUsageService {
     @Autowired
     private SentMedicineUsageRepository sentMedicineUsageRepository;
-
 
     public Optional<SentMedicineUsage> getBy_Id(Long id) {
         return sentMedicineUsageRepository.findById(id);
@@ -34,5 +33,4 @@ public class SentMedicineUsageService {
     public List<SentMedicineUsage> getAll() {
         return sentMedicineUsageRepository.findAll();
     }
-
 }

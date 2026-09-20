@@ -1,5 +1,7 @@
-package com.medical.schoolMedical.entities;
+package com.medical.schoolMedical.modules.pharmacy.entities;
 
+import com.medical.schoolMedical.entities.Parent;
+import com.medical.schoolMedical.entities.Student;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,11 +34,10 @@ public class SentMedicine {
     @Column(name = "medicine_list", nullable = false)
     private String medicineList;
 
-    @Column(name = "usage_instructions",columnDefinition = "TEXT", nullable = false)
+    @Column(name = "usage_instructions", columnDefinition = "TEXT", nullable = false)
     private String usageInstructions;
 
     @Column(name = "sent_date", nullable = false)
     @CreationTimestamp
     private LocalDate sentDate;
-
 }

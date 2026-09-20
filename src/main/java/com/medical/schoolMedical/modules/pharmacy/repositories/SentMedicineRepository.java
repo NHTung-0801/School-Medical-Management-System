@@ -1,7 +1,6 @@
-package com.medical.schoolMedical.repositories;
+package com.medical.schoolMedical.modules.pharmacy.repositories;
 
-
-import com.medical.schoolMedical.entities.SentMedicine;
+import com.medical.schoolMedical.modules.pharmacy.entities.SentMedicine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

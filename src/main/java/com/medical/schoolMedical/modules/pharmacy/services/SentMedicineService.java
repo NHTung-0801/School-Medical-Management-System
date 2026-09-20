@@ -1,7 +1,7 @@
-package com.medical.schoolMedical.service;
+package com.medical.schoolMedical.modules.pharmacy.services;
 
-import com.medical.schoolMedical.entities.SentMedicine;
-import com.medical.schoolMedical.repositories.SentMedicineRepository;
+import com.medical.schoolMedical.modules.pharmacy.entities.SentMedicine;
+import com.medical.schoolMedical.modules.pharmacy.repositories.SentMedicineRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE,  makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SentMedicineService {
     @Autowired
     private SentMedicineRepository sentMedicineRepository;

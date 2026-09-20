@@ -1,19 +1,17 @@
-package com.medical.schoolMedical.controller.parent;
+package com.medical.schoolMedical.modules.pharmacy.controllers;
 
-import com.medical.schoolMedical.dto.SentMedicineDTO;
 import com.medical.schoolMedical.entities.Parent;
-import com.medical.schoolMedical.entities.SentMedicine;
 import com.medical.schoolMedical.entities.Student;
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.exceptions.ErrorCode;
+import com.medical.schoolMedical.modules.pharmacy.dto.SentMedicineDTO;
+import com.medical.schoolMedical.modules.pharmacy.entities.SentMedicine;
+import com.medical.schoolMedical.modules.pharmacy.services.SentMedicineService;
 import com.medical.schoolMedical.security.CustomUserDetails;
 import com.medical.schoolMedical.service.ParentService;
-import com.medical.schoolMedical.service.SentMedicineService;
 import com.medical.schoolMedical.service.StudentService;
-import com.medical.schoolMedical.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +34,6 @@ public class SentMedicineController {
 
     @Autowired
     private StudentService studentService;
-
 
     // Hiển thị form gửi thuốc
     @GetMapping("/form")
@@ -106,5 +103,4 @@ public class SentMedicineController {
 
         return "parent/sent-medicine/sent_medicine_list";
     }
-
 }

@@ -1,5 +1,6 @@
-package com.medical.schoolMedical.entities;
+package com.medical.schoolMedical.modules.pharmacy.entities;
 
+import com.medical.schoolMedical.entities.SchoolNurse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,9 +38,8 @@ public class SentMedicineUsage {
     private String medicineName;
 
     @Column(name = "dosage ", nullable = false)
-    private String dosage ;
+    private String dosage;
 
-    @Column(name = "notes ",columnDefinition = "TEXT")
-    private String notes ;
+    @Column(name = "notes ", columnDefinition = "TEXT")
+    private String notes;
 }
-
