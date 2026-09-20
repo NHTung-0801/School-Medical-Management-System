@@ -1,0 +1,12 @@
+.git
+.gitignore
+.gitattributes
+.agents
+target/
+docs/
+*.md
+*.log
+.env
+.idea/
+.vscode/
+*.dumpstream
