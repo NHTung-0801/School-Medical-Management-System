@@ -76,7 +76,7 @@ public class HealthCheckScheduleController {
         model.addAttribute("sentSchedules", healthChecks.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", healthChecks.getTotalPages());
-        return "admin/listSentSchedules";
+        return "admin/ListSentSchedules";
     }
 
     // Gửi lịch khám sức khỏe đến phụ huynh
