@@ -2,6 +2,7 @@ package com.medical.schoolMedical.modules.auth.controllers;
 
 import com.medical.schoolMedical.enums.Role;
 import com.medical.schoolMedical.exceptions.BusinessException;
+import com.medical.schoolMedical.exceptions.ErrorCode;
 import com.medical.schoolMedical.modules.user_management.dto.UserDTO;
 import com.medical.schoolMedical.modules.user_management.entities.User;
 import com.medical.schoolMedical.modules.user_management.services.UserService;
@@ -48,7 +49,11 @@ public class SignupController {
             userService.validateUserInput(user);
         } catch (BusinessException ex) {
             model.addAttribute("roles", Role.values());
-            bindingResult.rejectValue("password", null, ex.getMessage());
+            if (ex.getErrorCode() == ErrorCode.INVALID_PHONE_NUMBER || ex.getErrorCode() == ErrorCode.CONTAINS_WHITESPACE) {
+                bindingResult.rejectValue("username", null, ex.getMessage());
+            } else {
+                bindingResult.rejectValue("password", null, ex.getMessage());
+            }
             return "admin/add-user";
         }
         // Lưu user

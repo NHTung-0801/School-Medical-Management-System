@@ -76,4 +76,7 @@ logs/
 
 # Local sensitive properties:
 src/main/resources/application-dev.properties
-.env
+.env
+
+# Database & SQL scripts
+*.sql

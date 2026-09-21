@@ -9,6 +9,7 @@ public enum ErrorCode {
     CONTAINS_WHITESPACE("ERR004", "Tên đăng nhập không được chứa khoảng trắng."),
     USER_NOT_EXISTS("ERR005", "Người dùng không tồn tại."),
     USERNAME_NOT_FOUND("ERR006", "Người dùng không tồn tại"),
+    INVALID_PHONE_NUMBER("ERR007", "Số điện thoại đăng nhập không hợp lệ (phải gồm 10 chữ số bắt đầu bằng 03, 05, 07, 08, 09)."),
 
 //    INTERNAL_ERROR,
 //health check consent
@@ -62,7 +63,9 @@ public enum ErrorCode {
     // Hồ sơ sức khỏe
     HEALTH_RECORD_NOT_FOUND("ERR073", "Không tìm thấy hồ sơ sức khỏe."),
 
-    SENT_MEDICINE_NOT_FOUND("ERR075", "Không tìm thấy bản ghi gửi thuốc.");
+    SENT_MEDICINE_NOT_FOUND("ERR075", "Không tìm thấy bản ghi gửi thuốc."),
+
+    CANNOT_DELETE_STUDENT("ERR076", "Không thể xoá học sinh do đang có hồ sơ sức khỏe hoặc dữ liệu y tế liên kết.");
 
 
 

@@ -19,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.medical.schoolMedical.util.ValidationUtil;
 
 import java.util.List;
 
@@ -57,7 +58,15 @@ public class UserService {
     }
 
     public void validateUserInput(UserDTO userDTO) {
-        String password = userDTO.getPassword().trim();
+        String username = userDTO.getUsername() != null ? userDTO.getUsername().trim() : "";
+        if (userDTO.getRole() == Role.PARENT || (!username.equalsIgnoreCase("admin") && userDTO.getRole() != Role.ADMIN)) {
+            if (!ValidationUtil.isValidPhoneNumber(username)) {
+                throw new BusinessException(ErrorCode.INVALID_PHONE_NUMBER);
+            }
+        }
+        userDTO.setUsername(username);
+
+        String password = userDTO.getPassword() != null ? userDTO.getPassword().trim() : "";
         if (password.contains("<script>") || password.matches(".*[<>\"'].+")) {
             throw new BusinessException(ErrorCode.INVALID_PASSWORD);
         }
@@ -81,6 +90,7 @@ public class UserService {
             case PARENT:
                 Parent parent = new Parent();
                 parent.setUser(user);
+                parent.setPhoneNumber(user.getUsername());
                 parentRepository.save(parent);
                 break;
         }

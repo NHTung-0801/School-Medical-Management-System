@@ -122,6 +122,46 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Ràng buộc định dạng số điện thoại cho form đăng nhập người dùng/phụ huynh
+    const userPhoneInput = document.querySelector('input[type="tel"]#username');
+    if (userPhoneInput) {
+        const phoneError = document.getElementById('phoneError');
+        userPhoneInput.addEventListener('input', function () {
+            // Chỉ giữ lại ký tự số và giới hạn 10 chữ số
+            this.value = this.value.replace(/\D/g, '').slice(0, 10);
+            if (phoneError) {
+                if (this.value.length > 0 && !/^0[35789]/.test(this.value)) {
+                    phoneError.innerText = 'Số điện thoại phải bắt đầu bằng 03, 05, 07, 08 hoặc 09';
+                    phoneError.style.display = 'block';
+                } else if (this.value.length > 0 && this.value.length < 10) {
+                    phoneError.innerText = 'Số điện thoại phải gồm đúng 10 chữ số';
+                    phoneError.style.display = 'block';
+                } else {
+                    phoneError.style.display = 'none';
+                    phoneError.innerText = '';
+                }
+            }
+        });
+
+        const loginForm = userPhoneInput.closest('form');
+        if (loginForm) {
+            loginForm.addEventListener('submit', function (e) {
+                const phoneVal = userPhoneInput.value.trim();
+                const phoneRegex = /^0[35789]\d{8}$/;
+                if (!phoneRegex.test(phoneVal)) {
+                    e.preventDefault();
+                    if (phoneError) {
+                        phoneError.innerText = 'Vui lòng nhập số điện thoại hợp lệ gồm 10 chữ số (03, 05, 07, 08, 09)!';
+                        phoneError.style.display = 'block';
+                    } else {
+                        alert('Vui lòng nhập số điện thoại hợp lệ gồm 10 chữ số (03, 05, 07, 08, 09)!');
+                    }
+                    userPhoneInput.focus();
+                }
+            });
+        }
+    }
+
     // Gán các hàm vào global scope để gọi từ HTML
     window.openModal = openModal;
     window.closeModal = closeModal;

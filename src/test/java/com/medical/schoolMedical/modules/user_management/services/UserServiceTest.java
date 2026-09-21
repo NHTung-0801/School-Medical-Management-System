@@ -115,4 +115,61 @@ class UserServiceTest {
         assertEquals(ErrorCode.USER_NOT_EXISTS, exception.getErrorCode());
         verify(userRepository, never()).save(any());
     }
+
+    @Test
+    @DisplayName("Should pass validateUserInput when parent has valid Vietnamese phone number")
+    void testValidateUserInputValidParentPhone() {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername("0912345678");
+        userDTO.setPassword("Pass1234");
+        userDTO.setRole(Role.PARENT);
+
+        assertDoesNotThrow(() -> userService.validateUserInput(userDTO));
+    }
+
+    @Test
+    @DisplayName("Should throw INVALID_PHONE_NUMBER when parent has invalid phone number")
+    void testValidateUserInputInvalidParentPhone() {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername("1234567890"); // Invalid prefix
+        userDTO.setPassword("Pass1234");
+        userDTO.setRole(Role.PARENT);
+
+        BusinessException exception = assertThrows(BusinessException.class, () -> {
+            userService.validateUserInput(userDTO);
+        });
+
+        assertEquals(ErrorCode.INVALID_PHONE_NUMBER, exception.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("Should pass validateUserInput for root admin with username 'admin'")
+    void testValidateUserInputAdminAllowed() {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername("admin");
+        userDTO.setPassword("AdminPass123");
+        userDTO.setRole(Role.ADMIN);
+
+        assertDoesNotThrow(() -> userService.validateUserInput(userDTO));
+    }
+
+    @Test
+    @DisplayName("Should create PARENT entity and sync phone number to Parent entity")
+    void testCreateUserParentSyncsPhoneNumber() {
+        User user = new User();
+        user.setId(5L);
+        user.setUsername("0987654321");
+        user.setRole(Role.PARENT);
+
+        when(userRepository.save(user)).thenReturn(user);
+
+        userService.createUser(user);
+
+        verify(userRepository, times(1)).save(user);
+        org.mockito.ArgumentCaptor<com.medical.schoolMedical.modules.user_management.entities.Parent> parentCaptor =
+                org.mockito.ArgumentCaptor.forClass(com.medical.schoolMedical.modules.user_management.entities.Parent.class);
+        verify(parentRepository, times(1)).save(parentCaptor.capture());
+        assertEquals("0987654321", parentCaptor.getValue().getPhoneNumber());
+        assertEquals(user, parentCaptor.getValue().getUser());
+    }
 }

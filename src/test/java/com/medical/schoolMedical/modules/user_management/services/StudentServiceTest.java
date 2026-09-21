@@ -103,4 +103,66 @@ class StudentServiceTest {
 
         assertEquals(ErrorCode.STUDENT_NOT_FOUND, exception.getErrorCode());
     }
+
+    @Test
+    @DisplayName("Should update student successfully when student and parent exist")
+    void testUpdateStudentSuccess() {
+        Student student = new Student();
+        student.setId(10L);
+        student.setFullName("Old Name");
+
+        Parent parent = new Parent();
+        parent.setId(2L);
+        parent.setFullName("Parent Name");
+
+        when(studentRepository.findById(10L)).thenReturn(Optional.of(student));
+        when(parentRepository.findById(2L)).thenReturn(Optional.of(parent));
+
+        studentService.updateStudent(10L, "New Name", Gender.FEMALE, LocalDate.of(2016, 8, 15), "New Address", "4B", 2L);
+
+        assertEquals("New Name", student.getFullName());
+        assertEquals(Gender.FEMALE, student.getGender());
+        assertEquals("4B", student.getClassName());
+        assertEquals(parent, student.getParent());
+        verify(studentRepository, times(1)).save(student);
+    }
+
+    @Test
+    @DisplayName("Should throw BusinessException when updating non-existent student")
+    void testUpdateStudentNotFound() {
+        when(studentRepository.findById(99L)).thenReturn(Optional.empty());
+
+        BusinessException exception = assertThrows(BusinessException.class, () -> {
+            studentService.updateStudent(99L, "New Name", Gender.FEMALE, LocalDate.of(2016, 8, 15), "New Address", "4B", 2L);
+        });
+
+        assertEquals(ErrorCode.STUDENT_NOT_FOUND, exception.getErrorCode());
+        verify(studentRepository, never()).save(any());
+    }
+
+    @Test
+    @DisplayName("Should delete student successfully when student exists")
+    void testDeleteStudentSuccess() {
+        Student student = new Student();
+        student.setId(15L);
+
+        when(studentRepository.findById(15L)).thenReturn(Optional.of(student));
+
+        studentService.deleteStudent(15L);
+
+        verify(studentRepository, times(1)).delete(student);
+    }
+
+    @Test
+    @DisplayName("Should throw BusinessException when deleting non-existent student")
+    void testDeleteStudentNotFound() {
+        when(studentRepository.findById(88L)).thenReturn(Optional.empty());
+
+        BusinessException exception = assertThrows(BusinessException.class, () -> {
+            studentService.deleteStudent(88L);
+        });
+
+        assertEquals(ErrorCode.STUDENT_NOT_FOUND, exception.getErrorCode());
+        verify(studentRepository, never()).delete(any());
+    }
 }

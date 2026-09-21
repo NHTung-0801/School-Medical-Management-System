@@ -68,7 +68,17 @@
     </div>
     <!-- Recent Students List -->
     <div class="students-container">
-        <h2>Học Sinh Thêm Mới Nhất</h2>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+            <h2 style="margin: 0;"><i class="fas fa-user-graduate" style="color: #e11d48; margin-right: 8px;"></i> Học Sinh Thêm Mới Nhất</h2>
+            <div style="display: flex; gap: 10px;">
+                <a th:href="@{/manager/students/list}" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background-color: #f1f5f9; color: #334155; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 13px; border: 1px solid #cbd5e1;">
+                    <i class="fas fa-list"></i> Xem tất cả học sinh
+                </a>
+                <a th:href="@{/manager/students/create}" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background-color: #e11d48; color: #ffffff; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 13px; box-shadow: 0 4px 10px rgba(225, 29, 72, 0.2);">
+                    <i class="fas fa-plus-circle"></i> Thêm học sinh mới
+                </a>
+            </div>
+        </div>
         <div class="tab-nav">
             <button class="tab-button active" onclick="switchTab('thisMonth')">Tháng này</button>
             <button class="tab-button" onclick="switchTab('lastMonth')">Tháng trước</button>
@@ -76,21 +86,25 @@
         <table id="usersTable">
             <thead>
             <tr>
-                <th>STT</th>
+                <th style="width: 60px;">STT</th>
                 <th>Họ và tên</th>
-                <th>Lớp</th>
+                <th style="width: 100px;">Lớp</th>
                 <th>Họ tên phụ huynh</th>
-
+                <th style="width: 120px; text-align: center;">Hành động</th>
             </tr>
             </thead>
             <!-- Tháng này -->
             <tbody id="thisMonthTable">
             <tr th:each="student, iterStat : ${studentsThisMonth}">
                 <td th:text="${iterStat.index + 1}"></td>
-                <td th:text="${student.fullName}"></td>
-                <td th:text="${student.className}"></td>
+                <td><strong style="color: #0f172a;" th:text="${student.fullName}"></strong></td>
+                <td><span style="display:inline-block; padding: 2px 8px; background: #f1f5f9; border-radius: 4px; font-weight: 600;" th:text="${student.className}"></span></td>
                 <td th:text="${student.parent != null ? student.parent.fullName : '---'}"></td>
-                <!--                <td th:text="${student.parent != null ? student.parent.phone : '-&#45;&#45;'}"></td>-->
+                <td style="text-align: center;">
+                    <a th:href="@{'/manager/students/edit/' + ${student.id}}" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 12px;">
+                        <i class="fas fa-edit"></i> Sửa
+                    </a>
+                </td>
             </tr>
             <tr th:if="${#lists.isEmpty(studentsThisMonth)}">
                 <td colspan="5" style="text-align:center;">Không có dữ liệu tháng này.</td>
@@ -101,10 +115,14 @@
             <tbody id="lastMonthTable" style="display:none;">
             <tr th:each="student, iterStat : ${studentsLastMonth}">
                 <td th:text="${iterStat.index + 1}"></td>
-                <td th:text="${student.fullName}"></td>
-                <td th:text="${student.className}"></td>
+                <td><strong style="color: #0f172a;" th:text="${student.fullName}"></strong></td>
+                <td><span style="display:inline-block; padding: 2px 8px; background: #f1f5f9; border-radius: 4px; font-weight: 600;" th:text="${student.className}"></span></td>
                 <td th:text="${student.parent != null ? student.parent.fullName : '---'}"></td>
-                <!--                <td th:text="${student.parent != null ? student.parent.phone : '-&#45;&#45;'}"></td>-->
+                <td style="text-align: center;">
+                    <a th:href="@{'/manager/students/edit/' + ${student.id}}" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 12px;">
+                        <i class="fas fa-edit"></i> Sửa
+                    </a>
+                </td>
             </tr>
             <tr th:if="${#lists.isEmpty(studentsLastMonth)}">
                 <td colspan="5" style="text-align:center;">Không có dữ liệu tháng trước.</td>

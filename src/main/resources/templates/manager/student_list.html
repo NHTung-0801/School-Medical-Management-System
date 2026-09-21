@@ -2,58 +2,113 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Danh sách học sinh</title>
-  <link rel="stylesheet" th:href="@{/assets/css/manager/student_list.css}">
-  <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh Sách Học Sinh | School Medical</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" th:href="@{/assets/css/fragments/header.css}" type="text/css"/>
   <link rel="stylesheet" th:href="@{/assets/css/fragments/footer.css}" type="text/css"/>
+  <link rel="stylesheet" th:href="@{/assets/css/manager/student_list.css}">
 </head>
 <body>
 <div th:replace="fragments/header :: Header"></div>
 <div th:replace="fragments/header :: Nav-Manager"></div>
-<div class="container">
-  <h2 class="page-title">Danh sách học sinh</h2>
 
-  <div class="action-bar">
-    <a th:href="@{/manager/manager-home}">
-      <button type="button" class="btn-secondary">← Quay lại</button>
-    </a>
-
-    <a class="button add-button" th:href="@{/manager/students/create}">Thêm học sinh mới</a>
+<main class="container">
+  <!-- Header & Toolbar -->
+  <div class="page-header">
+    <div class="page-title-group">
+      <h2><i class="fas fa-user-graduate"></i> Danh Sách Học Sinh</h2>
+      <p class="subtitle">Quản lý hồ sơ học sinh, thông tin lớp học và liên kết phụ huynh</p>
+    </div>
+    <div class="header-actions">
+      <a th:href="@{/manager/manager-home}" class="btn-back">
+        <i class="fas fa-arrow-left"></i> Trang chủ
+      </a>
+      <a th:href="@{/manager/students/create}" class="btn-add">
+        <i class="fas fa-plus-circle"></i> Thêm học sinh mới
+      </a>
+    </div>
   </div>
 
-  <table>
-    <thead>
-    <tr>
-      <th class="center">STT</th>
-      <th>Họ tên</th>
-      <th>Giới tính</th>
-      <th>Ngày sinh</th>
-      <th>Địa chỉ</th>
-      <th>Lớp</th>
-      <th>Phụ huynh</th>
-      <th>Tài khoản phụ huynh</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${#lists.isEmpty(studentList)}">
-      <td colspan="8" class="no-data">Không có bản ghi nào.</td>
-    </tr>
-    <tr th:each="student, iterStat : ${studentList}">
-      <td class="center" th:text="${iterStat.count}">1</td>
-      <td th:text="${student.fullName}">Nguyễn Văn A</td>
-      <td th:text="${student.gender}">Nam</td>
-      <td th:text="${student.birthDate}">2008-04-12</td>
-      <td th:text="${student.address}">123 Lê Lợi</td>
-      <td th:text="${student.className}">6A1</td>
-      <td th:text="${student.parent != null and student.parent.fullName != null} ? ${student.parent.fullName} : 'Phụ huynh chưa cập nhật tên'">Phụ huynh</td>
-      <td th:text="${student.parent.user.username}">phuhuynh1</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+  <!-- Thông báo thành công / lỗi -->
+  <div th:if="${success}" class="message success">
+    <i class="fas fa-check-circle"></i> <span th:text="${success}"></span>
+  </div>
+  <div th:if="${error}" class="message error">
+    <i class="fas fa-exclamation-circle"></i> <span th:text="${error}"></span>
+  </div>
 
-<script th:src="@{/assets/js/manager/student_list.js}"></script>
+  <!-- Table Container -->
+  <div class="table-responsive">
+    <table>
+      <thead>
+      <tr>
+        <th style="width: 60px; text-align: center;">STT</th>
+        <th>Họ và tên</th>
+        <th style="width: 100px; text-align: center;">Giới tính</th>
+        <th style="width: 120px;">Ngày sinh</th>
+        <th>Lớp</th>
+        <th>Địa chỉ</th>
+        <th>Phụ huynh</th>
+        <th>SĐT Phụ huynh</th>
+        <th style="width: 150px; text-align: center;">Hành động</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:if="${#lists.isEmpty(studentList)}">
+        <td colspan="9" class="no-data">
+          <i class="fas fa-inbox fa-2x" style="display: block; margin-bottom: 8px; color: #cbd5e1;"></i>
+          Không có bản ghi học sinh nào trong hệ thống.
+        </td>
+      </tr>
+      <tr th:each="student, iterStat : ${studentList}">
+        <td style="text-align: center; font-weight: 600; color: #64748b;" th:text="${iterStat.count}">1</td>
+        <td>
+          <strong style="color: #0f172a;" th:text="${student.fullName}">Nguyễn Văn A</strong>
+        </td>
+        <td style="text-align: center;">
+          <span th:if="${student.gender.name() == 'MALE'}" class="gender-badge male">
+            <i class="fas fa-mars"></i> Nam
+          </span>
+          <span th:if="${student.gender.name() == 'FEMALE'}" class="gender-badge female">
+            <i class="fas fa-venus"></i> Nữ
+          </span>
+          <span th:if="${student.gender.name() == 'OTHER'}" class="gender-badge other">
+            Khác
+          </span>
+        </td>
+        <td th:text="${student.birthDate}">2016-05-15</td>
+        <td>
+          <span class="class-badge" th:text="${student.className}">3A</span>
+        </td>
+        <td th:text="${student.address}">Hà Nội</td>
+        <td th:text="${student.parent != null and student.parent.fullName != null} ? ${student.parent.fullName} : 'Chưa cập nhật'">Phụ huynh</td>
+        <td>
+          <span style="font-family: monospace; font-weight: 600; color: #0284c7;"
+                th:text="${student.parent != null && student.parent.user != null ? student.parent.user.username : (student.parent != null ? student.parent.phoneNumber : '---')}">
+            0912345678
+          </span>
+        </td>
+        <td>
+          <div class="actions">
+            <a th:href="@{'/manager/students/edit/' + ${student.id}}" class="btn-edit" title="Chỉnh sửa thông tin">
+              <i class="fas fa-edit"></i> Sửa
+            </a>
+            <form th:action="@{'/manager/students/delete/' + ${student.id}}" method="post" style="display:inline;"
+                  onsubmit="return confirm('Bạn có chắc chắn muốn xoá học sinh này không?');">
+              <button type="submit" class="btn-delete" title="Xoá học sinh">
+                <i class="fas fa-trash-alt"></i> Xoá
+              </button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
 <script th:src="@{/assets/js/fragments/header.js}"></script>
 <div th:replace="fragments/footer :: footer"></div>
 </body>

@@ -61,6 +61,35 @@ public class StudentService {
         studentRepository.save(student);
     }
 
+    public void updateStudent(Long id, String fullName, Gender gender, LocalDate birthDate,
+                              String address, String className, Long parentId) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.STUDENT_NOT_FOUND));
+
+        Parent parent = parentRepository.findById(parentId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.PARENT_NOT_EXISTS));
+
+        student.setFullName(fullName);
+        student.setGender(gender);
+        student.setBirthDate(birthDate);
+        student.setAddress(address);
+        student.setClassName(className);
+        student.setParent(parent);
+
+        studentRepository.save(student);
+    }
+
+    public void deleteStudent(Long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.STUDENT_NOT_FOUND));
+        try {
+            studentRepository.delete(student);
+        } catch (org.springframework.dao.DataIntegrityViolationException ex) {
+            log.error("Cannot delete student id {} due to foreign key constraints: {}", id, ex.getMessage());
+            throw new BusinessException(ErrorCode.CANNOT_DELETE_STUDENT);
+        }
+    }
+
     public StudentDTO getStudentById_DTO(Long id) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.STUDENT_NOT_FOUND));

@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDTO {
     private Long id;
-    @NotBlank(message = "Tên đăng nhập không được bỏ trống")
-    @Pattern(regexp = "^(0\\d{9,10}|[a-zA-Z0-9._-]{3,30})$", message = "Tên đăng nhập từ 3-30 ký tự hoặc số điện thoại (10-11 số bắt đầu từ 0)")
+    @NotBlank(message = "Số điện thoại đăng nhập không được bỏ trống")
+    @Pattern(regexp = "^(0[35789]\\d{8}|admin)$", message = "Số điện thoại đăng nhập phải là số điện thoại hợp lệ gồm 10 chữ số (bắt đầu bằng 03, 05, 07, 08, 09)")
     private String username;
 
     @NotBlank(message = "Email không được bỏ trống")
