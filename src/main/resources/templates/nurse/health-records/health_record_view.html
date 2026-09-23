@@ -1,4 +1,4 @@
-﻿<!--<!DOCTYPE html>-->
+<!--<!DOCTYPE html>-->
 <!--<html lang="vi" xmlns:th="http://www.thymeleaf.org">-->
 <!--<head>-->
 <!--    <meta charset="UTF-8">-->
@@ -76,9 +76,12 @@
 <div class="main-container py-5">
     <h3 class="view-title">Hồ sơ sức khỏe học sinh</h3>
 
-    <div class="text-end mt-3 back-btn-wrapper">
+    <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
         <a th:href="@{/nurse/health-record}" class="btn-back">
-            <i class="fas fa-arrow-left me-1"></i> Quay lại danh sách
+            <i class="fas fa-arrow-left me-1"></i> Danh sách hồ sơ
+        </a>
+        <a th:href="@{'/nurse/health-record/export-pdf/' + ${record.id}}" class="btn btn-primary" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border: none; border-radius: 8px; font-weight: 600; padding: 8px 16px; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);">
+            <i class="fas fa-file-pdf me-1"></i> Tải Thẻ Y Tế (PDF)
         </a>
     </div>
 

@@ -1,6 +1,7 @@
 package com.medical.schoolMedical.modules.health_record.controllers;
 
 import com.medical.schoolMedical.modules.health_record.entities.HealthRecord;
+import com.medical.schoolMedical.modules.health_record.services.HealthRecordPdfExportService;
 import com.medical.schoolMedical.modules.health_record.services.HealthRecordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ import java.util.Optional;
 public class NurseHealthRecordController {
     @Autowired
     private HealthRecordService healthRecordService;
+
+    @Autowired
+    private HealthRecordPdfExportService pdfExportService;
 
     @GetMapping
     public String listHealthRecord(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
@@ -42,5 +46,26 @@ public class NurseHealthRecordController {
 
         model.addAttribute("record", optionalRecord.get());
         return "nurse/health-records/health_record_view";
+    }
+
+    // Xuất Thẻ y tế điện tử ra file PDF
+    @GetMapping("/export-pdf/{id}")
+    public void exportPdf(@PathVariable Long id, jakarta.servlet.http.HttpServletResponse response) throws java.io.IOException {
+        Optional<HealthRecord> optionalRecord = healthRecordService.findByIdWithStudentAndParent(id);
+        if (optionalRecord.isEmpty()) {
+            response.sendError(jakarta.servlet.http.HttpServletResponse.SC_NOT_FOUND, "Không tìm thấy hồ sơ sức khỏe.");
+            return;
+        }
+
+        HealthRecord record = optionalRecord.get();
+        response.setContentType("application/pdf");
+        String filename = "TheYTe_" + (record.getStudent() != null ? record.getStudent().getId() : id) + ".pdf";
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+
+        try {
+            pdfExportService.exportToPdf(record, response.getOutputStream());
+        } catch (Exception e) {
+            response.sendError(jakarta.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi khi tạo file PDF: " + e.getMessage());
+        }
     }
 }

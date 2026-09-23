@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -31,9 +31,14 @@
                     <p>Thông tin y tế cơ bản và tiền sử theo dõi tại trường học</p>
                 </div>
             </div>
-            <div class="student-badge-pill" th:if="${record.student != null}">
-                <i class="fas fa-user-graduate me-1"></i>
-                <span th:text="${record.student.fullName}">Nguyễn Văn A</span>
+            <div class="d-flex align-items-center gap-2">
+                <a th:href="@{'/parent/health-record/export-pdf/' + ${record.student.id}}" class="btn-report-print" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: #fff; text-decoration: none; padding: 7px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);">
+                    <i class="fas fa-file-pdf"></i> Tải Thẻ Y Tế (PDF)
+                </a>
+                <div class="student-badge-pill" th:if="${record.student != null}">
+                    <i class="fas fa-user-graduate me-1"></i>
+                    <span th:text="${record.student.fullName}">Nguyễn Văn A</span>
+                </div>
             </div>
         </div>
 
@@ -117,6 +122,9 @@
             <div class="report-actions">
                 <a th:href="@{/parent/health-record/select-student}" class="btn-report-back">
                     <i class="fas fa-arrow-left"></i> Danh sách học sinh
+                </a>
+                <a th:href="@{'/parent/health-record/export-pdf/' + ${record.student.id}}" class="btn-report-edit" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);">
+                    <i class="fas fa-file-pdf"></i> Tải Thẻ Y Tế (PDF)
                 </a>
                 <a th:href="@{'/parent/health-record/form/' + ${record.student.id}}" class="btn-report-edit">
                     <i class="fas fa-edit"></i> Cập nhật thông tin

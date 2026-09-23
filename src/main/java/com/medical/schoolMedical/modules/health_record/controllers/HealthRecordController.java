@@ -3,6 +3,7 @@ package com.medical.schoolMedical.modules.health_record.controllers;
 import com.medical.schoolMedical.modules.user_management.entities.Parent;
 import com.medical.schoolMedical.modules.user_management.entities.Student;
 import com.medical.schoolMedical.modules.health_record.entities.HealthRecord;
+import com.medical.schoolMedical.modules.health_record.services.HealthRecordPdfExportService;
 import com.medical.schoolMedical.modules.health_record.services.HealthRecordService;
 import com.medical.schoolMedical.modules.user_management.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ import java.util.Optional;
 public class HealthRecordController {
     @Autowired
     private HealthRecordService healthRecordService;
+
+    @Autowired
+    private HealthRecordPdfExportService pdfExportService;
 
     @Autowired
     private UserService userService;
@@ -119,5 +123,32 @@ public class HealthRecordController {
         healthRecordService.deleteById(id);
         redirectAttributes.addFlashAttribute("success", "Đã xoá hồ sơ.");
         return "redirect:/parent/health-record/select-student";
+    }
+
+    // Xuất Thẻ y tế điện tử ra file PDF
+    @GetMapping("/export-pdf/{studentId}")
+    public void exportPdf(@PathVariable Long studentId, jakarta.servlet.http.HttpServletResponse response) throws java.io.IOException {
+        Student student = userService.findStudentById(studentId);
+        Parent currentParent = userService.getCurrentParent();
+        if (student == null || student.getParent() == null || student.getParent().getId() != currentParent.getId()) {
+            response.sendError(jakarta.servlet.http.HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền tải thẻ y tế của học sinh này.");
+            return;
+        }
+
+        Optional<HealthRecord> optionalRecord = healthRecordService.getByStudent(student);
+        if (optionalRecord.isEmpty()) {
+            response.sendError(jakarta.servlet.http.HttpServletResponse.SC_NOT_FOUND, "Chưa có hồ sơ sức khỏe.");
+            return;
+        }
+
+        response.setContentType("application/pdf");
+        String filename = "TheYTe_" + student.getId() + ".pdf";
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+
+        try {
+            pdfExportService.exportToPdf(optionalRecord.get(), response.getOutputStream());
+        } catch (Exception e) {
+            response.sendError(jakarta.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi khi tạo file PDF: " + e.getMessage());
+        }
     }
 }
