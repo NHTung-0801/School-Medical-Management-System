@@ -16,18 +16,25 @@
 <div th:replace="~{fragments/header :: Header}"></div>
 <div th:replace="~{fragments/header :: Nav-Nurse}"></div>
 
-<div class="bg-pink min-vh-100 d-flex justify-content-center align-items-start py-5">
+<main class="container py-4">
+    <div class="schedule-card">
+        <!-- Executive Header Banner -->
+        <div class="card-header-banner">
+            <div class="banner-title-group">
+                <div class="header-icon-badge">
+                    <i class="fas fa-syringe"></i>
+                </div>
+                <div>
+                    <h2 class="banner-title">Danh Sách Lịch Tiêm Chủng</h2>
+                    <p class="banner-subtitle">Quản lý và lập kế hoạch các đợt tiêm chủng phòng bệnh cho học sinh</p>
+                </div>
+            </div>
 
-    <!-- ❷ Khung trắng  -->
-    <div class="schedule-card p-4 w-100" style="width: 85%;">
-
-        <h2 class="fw-bold mb-4 text-pink">
-            Danh sách lịch tiêm chủng
-        </h2>
-
-        <div class="table-actions">
-            <a th:href="@{/nurse/nurse-home}" class="btn-gray">← Quay lại</a>
-            <a th:href="@{/nurse/vaccinationSchedule}" class="btn btn-pink">Tạo lịch tiêm chủng</a>
+            <div class="header-actions">
+                <a th:href="@{/nurse/vaccinationSchedule}" class="btn-add">
+                    <i class="fas fa-calendar-plus"></i> Tạo lịch tiêm chủng
+                </a>
+            </div>
         </div>
 
         <div th:if="${success}" class="send_parent">
@@ -36,7 +43,7 @@
 
         <!-- Bảng danh sách -->
         <div class="table-responsive">
-            <table class="table table-rounded table-bordered align-middle mb-0 ">
+            <table class="table table-rounded table-bordered align-middle mb-0">
                 <thead>
                 <tr class="table-pink text-white">
                     <th>STT</th>
@@ -59,24 +66,24 @@
                     <td class="text-center">
                         <form th:action="@{/nurse/vaccinationSchedule/sentToParent}" method="post" style="display: inline;">
                             <input type="hidden" name="vaccinationScheduleId" th:value="${schedule.id}" />
-                            <button type="submit" class="btn btn-outline-pink btn-sm">
-                                Gửi xác nhận
+                            <button type="submit" class="btn-action-send">
+                                <i class="fas fa-paper-plane"></i> Gửi xác nhận
                             </button>
                         </form>
                     </td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(draftsVaccinationSchedules)}">
-                    <td colspan="6" class="text-center fst-italic">Chưa có lịch tiêm chủng nào.</td>
+                    <td colspan="7" class="text-center fst-italic">Chưa có lịch tiêm chủng nào.</td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
-</div>
+</main>
 
 <!-- Optional JS (nếu cần)  -->
 <script th:src="@{/assets/js/nurse/vaccination-schedule-list.js}"></script>
 <script th:src="@{/assets/js/fragments/header.js}"></script>
-<div th:replace="~{fragments/footer :: footer}"></div>
+<div th:replace="fragments/footer :: footer-compact"></div>
 </body>
 </html>

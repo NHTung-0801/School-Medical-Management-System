@@ -1,68 +1,75 @@
+/* medicine/form.css — Nurse Medicine Add/Edit Form */
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #fff0f5;
-    padding: 40px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background-color: #f8fafc;
+    padding: 0;
     margin: 0;
-    display: contents;
-    justify-content: center;
-    align-items: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
-.wrapper{
-    max-width:600px;
+
+.wrapper {
+    max-width: 600px;
     margin: 20px auto;
-    background:#fff;
-    padding:32px;
-    border-radius:14px;
-    box-shadow:0 8px 20px rgba(0,0,0,.1);
+    background: #fff;
+    padding: 32px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
-/* ===== Tiêu đề ===== */
+
+/* Heading */
 h2 {
     text-align: center;
-    color: #e91e63;
+    color: #0284c7;
     font-size: 32px;
     font-weight: bold;
     text-transform: uppercase;
     margin-bottom: 30px;
 }
 
-/* ===== Thông báo lỗi ===== */
+/* Error message */
 .error-msg {
     color: red;
     text-align: center;
     margin-bottom: 16px;
 }
 
-/* ===== Nhãn và input ===== */
+/* Label and input */
 label {
     display: block;
     margin-bottom: 6px;
     font-weight: 600;
     color: #333;
 }
+
 input {
     width: 100%;
     padding: 10px 12px;
     margin-bottom: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #bae6fd;
     border-radius: 6px;
     font-size: 14px;
-}
-input:focus {
-    outline: none;
-    border-color: #e91e63;
-    box-shadow: 0 0 0 2px rgba(233, 30, 99, 0.15);
+    box-sizing: border-box;
 }
 
-/* ===== Nhóm nút ===== */
+input:focus {
+    outline: none;
+    border-color: #0284c7;
+    box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15);
+}
+
+/* Button group */
 .button-group {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
 }
+
 button[type="submit"],
 .back-btn {
-    background: #e91e63;
+    background: #0284c7;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -72,21 +79,22 @@ button[type="submit"],
     cursor: pointer;
     transition: background 0.3s ease;
 }
+
 button[type="submit"]:hover,
 .back-btn:hover {
-    background: #d81b60;
+    background: #0369a1;
 }
-.back-btn i {
-    margin-right: 6px;
-}
+
+.back-btn i { margin-right: 6px; }
+
 form {
     max-width: 700px;
     margin: 0 auto;
     padding: 30px;
     background: white;
     border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(233, 30, 99, 0.2);
-    box-sizing: border-box; /* QUAN TRỌNG */
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.12);
+    box-sizing: border-box;
 }
 
 input, label {

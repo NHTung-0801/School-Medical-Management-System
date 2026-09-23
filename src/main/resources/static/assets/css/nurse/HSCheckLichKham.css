@@ -1,14 +1,13 @@
+/* HSCheckLichKham.css — Nurse Health Check Schedule List */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f4f8;
-    display: contents;
-    justify-content: center;
-    align-items: center;
+    background-color: #f8fafc;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
-
 
 .container {
     max-width: 1000px;
@@ -16,7 +15,7 @@ body {
     background: #ffffff;
     padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(255, 77, 136, 0.2);
+    box-shadow: 0 8px 30px rgba(2, 132, 199, 0.12);
     animation: fadeIn 0.5s ease-in-out;
 }
 
@@ -33,7 +32,7 @@ body {
 .header-list logo {
     width: 80px;
     height: 80px;
-    background: linear-gradient(45deg, #ff4d88, #ff1a66);
+    background: linear-gradient(45deg, #0284c7, #0ea5e9);
     border-radius: 50%;
     margin: 0 auto 15px;
     display: flex;
@@ -47,7 +46,7 @@ body {
 }
 
 h2 {
-    color: #ff4d88;
+    color: #0284c7;
     font-size: 32px;
     font-weight: 700;
     text-transform: uppercase;
@@ -55,7 +54,7 @@ h2 {
 }
 
 h3 {
-    color: #ff1a66;
+    color: #0ea5e9;
     font-size: 16px;
     font-weight: 400;
     margin-top: 5px;
@@ -71,19 +70,19 @@ h3 {
 
 .search-bar-list input {
     padding: 10px 40px 10px 15px;
-    border: 1px solid #ffe6f0;
+    border: 1px solid #bae6fd;
     border-radius: 8px;
     font-size: 14px;
     width: 100%;
     max-width: 300px;
     transition: border-color 0.3s, box-shadow 0.3s;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23ff4d88" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>') no-repeat right 10px center;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%230284c7" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>') no-repeat right 10px center;
     background-size: 16px;
 }
 
 .search-bar-list input:focus {
-    border-color: #ff1a66;
-    box-shadow: 0 0 8px rgba(255, 26, 102, 0.2);
+    border-color: #0284c7;
+    box-shadow: 0 0 8px rgba(2, 132, 199, 0.2);
     outline: none;
 }
 
@@ -91,7 +90,7 @@ h3 {
     background: none;
     border: none;
     font-size: 16px;
-    color: #ff4d88;
+    color: #0284c7;
     cursor: pointer;
     display: none;
     position: absolute;
@@ -101,13 +100,13 @@ h3 {
 }
 
 .search-bar-list .clear-btn:hover {
-    color: #d81b60;
+    color: #0369a1;
 }
 
 .action-link {
     display: inline-block;
     padding: 10px 20px;
-    background: linear-gradient(90deg, #ff4d88, #ff1a66);
+    background: linear-gradient(90deg, #0284c7, #0ea5e9);
     color: white;
     text-decoration: none;
     border-radius: 8px;
@@ -185,12 +184,12 @@ table.active {
 th, td {
     padding: 15px;
     text-align: left;
-    border-bottom: 1px solid #ffe6f0;
+    border-bottom: 1px solid #e0f2fe;
     transition: background-color 0.3s;
 }
 
 th {
-    background: linear-gradient(90deg, #ff4d88, #ff1a66);
+    background: linear-gradient(90deg, #0284c7, #0ea5e9);
     color: white;
     font-weight: 600;
     font-size: 14px;
@@ -198,11 +197,11 @@ th {
 }
 
 tr:nth-child(even) {
-    background-color: #fff0f5;
+    background-color: #f0f9ff;
 }
 
 tr:hover {
-    background-color: #ffe6f0;
+    background-color: #e0f2fe;
     transform: scale(1.01);
 }
 
@@ -222,7 +221,7 @@ tr:hover {
 .btn {
     display: inline-block;
     padding: 8px 15px;
-    background: linear-gradient(90deg, #ff4d88, #ff1a66);
+    background: linear-gradient(90deg, #0284c7, #0ea5e9);
     color: white;
     text-decoration: none;
     border-radius: 8px;
@@ -246,7 +245,7 @@ tr:hover {
 
 .pagination a {
     padding: 10px 15px;
-    background: linear-gradient(90deg, #ff4d88, #ff1a66);
+    background: linear-gradient(90deg, #0284c7, #0ea5e9);
     color: white;
     text-decoration: none;
     border-radius: 8px;
@@ -256,7 +255,7 @@ tr:hover {
 }
 
 .pagination a.current {
-    background: linear-gradient(90deg, #d81b60, #c2185b);
+    background: linear-gradient(90deg, #0369a1, #0284c7);
     font-weight: bold;
     transform: scale(1.1);
 }
@@ -290,8 +289,9 @@ tr:hover {
         max-width: 100%;
     }
 }
+
 a.disabled {
     pointer-events: none;
-    opacity: 0.6; /* cho mờ đi */
+    opacity: 0.6;
     cursor: not-allowed;
 }

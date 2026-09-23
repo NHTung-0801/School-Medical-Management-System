@@ -1,24 +1,25 @@
+/* createReview.css — Create Medical Review/Consultation */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', 'Arial', sans-serif;
+    font-family: 'Inter', 'Roboto', 'Arial', sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #ffe6f0, #fff0f5);
-    display: contents;
-    justify-content: center;
-    align-items: center;
+    background-color: #f8fafc;
     min-height: 100vh;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
     background: #ffffff;
     padding: 30px;
     border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(255, 77, 136, 0.2);
+    box-shadow: 0 8px 30px rgba(2, 132, 199, 0.12);
     width: 100%;
     max-width: 600px;
     animation: fadeIn 0.5s ease-in-out;
@@ -31,7 +32,7 @@ body {
 }
 
 h2 {
-    color: #ff4d88;
+    color: #0284c7;
     font-size: 28px;
     font-weight: 700;
     text-align: center;
@@ -46,7 +47,7 @@ h2 {
 
 label {
     display: block;
-    color: #ff4d88;
+    color: #0284c7;
     font-weight: 500;
     margin-bottom: 8px;
     font-size: 16px;
@@ -55,7 +56,7 @@ label {
 input, textarea, select {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ffe6f0;
+    border: 1px solid #bae6fd;
     border-radius: 10px;
     font-size: 14px;
     transition: border-color 0.3s, box-shadow 0.3s;
@@ -64,8 +65,8 @@ input, textarea, select {
 }
 
 input:focus, textarea:focus, select:focus {
-    border-color: #ff1a66;
-    box-shadow: 0 0 8px rgba(255, 26, 102, 0.2);
+    border-color: #0284c7;
+    box-shadow: 0 0 8px rgba(2, 132, 199, 0.2);
     outline: none;
 }
 
@@ -91,12 +92,12 @@ button {
 }
 
 button[type="submit"] {
-    background: linear-gradient(90deg, #18c474, #00703c);
+    background: linear-gradient(90deg, #059669, #10b981);
     color: #fff;
 }
 
 button[type="button"] {
-    background: linear-gradient(90deg, #ff7182, #e62020);
+    background: linear-gradient(90deg, #64748b, #475569);
     color: #fff;
 }
 

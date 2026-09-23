@@ -1,41 +1,42 @@
+/* vaccination-schedule-form.css — Nurse Vaccination Schedule Form */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', 'Arial', sans-serif;
+    font-family: 'Inter', 'Roboto', 'Arial', sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #ffe6f0, #fff0f5);
-    display: contents;
-    justify-content: center;
-    align-items: center;
+    background-color: #f8fafc;
     min-height: 100vh;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
 }
 
-/* Khung chính */
+/* Main card */
 .vs-card {
     max-width: 700px;
     margin: 40px auto;
     padding: 30px 40px;
     border-radius: 16px;
     background-color: #fff;
-    box-shadow: 0 8px 30px rgba(233, 30, 99, 0.2);
-    border-top: 6px solid #e91e63;
+    box-shadow: 0 8px 30px rgba(2, 132, 199, 0.15);
+    border-top: 6px solid #0284c7;
     overflow: auto;
 }
 
-/* Tiêu đề */
+/* Heading */
 .vs-card h2 {
     text-align: center;
     text-transform: uppercase;
-    color: #e91e63;
+    color: #0284c7;
     font-weight: 700;
     margin-bottom: 30px;
 }
 
-/* Ô nhập */
+/* Form group */
 .form-group {
     margin-bottom: 22px;
     display: flex;
@@ -52,7 +53,7 @@ body {
 .form-control {
     width: 100%;
     border-radius: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #bae6fd;
     padding: 12px 15px;
     transition: border-color 0.2s;
     font-size: 15px;
@@ -61,20 +62,20 @@ body {
 
 .form-control:focus {
     outline: none;
-    border-color: #e91e63;
+    border-color: #0284c7;
     background-color: #fff;
+    box-shadow: 0 0 6px rgba(2, 132, 199, 0.2);
 }
 
-/* Textarea */
 textarea.form-control {
     resize: none;
     min-height: 100px;
 }
 
-/* Nút */
+/* Submit button */
 .btn-primary {
     width: 100%;
-    background: linear-gradient(to right, #e91e63, #ff6090);
+    background: linear-gradient(to right, #0284c7, #0ea5e9);
     border: none;
     font-weight: 600;
     border-radius: 12px;
@@ -86,13 +87,12 @@ textarea.form-control {
 }
 
 .btn-primary:hover {
-    background: linear-gradient(to right, #d81b60, #f06292);
+    background: linear-gradient(to right, #0369a1, #0284c7);
 }
 
-/* Lỗi */
+/* Error */
 .text-danger {
     color: #dc3545;
     font-size: 0.875rem;
     margin-top: 6px;
 }
-

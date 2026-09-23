@@ -9,7 +9,7 @@
     <link rel="stylesheet" th:href="@{/assets/css/fragments/footer.css}" type="text/css"/>
     <link rel="stylesheet" th:href="@{/assets/css/pages/phanTrang.css}"/>
 </head>
-<body style="background-color: #fff0f5;">
+<body>
 <div th:replace="~{fragments/header :: Header}"></div>
 <div th:replace="~{fragments/header :: Nav-Nurse}"></div>
 <div class="container mt-5">
@@ -46,6 +46,10 @@
                 <td>
                     <a th:href="@{/nurse/vaccinationConsent/list-student-vaccination(vaccinatonScheduleId=${schedule.id})}"
                        class="btn btn-sm btn-outline-pink">Xem học sinh</a>
+                    <a th:href="@{/nurse/vaccinationSchedule/export/{id}(id=${schedule.id})}"
+                       class="btn btn-sm btn-success text-white ms-1" title="Xuất báo cáo Excel">
+                        <i class="fas fa-file-excel"></i> Xuất Excel
+                    </a>
                 </td>
             </tr>
             <tr th:if="${#lists.isEmpty(sentVaccinationSchedules)}">
@@ -68,6 +72,6 @@
 <script th:src="@{/assets/js/nurse/list-sent-vaccination.js}"></script>
 <script th:src="@{/asset/js/phanTrang.js}"></script>
 <script th:src="@{/assets/js/fragments/header.js}"></script>
-<div th:replace="~{fragments/footer :: footer}"></div>
+<div th:replace="fragments/footer :: footer-compact"></div>
 </body>
 </html>

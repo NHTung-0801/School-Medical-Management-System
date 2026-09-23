@@ -12,68 +12,80 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" th:href="@{/assets/css/nurse/sent-medicine-usage/sent_medicine_list.css}" />
-    <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 </head>
 <body>
 
 <div th:replace="fragments/header :: Header"></div>
 <div th:replace="fragments/header :: Nav-Nurse"></div>
-<div class="container">
-    <h2 class="title">
-        Danh sách lịch khám sức khỏe
-    </h2>
 
-    <!-- Nút tạo lịch đặt bên phải -->
-    <div class="header-actions">
-        <a th:href="@{/nurse/healthCheckSchedule}"><button type="button" class="btn-primary">Tạo lịch khám sức khỏe</button></a>
+<main class="container py-4">
+    <div class="medical-card">
+        <!-- Executive Header Banner -->
+        <div class="card-header-banner">
+            <div class="banner-title-group">
+                <div class="header-icon-badge">
+                    <i class="fas fa-stethoscope"></i>
+                </div>
+                <div>
+                    <h2 class="banner-title">Danh Sách Lịch Khám Sức Khỏe</h2>
+                    <p class="banner-subtitle">Quản lý và lập kế hoạch kiểm tra thể lực, khám định kỳ các khối lớp</p>
+                </div>
+            </div>
 
-        <a th:href="@{/nurse/nurse-home}" ><button type="button" class="btn-secondary">Quay lại</button></a>
+            <div class="header-actions">
+                <a th:href="@{/nurse/healthCheckSchedule}" class="btn-add">
+                    <i class="fas fa-calendar-plus"></i> Tạo lịch khám sức khỏe
+                </a>
+            </div>
+        </div>
+
+        <div th:if="${success}" class="send_parent message">
+            <p th:text="${success}"></p>
+        </div>
+
+        <!-- Bảng danh sách -->
+        <div class="table-responsive">
+            <table class="table-rounded">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Khối khám</th>
+                    <th>Ngày khám</th>
+                    <th>Giờ khám</th>
+                    <th>Nội dung</th>
+                    <th>Ghi chú</th>
+                    <th>Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="schedule, iterStat : ${draftsHealthCheckSchedules}">
+                    <td th:text="${iterStat.index + 1}">1</td>
+                    <td th:text="${schedule.className}"></td>
+                    <td th:text="${#temporals.format(schedule.checkDate, 'dd/MM/yyyy')}">05/01/2026</td>
+                    <td th:text="${#temporals.format(schedule.checkDate, 'hh:mm a')}">09:30 AM</td>
+                    <td th:text="${schedule.content}"></td>
+                    <td th:text="${schedule.notes}">ghi chú</td>
+                    <td>
+                        <form th:action="@{/nurse/healthCheckSchedule/sentToParent}" method="post" style="display: inline;">
+                            <input type="hidden" name="healthCheckScheduleId" th:value="${schedule.id}" />
+                            <button type="submit" class="btn-action-send">
+                                <i class="fas fa-paper-plane"></i> Gửi xác nhận
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(draftsHealthCheckSchedules)}">
+                    <td colspan="7" class="empty-message">Chưa có lịch khám sức khỏe nào.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+</main>
 
-    <div th:if="${success}" class="send_parent message">
-        <p th:text="${success}"></p>
-    </div>
-
-    <!-- Bảng danh sách -->
-    <table class="table-rounded">
-        <thead>
-        <tr>
-            <th>STT</th>
-            <th>Khối khám</th>
-            <th>Ngày khám</th>
-            <th>Giờ khám</th>
-            <th>Nội dung</th>
-            <th>Ghi chú</th>
-            <th>Hành động</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="schedule, iterStat : ${draftsHealthCheckSchedules}">
-            <td th:text="${iterStat.index + 1}">1</td>
-            <td th:text="${schedule.className}"></td>
-            <td th:text="${#temporals.format(schedule.checkDate, 'dd/MM/yyyy')}">05/01/2026</td>
-            <td th:text="${#temporals.format(schedule.checkDate, 'hh:mm a')}">09:30 AM</td>
-            <td th:text="${schedule.content}"></td>
-            <td th:text="${schedule.notes}">ghi chú</td>
-            <td>
-                <form th:action="@{/nurse/healthCheckSchedule/sentToParent}" method="post" style="display: inline;">
-                    <input type="hidden" name="healthCheckScheduleId" th:value="${schedule.id}" />
-                    <button type="submit" class="btn-primary" >
-                        Gửi xác nhận
-                    </button>
-                </form>
-            </td>
-        </tr>
-        <tr th:if="${#lists.isEmpty(draftsHealthCheckSchedules)}">
-            <td colspan="6" class="empty-message">Chưa có lịch tiêm chủng nào.</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-
-<!-- Optional JS (nếu cần)  -->
+<!-- Optional JS -->
 <script th:src="@{/assets/js/nurse/vaccination-schedule-list.js}"></script>
 <script th:src="@{/assets/js/fragments/header.js}"></script>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="fragments/footer :: footer-compact"></div>
 </body>
 </html>

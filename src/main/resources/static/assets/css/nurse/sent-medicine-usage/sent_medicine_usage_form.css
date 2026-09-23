@@ -1,80 +1,89 @@
-/* Reset & base */
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif
+/* sent-medicine-usage/sent_medicine_usage_form.css — Nurse Medicine Usage Form */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
-body{
-    background:#fff0f5;
-    display:contents;
-    align-items:center;
-    justify-content:center;
-    min-height:100vh;
-    padding:20px;
+body {
+    background-color: #f8fafc;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
 }
 
-.form-container{
-    width:100%;
-    max-width:600px;
-    background:#fff;
-    padding:30px 40px;
-    border-radius:16px;
-    box-shadow:0 8px 24px rgba(233,30,99,.2);
+.form-container {
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(2, 132, 199, 0.15);
     margin: 20px auto;
 }
 
-.form-title{
-    text-align:center;
-    color:#e91e63;
-    text-transform:uppercase;
-    font-weight:700;
-    margin-bottom:28px;
-    font-size:1.5rem;
+.form-title {
+    text-align: center;
+    color: #0284c7;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 28px;
+    font-size: 1.5rem;
 }
 
-.form-group{margin-bottom:20px}
+.form-group { margin-bottom: 20px; }
 
-label{font-weight:600;color:#333;margin-bottom:6px;display:block}
+label { font-weight: 600; color: #333; margin-bottom: 6px; display: block; }
 
-.required{color:#e91e63;margin-left:2px}
+.required { color: #dc2626; margin-left: 2px; }
 
-select,textarea,input[type=text]{
-    width:100%;
-    padding:10px 12px;
-    border:1px solid #ccc;
-    border-radius:12px;
-    font-size:15px;
+select, textarea, input[type=text] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #bae6fd;
+    border-radius: 12px;
+    font-size: 15px;
+    transition: border-color 0.2s;
 }
 
-textarea{resize:none;min-height:90px}
-
-.actions{
-    display:flex;
-    justify-content:space-between;
-    margin-top:26px;
+select:focus, textarea:focus, input[type=text]:focus {
+    outline: none;
+    border-color: #0284c7;
+    box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15);
 }
 
-button{
-    padding:10px 20px;
-    border:none;
-    border-radius:12px;
-    font-weight:600;
-    cursor:pointer;
-    font-size:15px;
+textarea { resize: none; min-height: 90px; }
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 26px;
 }
 
-.btn-primary{
-    background:linear-gradient(to right,#d81b60,#f06292);
-    color:#fff;
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 15px;
 }
 
-.btn-primary:hover{background:linear-gradient(to right, #b6144e, #df3069)}
-
-.btn-secondary{
-    background:#999;
-    color:#fff;
+.btn-primary {
+    background: linear-gradient(to right, #0284c7, #0ea5e9);
+    color: #fff;
 }
 
-.btn-secondary:hover{background:#777}
+.btn-primary:hover {
+    background: linear-gradient(to right, #0369a1, #0284c7);
+}
+
+.btn-secondary {
+    background: #999;
+    color: #fff;
+}
+
+.btn-secondary:hover { background: #777; }

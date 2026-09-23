@@ -1,52 +1,60 @@
-/* Màu hồng chủ đạo */
+/* list-student-health-checked.css — Nurse List Student Health Checked */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', 'Arial', sans-serif;
+    font-family: 'Inter', 'Roboto', 'Arial', sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #ffe6f0, #fff0f5);
-    display: contents;
-    justify-content: center;
-    align-items: center;
+    background-color: #f8fafc;
     min-height: 100vh;
-    padding: 20px;
-}
-.text-pink { color:#e91e63; }
-
-/* Header bảng */
-.table-pink { background-color:#e91e63; }
-
-/* Nút outline hồng */
-.btn-outline-pink {
-    color:#e91e63;
-    border:1px solid #e91e63;
-    transition:background .3s;
-}
-.btn-outline-pink:hover {
-    background-color:#e91e63;
-    color:white;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
 }
 
-/* Phân trang */
+.text-pink,
+.text-blue { color: #0284c7; }
+
+/* Table header */
+.table-pink,
+.table-blue { background-color: #0284c7; }
+
+/* Outline button */
+.btn-outline-pink,
+.btn-outline-blue {
+    color: #0284c7;
+    border: 1px solid #0284c7;
+    transition: background .3s;
+}
+
+.btn-outline-pink:hover,
+.btn-outline-blue:hover {
+    background-color: #0284c7;
+    color: white;
+}
+
+/* Pagination */
 .page-link-custom {
-    padding:8px 14px;
-    margin:0 4px;
-    border:1px solid #e91e63;
-    color:#e91e63;
-    border-radius:5px;
-    text-decoration:none;
-    font-weight:500;
-    transition:all .3s;
+    padding: 8px 14px;
+    margin: 0 4px;
+    border: 1px solid #0284c7;
+    color: #0284c7;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all .3s;
 }
+
 .page-link-custom:hover {
-    background:#e91e63;
-    color:white;
+    background: #0284c7;
+    color: white;
 }
+
 .current-page {
-    background:#e91e63;
-    color:white !important;
-    font-weight:700;
+    background: #0284c7;
+    color: white !important;
+    font-weight: 700;
 }

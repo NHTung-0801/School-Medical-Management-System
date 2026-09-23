@@ -28,61 +28,74 @@
 </div>
 
 <!-- Nội dung chính -->
-<div class="container">
-    <h3 class="text-pink mb-4">Danh sách hồ sơ sức khỏe học sinh</h3>
+<main class="container py-4">
+    <div class="medical-card">
+        <!-- Executive Header Banner -->
+        <div class="card-header-banner">
+            <div class="banner-title-group">
+                <div class="header-icon-badge">
+                    <i class="fas fa-notes-medical"></i>
+                </div>
+                <div>
+                    <h2 class="banner-title">Hồ Sơ Sức Khỏe Học Sinh</h2>
+                    <p class="banner-subtitle">Theo dõi tiền sử bệnh lý, tình trạng dị ứng và chỉ số phát triển thể lực</p>
+                </div>
+            </div>
 
-    <!-- Toolbar: quay lại, tìm kiếm -->
-    <div class="action-toolbar">
-        <!-- Nút quay lại -->
-        <a th:href="@{/nurse/nurse-home}" class="btn-back">
-            <i class="fas fa-arrow-left"></i> Quay lại
-        </a>
+            <!-- Toolbar Tìm kiếm -->
+            <form th:action="@{/nurse/health-record}" method="get" class="search-box">
+                <input type="text" name="keyword" id="searchInput" class="form-control" placeholder="Tìm theo tên học sinh…" th:value="${keyword}">
+                <i class="fas fa-search"></i>
+            </form>
+        </div>
 
-        <!-- Tìm kiếm -->
-        <form th:action="@{/nurse/health-record}" method="get" class="search-box">
-            <input type="text" name="keyword" id="searchInput" class="form-control" placeholder="Tìm học sinh…" th:value="${keyword}">
-            <i class="fas fa-search"></i>
-        </form>
+        <!-- Bảng danh sách hồ sơ -->
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle text-center table-rounded">
+                <thead>
+                <tr>
+                    <th style="width: 60px;">STT</th>
+                    <th>Họ tên học sinh</th>
+                    <th style="width: 100px;">Lớp</th>
+                    <th>Dị ứng</th>
+                    <th>Bệnh mãn tính</th>
+                    <th style="width: 150px;">Chi tiết</th>
+                </tr>
+                </thead>
+                <tbody id="recordTable">
+                <tr th:each="record, stat : ${records}">
+                    <td th:text="${stat.index + 1}">1</td>
+                    <td class="fw-semibold text-start ps-3" th:text="${record.student.fullName}">Nguyễn Văn A</td>
+                    <td>
+                        <span class="badge-class" th:text="${record.student.className}">10A1</span>
+                    </td>
+                    <td class="ellipsis-cell" th:title="${record.allergies}">
+                        <span th:if="${record.allergies != null and record.allergies != '' and record.allergies != 'Không có'}" class="badge-warn" th:text="${record.allergies}">Dị ứng</span>
+                        <span th:if="${record.allergies == null or record.allergies == '' or record.allergies == 'Không có'}" class="badge-safe">Không có</span>
+                    </td>
+                    <td class="ellipsis-cell" th:title="${record.chronicDisease}">
+                        <span th:if="${record.chronicDisease != null and record.chronicDisease != '' and record.chronicDisease != 'Không có'}" class="badge-warn" th:text="${record.chronicDisease}">Bệnh mãn tính</span>
+                        <span th:if="${record.chronicDisease == null or record.chronicDisease == '' or record.chronicDisease == 'Không có'}" class="badge-safe">Không có</span>
+                    </td>
+                    <td>
+                        <a th:href="@{'/nurse/health-record/view/' + ${record.id}}" class="btn-action-view">
+                            <i class="fas fa-eye"></i> Xem chi tiết
+                        </a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(records)}">
+                    <td colspan="6" class="text-center text-muted py-4 fst-italic">Không tìm thấy hồ sơ nào.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <!-- Bảng danh sách hồ sơ -->
-    <div class="table-responsive">
-        <table class="table table-bordered align-middle text-center table-rounded">
-            <thead>
-            <tr>
-                <th>STT</th>
-                <th>Họ tên học sinh</th>
-                <th>Lớp</th>
-                <th>Dị ứng</th>
-                <th>Bệnh mãn tính</th>
-                <th>Chi tiết</th>
-            </tr>
-            </thead>
-            <tbody id="recordTable">
-            <tr th:each="record, stat : ${records}">
-                <td th:text="${stat.index + 1}">1</td>
-                <td th:text="${record.student.fullName}">Nguyễn Văn A</td>
-                <td th:text="${record.student.className}">10A1</td>
-                <td class="ellipsis-cell" th:title="${record.allergies}" th:text="${record.allergies}">Dị ứng nhiều</td>
-                <td class="ellipsis-cell" th:title="${record.chronicDisease}" th:text="${record.chronicDisease}">Bệnh mãn tính</td>
-                <td>
-                    <a th:href="@{'/nurse/health-record/view/' + ${record.id}}" class="btn-action">
-                        <i class="fas fa-eye"></i> Xem chi tiết
-                    </a>
-                </td>
-            </tr>
-            <tr th:if="${#lists.isEmpty(records)}">
-                <td colspan="6" class="text-center text-muted">Không tìm thấy hồ sơ nào.</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+</main>
 
 <!-- JS -->
 <script th:src="@{/assets/js/nurse/health-record/health_record_list.js}"></script>
 <script th:src="@{/assets/js/fragments/header.js}"></script>
-<div th:replace="~{fragments/footer :: footer}"></div>
+<div th:replace="fragments/footer :: footer-compact"></div>
 </body>
 </html>
 

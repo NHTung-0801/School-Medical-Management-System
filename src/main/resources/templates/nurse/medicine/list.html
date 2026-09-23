@@ -18,26 +18,37 @@
     <p th:if="${error}" th:text="${error}" class="alert alert-danger position-absolute top-0 end-0 me-2 mt-2 rounded-pill px-4 py-2 fw-semibold"></p>
   </div>
 
-<div class="container py-5">
-  <h3 class="fw-bold text-center text-uppercase text-pink mb-4">Danh sách thuốc trong kho</h3>
+<main class="container py-4">
+  <div class="medical-card">
+    <!-- Executive Header Banner -->
+    <div class="card-header-banner">
+      <div class="banner-title-group">
+        <div class="header-icon-badge">
+          <i class="fas fa-pills"></i>
+        </div>
+        <div>
+          <h2 class="banner-title">Danh Sách Thuốc Trong Kho</h2>
+          <p class="banner-subtitle">Quản lý định lượng, hạn sử dụng và tồn kho dược phẩm phòng y tế</p>
+        </div>
+      </div>
 
-  <div class="action-toolbar">
-    <a th:href="@{/nurse/nurse-home}" class="btn-back">
-      <i class="fas fa-arrow-left"></i> Quay lại
-    </a>
-
-    <div class="search-box">
-      <input type="text" id="searchInput" class="form-control" placeholder="Tìm theo tên thuốc...">
-      <i class="fas fa-search"></i>
+      <!-- Action: Thêm thuốc mới -->
+      <div class="header-actions">
+        <a th:href="@{/nurse/medicines/new}" class="btn-add">
+          <i class="fas fa-plus"></i> Thêm thuốc mới
+        </a>
+      </div>
     </div>
 
-    <a th:href="@{/nurse/medicines/new}" class="btn-add">
-      <i class="fas fa-plus"></i> Thêm thuốc mới
-    </a>
-  </div>
+    <!-- Toolbar: Tìm kiếm -->
+    <div class="action-toolbar">
+      <div class="search-box">
+        <input type="text" id="searchInput" class="form-control" placeholder="Tìm theo tên thuốc...">
+        <i class="fas fa-search"></i>
+      </div>
+    </div>
 
-
-  <div class="table-responsive mt-2">
+    <div class="table-responsive">
     <table class="table table-bordered align-middle text-center table-rounded">
       <thead class="table-pink">
       <tr>
@@ -79,9 +90,10 @@
     </table>
   </div>
 </div>
+</main>
 <script th:src="@{/assets/js/nurse/medicine/list.js}"></script>
 <script th:src="@{/assets/js/fragments/header.js}"></script>
-<div th:replace="~{fragments/footer :: footer}"></div>
+<div th:replace="fragments/footer :: footer-compact"></div>
 </body>
 </html>
 

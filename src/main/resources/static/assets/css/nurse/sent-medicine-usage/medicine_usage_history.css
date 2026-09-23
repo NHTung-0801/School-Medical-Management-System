@@ -1,27 +1,29 @@
+/* sent-medicine-usage/medicine_usage_history.css — Nurse Medicine Usage History */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #fff0f5;
-    padding: 40px;
-    display: contents;
-    justify-content: center;
-    align-items: center;
+    font-family: 'Inter', 'Arial', sans-serif;
+    background-color: #f8fafc;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
 }
 
-h2{
+h2 {
     text-transform: uppercase;
     text-align: center;
-    color: #e91e63;
+    color: #0284c7;
 }
 
 .container {
     max-width: 1100px;
     margin: 20px auto;
-    color: #fb1155;
+    color: #0369a1;
 }
 
 .title {
     text-align: center;
-    color: #e91e63;
+    color: #0284c7;
     margin-bottom: 30px;
     text-transform: uppercase;
 }
@@ -45,43 +47,34 @@ th, td {
 }
 
 thead {
-    background-color: #e91e63;
+    background-color: #0284c7;
     color: white;
     font-weight: bold;
 }
 
-.table-rounded thead th:first-child {
-    border-top-left-radius: 8px;
-}
-.table-rounded thead th:last-child {
-    border-top-right-radius: 8px;
-}
-.table-rounded tbody tr:last-child td:first-child {
-    border-bottom-left-radius: 8px;
-}
-.table-rounded tbody tr:last-child td:last-child {
-    border-bottom-right-radius: 8px;
-}
+.table-rounded thead th:first-child { border-top-left-radius: 8px; }
+.table-rounded thead th:last-child { border-top-right-radius: 8px; }
+.table-rounded tbody tr:last-child td:first-child { border-bottom-left-radius: 8px; }
+.table-rounded tbody tr:last-child td:last-child { border-bottom-right-radius: 8px; }
 
-/* === Nút quay lại chuẩn hệ thống === */
+/* Back button */
 .back-button {
-    margin-top: 30px;          /* khoảng cách so với bảng */
+    margin-top: 30px;
     display: inline-block;
     padding-bottom: 20px;
 }
 
 .back-button button {
     padding: 10px 20px;
-    background-color: #757575; /* xám trung tính */
+    background-color: #757575;
     color: #fff;
     border: none;
-    border-radius: 6px;        /* bo góc */
+    border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.25s ease;
 }
 
 .back-button button:hover {
-    background-color: #5c5c5c; /* xám đậm khi hover */
+    background-color: #5c5c5c;
 }
-

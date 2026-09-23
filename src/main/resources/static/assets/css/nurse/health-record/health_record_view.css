@@ -1,21 +1,22 @@
+/* health_record_view.css — Nurse Health Record Detail View */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', 'Arial', sans-serif;
+    font-family: 'Inter', 'Roboto', 'Arial', sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #ffe6f0, #fff0f5);
-    display: contents;
-    justify-content: center;
-    align-items: center;
+    background-color: #f8fafc;
     min-height: 100vh;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
 }
-.text-pink {
-    color: #e91e63;
-}
+
+.text-pink,
+.text-blue { color: #0284c7; }
 
 .main-container {
     max-width: 800px;
@@ -23,17 +24,17 @@ body {
     padding: 2rem 1rem;
 }
 
-/* Tiêu đề */
+/* Page title */
 .view-title {
     font-size: 1.75rem;
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
-    color: #e91e63;
+    color: #0284c7;
     margin-bottom: 2rem;
 }
 
-/* Thẻ hồ sơ */
+/* Health record card */
 .health-record-card {
     border-radius: 16px;
     background-color: #ffffff;
@@ -41,9 +42,9 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
-/* Khung thông tin */
+/* Info box */
 .info-box {
-    border: 1px solid #eee;
+    border: 1px solid #e0f2fe;
     border-radius: 12px;
     padding: 1.5rem;
     background-color: #fafafa;
@@ -53,15 +54,15 @@ body {
     margin-top: 1.5rem;
 }
 
-/* Tiêu đề nhỏ */
+/* Section title */
 .section-title {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #e91e63;
+    color: #0284c7;
     margin-bottom: 1rem;
 }
 
-/* Nút quay lại */
+/* Back button */
 .btn-back {
     background: #fff;
     color: #6c757d;
@@ -81,6 +82,7 @@ body {
     color: white;
     border-color: #6c757d;
 }
+
 .back-btn-wrapper {
     margin-bottom: 1.5rem;
     padding-right: 0.5rem;

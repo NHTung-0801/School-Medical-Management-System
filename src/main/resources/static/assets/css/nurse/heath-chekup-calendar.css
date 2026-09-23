@@ -1,12 +1,12 @@
+/* heath-chekup-calendar.css — Health Check Calendar */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f4f8;
-    display: contents;
-    justify-content: center;
-    align-items: center;
+    background-color: #f8fafc;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
@@ -22,7 +22,7 @@ body {
 }
 
 h1 {
-    color: #ff4d88;
+    color: #0284c7;
     margin-bottom: 20px;
     font-size: 28px;
 }
@@ -68,7 +68,7 @@ h1 {
 }
 
 .day-header {
-    background-color: #3498db;
+    background-color: #0284c7;
     color: white;
 }
 
@@ -78,12 +78,12 @@ h1 {
 }
 
 .day:hover {
-    background-color: #3498db;
+    background-color: #0ea5e9;
     color: white;
 }
 
 .day.selected {
-    background-color: #f3285a;
+    background-color: #0284c7;
     color: white;
 }
 
@@ -102,14 +102,14 @@ h1 {
 .form-group input, .form-group select, .form-group textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #bae6fd;
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 14px;
 }
 
 .btn {
-    background-color: #f1305c;
+    background-color: #0284c7;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -120,5 +120,5 @@ h1 {
 }
 
 .btn:hover {
-    background-color: rgba(241, 48, 92, 0.85);
+    background-color: #0369a1;
 }

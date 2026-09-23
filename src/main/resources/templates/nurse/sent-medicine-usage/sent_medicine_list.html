@@ -11,50 +11,62 @@
 <body>
 <div th:replace="fragments/header :: Header"></div>
 <div th:replace="fragments/header :: Nav-Nurse"></div>
-<div class="container">
-  <h2 class="title">Danh sách thuốc phụ huynh đã gửi</h2>
+<main class="container py-4">
+  <div class="medical-card">
+    <!-- Executive Header Banner -->
+    <div class="card-header-banner">
+      <div class="banner-title-group">
+        <div class="header-icon-badge">
+          <i class="fas fa-prescription-bottle-alt"></i>
+        </div>
+        <div>
+          <h2 class="banner-title">Thuốc Phụ Huynh Đã Gửi</h2>
+          <p class="banner-subtitle">Quản lý các loại thuốc phụ huynh gửi và ghi nhận lịch sử cho học sinh uống thuốc</p>
+        </div>
+      </div>
 
-  <div class="header-actions">
-    <a th:href="@{/nurse/nurse-home}">
-      <button type="button" class="btn-secondary">Quay lại</button>
-    </a>
+      <div class="header-actions">
+        <a th:href="@{/nurse/sentMedicineUsage/usage-history}" class="btn-add">
+          <i class="fas fa-history"></i> Lịch sử sử dụng thuốc
+        </a>
+      </div>
+    </div>
 
-    <a th:href="@{/nurse/sentMedicineUsage/usage-history}">
-      <button type="button" class="btn-primary">Lịch sử sử dụng thuốc</button>
-    </a>
+    <!-- Bảng danh sách thuốc -->
+    <div class="table-responsive">
+      <table class="table-rounded">
+        <thead>
+        <tr>
+          <th>STT</th>
+          <th>Học sinh</th>
+          <th>Ngày gửi</th>
+          <th>Danh sách thuốc</th>
+          <th>Hướng dẫn sử dụng</th>
+          <th>Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(sentList)}">
+          <td colspan="6" class="empty-message">Không có bản ghi nào.</td>
+        </tr>
+        <tr th:each="medicine, iter : ${sentList}">
+          <td th:text="${iter.count}">1</td>
+          <td th:text="${medicine.student.fullName}">Nguyễn Văn A</td>
+          <td th:text="${medicine.sentDate}">2025-07-06</td>
+          <td th:text="${medicine.medicineList}">Paracetamol</td>
+          <td th:text="${medicine.usageInstructions}">Uống sau ăn</td>
+          <td>
+            <a th:href="@{'/nurse/sentMedicineUsage/use/' + ${medicine.id}}" class="action-link">Ghi nhận liều dùng</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-
-  <table class="table-rounded">
-    <thead>
-    <tr>
-      <th>STT</th>
-      <th>Học sinh</th>
-      <th>Ngày gửi</th>
-      <th>Danh sách thuốc</th>
-      <th>Hướng dẫn sử dụng</th>
-      <th>Thao tác</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${#lists.isEmpty(sentList)}">
-      <td colspan="6" class="empty-message">Không có bản ghi nào.</td>
-    </tr>
-    <tr th:each="medicine, iter : ${sentList}">
-      <td th:text="${iter.count}">1</td>
-      <td th:text="${medicine.student.fullName}">Nguyễn Văn A</td>
-      <td th:text="${medicine.sentDate}">2025-07-06</td>
-      <td th:text="${medicine.medicineList}">Paracetamol</td>
-      <td th:text="${medicine.usageInstructions}">Uống sau ăn</td>
-      <td>
-        <a th:href="@{'/nurse/sentMedicineUsage/use/' + ${medicine.id}}" class="action-link">Ghi nhận liều dùng</a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+</main>
 
 <script th:src="@{/assets/js/nurse/sent-medicine-usage/sent_medicine_list.js}"></script>
 <script th:src="@{/assets/js/fragments/header.js}"></script>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="fragments/footer :: footer-compact"></div>
 </body>
 </html>

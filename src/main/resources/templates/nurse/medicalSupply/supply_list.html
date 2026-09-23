@@ -25,74 +25,82 @@
 </div>
 
 <!-- Nội dung chính -->
-<div class="container">
-  <!-- Tiêu đề -->
-  <h3 class="text-pink mb-4">Danh sách vật tư y tế</h3>
+<main class="container py-4">
+  <div class="medical-card">
+    <!-- Executive Header Banner -->
+    <div class="card-header-banner">
+      <div class="banner-title-group">
+        <div class="header-icon-badge">
+          <i class="fas fa-boxes"></i>
+        </div>
+        <div>
+          <h2 class="banner-title">Danh Sách Vật Tư Y Tế</h2>
+          <p class="banner-subtitle">Theo dõi số lượng tồn kho và tình trạng cấp phát vật tư y tế học đường</p>
+        </div>
+      </div>
 
-  <!-- Toolbar: Quay lại - Tìm kiếm - Thêm -->
-  <div class="action-toolbar">
-    <!-- Nút quay lại -->
-    <a th:href="@{/nurse/nurse-home}" class="btn-back">
-      <i class="fas fa-arrow-left"></i> Quay lại
-    </a>
-
-    <!-- Tìm kiếm -->
-    <div class="search-box">
-      <input type="text" id="searchInput" class="form-control" placeholder="Tìm theo tên vật tư…">
-      <i class="fas fa-search"></i>
+      <!-- Toolbar: Thêm vật tư -->
+      <div class="header-actions">
+        <a th:href="@{/nurse/medical-supplies/new}" class="btn-add">
+          <i class="fas fa-plus"></i> Thêm vật tư
+        </a>
+      </div>
     </div>
 
-    <!-- Thêm vật tư -->
-    <a th:href="@{/nurse/medical-supplies/new}" class="btn-add">
-      <i class="fas fa-plus"></i> Thêm vật tư
-    </a>
-  </div>
+    <!-- Toolbar: Tìm kiếm -->
+    <div class="action-toolbar">
+      <div class="search-box">
+        <input type="text" id="searchInput" class="form-control" placeholder="Tìm theo tên vật tư…">
+        <i class="fas fa-search"></i>
+      </div>
+    </div>
 
-  <!-- Bảng vật tư -->
-  <div class="table-responsive">
-    <table class="table table-bordered align-middle text-center table-rounded">
-      <thead>
-      <tr>
-        <th>STT</th>
-        <th>Tên vật tư</th>
-        <th>Ngày tạo</th>
-        <th>Số lượng</th>
-        <th>Thao tác</th>
-      </tr>
-      </thead>
-      <tbody id="supplyTable">
-      <tr th:if="${#lists.isEmpty(supplyList)}">
-        <td colspan="5">Hiện không có vật tư nào.</td>
-      </tr>
-      <tr th:each="supply, iterStat : ${supplyList}">
-        <td th:text="${iterStat.index + 1}">1</td>
-        <td th:text="${supply.name}" class="ellipsis-cell">Gạc y tế</td>
-        <td th:text="${supply.entryDate}">2024-05-01</td>
-        <td th:text="${supply.quantityInStock}"
-            th:classappend="${supply.quantityInStock < 10} ? 'text-danger fw-bold' : ''">
-          5
-        </td>
-        <td>
-          <div class="d-flex justify-content-center flex-wrap gap-2">
-            <a th:href="@{'/nurse/medical-supplies/edit/' + ${supply.id}}" class="btn-action">
-              <i class="fas fa-pen"></i> Sửa
-            </a>
-            <a th:href="@{'/nurse/medical-supplies/delete/' + ${supply.id}}"
-               onclick="return confirm('Bạn có chắc muốn xóa vật tư này?')"
-               class="btn-action text-danger border-danger">
-              <i class="fas fa-trash"></i> Xóa
-            </a>
-          </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <!-- Bảng vật tư -->
+    <div class="table-responsive">
+      <table class="table table-bordered align-middle text-center table-rounded">
+        <thead>
+        <tr>
+          <th>STT</th>
+          <th>Tên vật tư</th>
+          <th>Ngày tạo</th>
+          <th>Số lượng</th>
+          <th>Thao tác</th>
+        </tr>
+        </thead>
+        <tbody id="supplyTable">
+        <tr th:if="${#lists.isEmpty(supplyList)}">
+          <td colspan="5">Hiện không có vật tư nào.</td>
+        </tr>
+        <tr th:each="supply, iterStat : ${supplyList}">
+          <td th:text="${iterStat.index + 1}">1</td>
+          <td th:text="${supply.name}" class="ellipsis-cell">Gạc y tế</td>
+          <td th:text="${supply.entryDate}">2024-05-01</td>
+          <td th:text="${supply.quantityInStock}"
+              th:classappend="${supply.quantityInStock < 10} ? 'text-danger fw-bold' : ''">
+            5
+          </td>
+          <td>
+            <div class="d-flex justify-content-center flex-wrap gap-2">
+              <a th:href="@{'/nurse/medical-supplies/edit/' + ${supply.id}}" class="btn-action">
+                <i class="fas fa-pen"></i> Sửa
+              </a>
+              <a th:href="@{'/nurse/medical-supplies/delete/' + ${supply.id}}"
+                 onclick="return confirm('Bạn có chắc muốn xóa vật tư này?')"
+                 class="btn-action text-danger border-danger">
+                <i class="fas fa-trash"></i> Xóa
+              </a>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
+</main>
 
 <!-- JS -->
 <script th:src="@{/assets/js/nurse/medicalSupply/supply_list.js}"></script>
 <script th:src="@{/assets/js/fragments/header.js}"></script>
-<div th:replace="~{fragments/footer :: footer}"></div>
+<div th:replace="fragments/footer :: footer-compact"></div>
 </body>
 </html>

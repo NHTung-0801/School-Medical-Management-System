@@ -1,39 +1,33 @@
+/* vaccination-list.css — Nurse Vaccination List */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', 'Arial', sans-serif;
+    font-family: 'Inter', 'Roboto', 'Arial', sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #ffe6f0, #fff0f5);
-    display: contents;
-    justify-content: center;
-    align-items: center;
+    background-color: #f8fafc;
     min-height: 100vh;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
 }
+
 .link-button {
     display: inline-block;
     margin-bottom: 20px;
     padding: 10px 15px;
-    background-color: #e91e63;
+    background-color: #0284c7;
     color: white;
     text-decoration: none;
     border-radius: 5px;
 }
 
-.alert-success {
-    color: green;
-}
-
-.alert-error {
-    color: red;
-}
-
-.alert-warning {
-    color: orange;
-}
+.alert-success { color: green; }
+.alert-error { color: red; }
+.alert-warning { color: orange; }
 
 .no-data {
     text-align: center;
@@ -69,7 +63,7 @@ body {
 
 .send-button button {
     padding: 10px 15px;
-    background-color: #e91e63;
+    background-color: #0284c7;
     color: white;
     border: none;
     border-radius: 5px;
@@ -77,7 +71,7 @@ body {
 }
 
 .send-button button:hover {
-    background-color: #d81b60;
+    background-color: #0369a1;
 }
 
 .pagination {
@@ -88,14 +82,14 @@ body {
 .pagination a {
     margin: 0 5px;
     padding: 8px 12px;
-    background-color: #e91e63;
+    background-color: #0284c7;
     color: white;
     text-decoration: none;
     border-radius: 5px;
 }
 
 .pagination a.current {
-    background-color: #c2185b;
+    background-color: #0369a1;
     font-weight: bold;
 }
 
@@ -112,32 +106,37 @@ th label {
     font-weight: normal;
     font-size: 14px;
 }
+
 /* === TOAST (thông báo góc phải) ================================ */
-.toast-container{
-    position:fixed;
-    top:20px;
-    right:20px;
-    z-index:9999;
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
 }
-.toast{
-    min-width:260px;
-    padding:12px 16px;
-    margin-bottom:10px;
-    border-radius:6px;
-    color:#fff;
-    font-weight:500;
-    box-shadow:0 4px 12px rgba(0,0,0,.12);
-    opacity:0;
-    transform:translateX(100%);
-    transition:all .4s ease;
+
+.toast {
+    min-width: 260px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0,0,0,.12);
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all .4s ease;
 }
-.toast.show{
-    opacity:1;
-    transform:translateX(0);
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
 }
-.toast-info   {background:#e91e63;}
-.toast-success{background:#4caf50;}
-.toast-error  {background:#f44336;}
+
+.toast-info    { background: #0284c7; }
+.toast-success { background: #4caf50; }
+.toast-error   { background: #f44336; }
+
 .table-rounded {
     border-collapse: separate;
     border-spacing: 0;
@@ -146,26 +145,16 @@ th label {
     overflow: hidden;
 }
 
-.table-rounded thead th:first-child {
-    border-top-left-radius: 8px;
-}
-
-.table-rounded thead th:last-child {
-    border-top-right-radius: 8px;
-}
-
-.table-rounded tbody tr:last-child td:first-child {
-    border-bottom-left-radius: 8px;
-}
-
-.table-rounded tbody tr:last-child td:last-child {
-    border-bottom-right-radius: 8px;
-}
+.table-rounded thead th:first-child { border-top-left-radius: 8px; }
+.table-rounded thead th:last-child { border-top-right-radius: 8px; }
+.table-rounded tbody tr:last-child td:first-child { border-bottom-left-radius: 8px; }
+.table-rounded tbody tr:last-child td:last-child { border-bottom-right-radius: 8px; }
 
 .table-bordered td,
 .table-bordered th {
     border: 1px solid #ddd !important;
 }
+
 .table-responsive {
     width: 100%;
     display: flex;
@@ -177,6 +166,7 @@ th label {
     width: 95%;
     margin: 0 auto;
 }
+
 .ellipsis-cell {
     white-space: nowrap;
     overflow: hidden;
@@ -186,21 +176,21 @@ th label {
 .table th {
     vertical-align: middle;
     padding: 10px;
-    background-color: #e91e63;
+    background-color: #0284c7;
     color: #ffffff;
 }
+
 .table td {
     vertical-align: middle;
     padding: 10px;
 }
 
-/* Tiêu đề */
 h2 {
     font-size: 2rem;
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
-    color: #e91e63;
+    color: #0284c7;
     margin-bottom: 1.5rem;
 }
 
@@ -223,6 +213,6 @@ h2 {
 
 a.disabled {
     pointer-events: none;
-    opacity: 0.6; /* cho mờ đi */
+    opacity: 0.6;
     cursor: not-allowed;
 }

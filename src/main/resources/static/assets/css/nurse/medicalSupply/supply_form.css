@@ -1,71 +1,75 @@
-body{
-    font-family:'Segoe UI',sans-serif;
-    background:#fff0f5;
-    padding:40px;
-    margin:0;
-    display: contents;
-    justify-content: center;
-    align-items: center;
+/* medicalSupply/supply_form.css — Nurse Medical Supply Form */
+body {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background-color: #f8fafc;
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Khung chính */
-.form-container{
-    max-width:600px;
+/* Main container */
+.form-container {
+    max-width: 600px;
     margin: 20px auto;
-    background:#fff;
-    padding:32px;
-    border-radius:14px;
-    box-shadow:0 8px 20px rgba(0,0,0,.1);
+    background: #fff;
+    padding: 32px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Tiêu đề */
-h2{
-    text-align:center;
-    color:#e91e63;
-    font-size:26px;
-    font-weight:bold;
-    text-transform:uppercase;
-    margin-bottom:24px;
+/* Heading */
+h2 {
+    text-align: center;
+    color: #0284c7;
+    font-size: 26px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 24px;
 }
 
-/* Thông báo lỗi */
-.error-msg{
-    color:red;
-    text-align:center;
-    margin-bottom:16px;
+/* Error message */
+.error-msg {
+    color: red;
+    text-align: center;
+    margin-bottom: 16px;
 }
 
 /* Label + Input */
-label{
-    display:block;
-    margin-bottom:6px;
-    font-weight:600;
-    color:#333;
-}
-input{
-    width:100%;
-    padding:10px 12px;
-    margin-bottom:20px;
-    border:1px solid #ddd;
-    border-radius:6px;
-    font-size:14px;
-    box-sizing:border-box;
-}
-input:focus{
-    outline:none;
-    border-color:#e91e63;
-    box-shadow:0 0 0 2px rgba(233,30,99,.15);
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #333;
 }
 
-/* Nhóm nút */
-.button-group{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+input {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 20px;
+    border: 1px solid #bae6fd;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
 }
+
+input:focus {
+    outline: none;
+    border-color: #0284c7;
+    box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15);
+}
+
+/* Button group */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 button[type="submit"],
 .back-btn {
-    background: #e91e63;
+    background: #0284c7;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -75,9 +79,11 @@ button[type="submit"],
     cursor: pointer;
     transition: background 0.3s;
 }
-button[type="submit"] {
-    font-size: 14px;
+
+button[type="submit"]:hover,
+.back-btn:hover {
+    background: #0369a1;
 }
-.back-btn i{
-    margin-right:6px;
-}
+
+button[type="submit"] { font-size: 14px; }
+.back-btn i { margin-right: 6px; }
