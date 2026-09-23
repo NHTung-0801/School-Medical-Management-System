@@ -97,6 +97,8 @@ public class SecurityConfig {
                         .requestMatchers("/", "/home", "/register", "/login").permitAll() // các trang công khai
                         .requestMatchers("/forgot-password", "/new-password", "/reset-password", "/resend-otp").permitAll() // quên mật khẩu
                         .requestMatchers("/access-denied", "/error/**", "/error").permitAll() // trang lỗi
+                        .requestMatchers("/actuator/health", "/actuator/info").permitAll() // Health & Info probe
+                        .requestMatchers("/actuator/**").hasRole("ADMIN") // Chi tiết metrics chỉ dành cho Admin
                         // trang cần đăng nhập theo role
                         .requestMatchers("/parent/**").hasRole("PARENT")
                         .requestMatchers("/manager/**").hasRole("MANAGER")
