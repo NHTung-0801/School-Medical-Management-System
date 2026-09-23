@@ -1,44 +1,202 @@
 <header class="header" th:fragment="Header" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <div class="logo"><img th:src="@{/assets/images/logo.png}"></div>
+    <div class="logo">
+        <a th:href="@{/}"><img th:src="@{/assets/images/logo.png}" alt="School Medical Logo"></a>
+    </div>
     <div class="search-bar">
         <label>
-            <input type="text" placeholder="Tìm kiếm..." />
+            <input type="text" placeholder="Tìm kiếm dịch vụ, cẩm nang sức khỏe..." />
         </label>
-        <button class="search-btn"><i class="fas fa-search"></i></button>
-    </div>
-    <div class="contact-login">
-        <div class="hotline"><i class="fas fa-phone"></i> Hotline: 1900 6750</div>
-    </div>
-    <div class="user">
-        <div sec:authorize="isAnonymous()">
-            <a th:href="@{/login}" class="login-btn">Đăng nhập</a>
-        </div>
-    </div>
-    <div sec:authorize="isAuthenticated()" class="user">
-        <i class="fas fa-user" id="userIcon"></i>
-        <p>Xin chào,<span sec:authentication="name"></span>!</p>
-        <div class="dropdown-user" id="dropdownUser">
-
-            <div sec:authorize="hasRole('ADMIN')">
-                <a th:href="@{/admin/logout}">Đăng xuất (Admin)</a>
-            </div>
-            <div sec:authorize="!hasRole('ADMIN')">
-                <a th:href="@{/logout}">Đăng xuất</a>
-            </div>
-        </div>
+        <button class="search-btn" aria-label="Tìm kiếm"><i class="fas fa-search"></i></button>
     </div>
 
-    <div>
-        <button id="backToTop" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></button>
+    <div class="header-right-actions">
+        <div class="hotline">
+            <i class="fas fa-phone-alt"></i>
+            <span>Hotline: <strong>1900 6750</strong></span>
+        </div>
+
+        <!-- Notification Bell for Parent -->
+        <div sec:authorize="hasRole('PARENT')" class="notification-bell-container" id="notificationBellContainer">
+            <div class="notification-bell-btn" id="notificationBellBtn" title="Thông báo y tế">
+                <i class="fas fa-bell"></i>
+                <span th:if="${notifications != null and notifications['hasAnyNotification'] == true}" 
+                      class="noti-badge pulse-dot" 
+                      th:text="${notifications['unreadCount']}">1</span>
+            </div>
+            
+            <!-- Notification Dropdown Menu -->
+            <div class="notification-dropdown" id="notificationDropdown">
+                <div class="noti-header">
+                    <h4><i class="fas fa-bell"></i> Thông báo sức khỏe</h4>
+                    <span class="noti-counter" th:if="${notifications != null and notifications['unreadCount'] != null and notifications['unreadCount'] > 0}"
+                          th:text="${notifications['unreadCount'] + ' mục mới'}">1 mục mới</span>
+                </div>
+                <div class="noti-list">
+                    <!-- Phiếu khám sức khỏe -->
+                    <a th:if="${notifications != null and notifications['hasNewHealthCheckConsent'] == true}"
+                       th:href="@{/parent/notification/HealthCheckConsents}" 
+                       class="noti-item unread">
+                        <div class="noti-icon bg-info"><i class="fas fa-notes-medical"></i></div>
+                        <div class="noti-content">
+                            <div class="noti-title">Phiếu khám sức khỏe mới</div>
+                            <div class="noti-desc">Nhà trường vừa gửi phiếu khám sức khỏe cần bạn xác nhận.</div>
+                        </div>
+                    </a>
+
+                    <!-- Kết quả khám sức khỏe -->
+                    <a th:if="${notifications != null and notifications['hasNewHealthCheckRecord'] == true}"
+                       th:href="@{/parent/notification/HealthCheckRecords}" 
+                       class="noti-item unread">
+                        <div class="noti-icon bg-success"><i class="fas fa-file-medical-alt"></i></div>
+                        <div class="noti-content">
+                            <div class="noti-title">Kết quả khám sức khỏe</div>
+                            <div class="noti-desc">Đã có kết quả khám sức khỏe của học sinh từ y tá.</div>
+                        </div>
+                    </a>
+
+                    <!-- Phiếu tiêm chủng -->
+                    <a th:if="${notifications != null and notifications['hasNewVaccinationConsent'] == true}"
+                       th:href="@{/parent/notification/vaccinationConsents}" 
+                       class="noti-item unread">
+                        <div class="noti-icon bg-warning"><i class="fas fa-syringe"></i></div>
+                        <div class="noti-content">
+                            <div class="noti-title">Phiếu tiêm chủng mới</div>
+                            <div class="noti-desc">Lịch tiêm chủng mới cần phụ huynh xác nhận đồng ý.</div>
+                        </div>
+                    </a>
+
+                    <!-- Kết quả tiêm chủng -->
+                    <a th:if="${notifications != null and notifications['hasNewVaccinationRecord'] == true}"
+                       th:href="@{/parent/notification/VaccinationRecords}" 
+                       class="noti-item unread">
+                        <div class="noti-icon bg-primary"><i class="fas fa-shield-virus"></i></div>
+                        <div class="noti-content">
+                            <div class="noti-title">Kết quả tiêm chủng</div>
+                            <div class="noti-desc">Báo cáo tình trạng sau tiêm chủng của học sinh.</div>
+                        </div>
+                    </a>
+
+                    <!-- Empty State -->
+                    <div th:if="${notifications == null or notifications['hasAnyNotification'] != true}" class="noti-empty">
+                        <i class="fas fa-bell-slash"></i>
+                        <p>Hiện không có thông báo mới nào</p>
+                    </div>
+                </div>
+                <div class="noti-footer">
+                    <a th:href="@{/parent/parent-home}">Xem trang chủ</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="user">
+            <div sec:authorize="isAnonymous()">
+                <a th:href="@{/login}" class="login-btn"><i class="fas fa-sign-in-alt"></i> <span>Đăng nhập</span></a>
+            </div>
+        </div>
+        <div sec:authorize="isAuthenticated()" class="user-authenticated">
+            <div class="user-info-trigger" id="userIcon">
+                <i class="fas fa-user-circle"></i>
+                <span class="user-display-name" sec:authentication="name"></span>
+                <i class="fas fa-chevron-down caret-icon"></i>
+            </div>
+            <div class="dropdown-user" id="dropdownUser">
+                <!-- User Profile Summary Header -->
+                <div class="dropdown-user-header">
+                    <div class="dropdown-user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="dropdown-user-meta">
+                        <span class="dropdown-username" sec:authentication="name">admin</span>
+                        <span sec:authorize="hasRole('ADMIN')" class="dropdown-role-tag admin">Quản Trị Viên</span>
+                        <span sec:authorize="hasRole('NURSE')" class="dropdown-role-tag nurse">Cán Bộ Y Tế</span>
+                        <span sec:authorize="hasRole('PARENT')" class="dropdown-role-tag parent">Phụ Huynh</span>
+                        <span sec:authorize="hasRole('MANAGER')" class="dropdown-role-tag manager">Cán Bộ Quản Lý</span>
+                    </div>
+                </div>
+
+                <div class="dropdown-divider"></div>
+
+                <!-- Primary Portal Access Link -->
+                <div class="dropdown-section">
+                    <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/dashboard}" class="dropdown-item primary-portal-link">
+                        <i class="fas fa-columns"></i> <span>Bảng Điều Khiển Quản Trị</span>
+                    </a>
+                    <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/manage-users}" class="dropdown-item">
+                        <i class="fas fa-users-cog"></i> <span>Quản Lý Người Dùng</span>
+                    </a>
+                    <a sec:authorize="hasRole('NURSE')" th:href="@{/nurse/nurse-home}" class="dropdown-item primary-portal-link">
+                        <i class="fas fa-stethoscope"></i> <span>Cổng Y Tế Học Đường</span>
+                    </a>
+                    <a sec:authorize="hasRole('PARENT')" th:href="@{/parent/parent-home}" class="dropdown-item primary-portal-link">
+                        <i class="fas fa-home"></i> <span>Cổng Phụ Huynh</span>
+                    </a>
+                    <a sec:authorize="hasRole('MANAGER')" th:href="@{/manager/manager-home}" class="dropdown-item primary-portal-link">
+                        <i class="fas fa-chart-line"></i> <span>Cổng Quản Lý</span>
+                    </a>
+                </div>
+
+                <div class="dropdown-divider"></div>
+
+                <!-- Account & Password Links -->
+                <div class="dropdown-section">
+                    <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/profile}" class="dropdown-item">
+                        <i class="fas fa-id-card"></i> <span>Thông Tin Cá Nhân</span>
+                    </a>
+                    <a sec:authorize="hasRole('NURSE')" th:href="@{/nurse/profile}" class="dropdown-item">
+                        <i class="fas fa-id-card"></i> <span>Thông Tin Cá Nhân</span>
+                    </a>
+                    <a sec:authorize="hasRole('PARENT')" th:href="@{/parent/profile}" class="dropdown-item">
+                        <i class="fas fa-id-card"></i> <span>Thông Tin Cá Nhân</span>
+                    </a>
+                    <a sec:authorize="hasRole('MANAGER')" th:href="@{/manager/profile}" class="dropdown-item">
+                        <i class="fas fa-id-card"></i> <span>Thông Tin Cá Nhân</span>
+                    </a>
+                    <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/change-password}" class="dropdown-item">
+                        <i class="fas fa-key"></i> <span>Đổi Mật Khẩu</span>
+                    </a>
+                    <a sec:authorize="hasRole('NURSE')" th:href="@{/nurse/change-password}" class="dropdown-item">
+                        <i class="fas fa-key"></i> <span>Đổi Mật Khẩu</span>
+                    </a>
+                    <a sec:authorize="hasRole('PARENT')" th:href="@{/parent/change-password}" class="dropdown-item">
+                        <i class="fas fa-key"></i> <span>Đổi Mật Khẩu</span>
+                    </a>
+                    <a sec:authorize="hasRole('MANAGER')" th:href="@{/manager/change-password}" class="dropdown-item">
+                        <i class="fas fa-key"></i> <span>Đổi Mật Khẩu</span>
+                    </a>
+                </div>
+
+                <div class="dropdown-divider"></div>
+
+                <!-- Logout Form -->
+                <div sec:authorize="hasRole('ADMIN')">
+                    <form th:action="@{/admin/logout}" method="post" class="logout-form">
+                        <button type="submit" class="dropdown-logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> <span>Đăng xuất</span>
+                        </button>
+                    </form>
+                </div>
+                <div sec:authorize="!hasRole('ADMIN')">
+                    <form th:action="@{/logout}" method="post" class="logout-form">
+                        <button type="submit" class="dropdown-logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> <span>Đăng xuất</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </header>
 
 
 <nav class="nav" th:fragment="Nav-User">
     <ul class="nav-list">
-        <li class="nav-item"><a th:href="@{/}">Trang chủ</a></li>
-        <li class="nav-item"><a th:href="@{/}">Giới thiệu</a></li>
-        <li class="nav-item"><a th:href="@{/}">Liên hệ</a></li>
+        <li class="nav-item"><a th:href="@{/#home}"><i class="fas fa-home"></i> Trang chủ</a></li>
+        <li class="nav-item"><a th:href="@{/#services}"><i class="fas fa-stethoscope"></i> Dịch vụ y tế</a></li>
+        <li class="nav-item"><a th:href="@{/#about}"><i class="fas fa-school"></i> Giới thiệu</a></li>
+        <li class="nav-item"><a th:href="@{/#blog}"><i class="fas fa-book-medical"></i> Cẩm nang</a></li>
+        <li class="nav-item"><a th:href="@{/#doctors}"><i class="fas fa-user-md"></i> Đội ngũ</a></li>
+        <li class="nav-item"><a th:href="@{/#contact}"><i class="fas fa-phone-alt"></i> Liên hệ</a></li>
     </ul>
 </nav>
 
@@ -51,13 +209,21 @@
                 <li><a th:href="@{/parent/sentMedicine/list}">Gửi thuốc</a></li>
             </ul>
         </li>
-        <li class="nav-item"><a th:href="@{/parent/notification/vaccinationConsents}">Tiêm chủng</a>
+        <li class="nav-item">
+            <a th:href="@{/parent/notification/vaccinationConsents}">
+                Tiêm chủng
+                <span th:if="${notifications != null and (notifications['hasNewVaccinationConsent'] == true or notifications['hasNewVaccinationRecord'] == true)}" class="nav-noti-dot"></span>
+            </a>
             <ul class="submenu">
                 <li><a th:href="@{/parent/notification/vaccinationConsents}">Xác nhận tiêm chủng</a></li>
                 <li><a th:href="@{/parent/notification/VaccinationRecords}">Kết quả</a></li>
             </ul>
         </li>
-        <li class="nav-item"><a th:href="@{/parent/notification/HealthCheckConsents}">Khám sức khỏe</a>
+        <li class="nav-item">
+            <a th:href="@{/parent/notification/HealthCheckConsents}">
+                Khám sức khỏe
+                <span th:if="${notifications != null and (notifications['hasNewHealthCheckConsent'] == true or notifications['hasNewHealthCheckRecord'] == true)}" class="nav-noti-dot"></span>
+            </a>
             <ul class="submenu">
                 <li><a th:href="@{/parent/notification/HealthCheckConsents}">Xác nhận khám</a></li>
                 <li><a th:href="@{/parent/notification/HealthCheckRecords}">Kết quả</a></li>

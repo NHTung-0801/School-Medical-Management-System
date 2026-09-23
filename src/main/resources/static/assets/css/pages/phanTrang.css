@@ -8,7 +8,7 @@
 
 .pagination a {
     padding: 10px 15px;
-    background: linear-gradient(90deg, #ff4d88, #ff1a66);
+    background: linear-gradient(90deg, #0284c7, #0ea5e9);
     color: white;
     text-decoration: none;
     border-radius: 8px;
@@ -18,7 +18,7 @@
 }
 
 .pagination a.current {
-    background: linear-gradient(90deg, #d81b60, #c2185b);
+    background: linear-gradient(90deg, #0369a1, #0284c7);
     font-weight: bold;
     transform: scale(1.1);
 }

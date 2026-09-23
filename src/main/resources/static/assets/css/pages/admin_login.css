@@ -1,0 +1,270 @@
+/* ================================================
+   ADMIN LOGIN - Override & Extension
+   Extends the base login.css with admin-specific theming
+   ================================================ */
+
+/* Admin body: darker, more serious palette */
+.admin-body {
+    --primary:       #dc2626;
+    --primary-light: #f87171;
+    --primary-dark:  #991b1b;
+    --accent:        #f59e0b;
+    --accent-light:  #fcd34d;
+}
+
+/* Override body frosted glass for admin: deep secure navy theme over school campus */
+.admin-body::before {
+    background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.82) 0%,
+        rgba(30, 41, 59, 0.76) 50%,
+        rgba(15, 23, 42, 0.85) 100%
+    ) !important;
+    backdrop-filter: blur(16px) saturate(120%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
+}
+
+.admin-body::after {
+    background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.5) 100%) !important;
+}
+
+/* ── Admin Left Panel ── */
+.admin-left {
+    background: linear-gradient(145deg, #7f1d1d 0%, #b91c1c 40%, #92400e 100%) !important;
+}
+
+/* Admin badge (shield icon) */
+.admin-badge {
+    width: 80px;
+    height: 80px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    color: #fff;
+    margin-bottom: 16px;
+    border: 2px solid rgba(255,255,255,0.25);
+    animation: badgePulse 3s ease-in-out infinite;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+@keyframes badgePulse {
+    0%, 100% { transform: scale(1);    box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+    50%       { transform: scale(1.05); box-shadow: 0 12px 40px rgba(220,38,38,0.4); }
+}
+
+.brand-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.95);
+    text-align: center;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+}
+
+.brand-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+/* Brand features (user page) */
+.brand-features {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 200px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255,255,255,0.8);
+    font-size: 13px;
+    font-weight: 500;
+    background: rgba(255,255,255,0.1);
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: background 0.2s, transform 0.2s;
+}
+
+.feature-item:hover {
+    background: rgba(255,255,255,0.18);
+    transform: translateX(4px);
+}
+
+.feature-item i { font-size: 14px; opacity: 0.9; }
+
+/* Brand icon (emoji) for user page */
+.brand-icon {
+    font-size: 72px;
+    margin-bottom: 12px;
+    animation: iconFloat 5s ease-in-out infinite;
+    filter: drop-shadow(0 6px 20px rgba(0,0,0,0.3));
+}
+
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-10px); }
+}
+
+/* Admin warning badge */
+.admin-warning {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.9);
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 99px;
+    letter-spacing: 0.04em;
+    animation: warningPing 2.5s ease-in-out infinite;
+}
+
+@keyframes warningPing {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.3); }
+    50%       { box-shadow: 0 0 0 6px rgba(255,255,255,0); }
+}
+
+/* ── Admin label chip ── */
+.admin-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(220,38,38,0.15);
+    border: 1px solid rgba(220,38,38,0.35);
+    color: #f87171;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 99px;
+    margin-bottom: 12px;
+}
+
+/* ── Input wrapper (icon prefix) ── */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper .input-icon {
+    position: absolute;
+    left: 14px;
+    color: rgba(241,245,249,0.45);
+    font-size: 14px;
+    pointer-events: none;
+    transition: color 0.2s;
+    z-index: 1;
+}
+
+.input-wrapper:focus-within .input-icon { color: var(--primary-light, #818cf8); }
+
+.input-wrapper input {
+    width: 100%;
+    padding-left: 42px !important;
+}
+
+/* ── Admin button override ── */
+.admin-btn {
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%) !important;
+}
+
+.admin-btn::after {
+    background: linear-gradient(135deg, #f59e0b 0%, #dc2626 100%) !important;
+}
+
+.admin-btn:hover {
+    box-shadow: 0 10px 30px rgba(220,38,38,0.55) !important;
+}
+
+/* Button with icon layout */
+.btn-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-icon {
+    position: relative;
+    z-index: 1;
+    font-size: 14px;
+    transition: transform 0.25s;
+}
+
+.btn-login:hover .btn-icon { transform: translateX(4px); }
+
+/* ── Alert/msg styles (shared) ── */
+.msg-error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(239,68,68,0.12);
+    border: 1px solid rgba(239,68,68,0.3);
+    color: #fca5a5;
+    font-size: 13.5px;
+    font-weight: 500;
+    margin: 10px 0;
+    animation: slideDown 0.3s ease;
+}
+
+.msg-success {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(16,185,129,0.12);
+    border: 1px solid rgba(16,185,129,0.3);
+    color: #6ee7b7;
+    font-size: 13.5px;
+    font-weight: 500;
+    margin: 10px 0;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+    .admin-badge { width: 60px; height: 60px; font-size: 26px; }
+    .brand-title { font-size: 16px; }
+    .brand-features { display: none; }
+}
+
+/* ── Admin Floating Back to Home Button ── */
+.admin-body .floating-back-btn {
+    background: rgba(15, 23, 42, 0.85);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #f8fafc;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.admin-body .floating-back-btn i {
+    color: #f87171;
+}
+
+.admin-body .floating-back-btn:hover {
+    background: rgba(30, 41, 59, 0.95);
+    color: #ffffff;
+    border-color: rgba(248, 113, 113, 0.5);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}

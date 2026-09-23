@@ -1,39 +1,146 @@
-<footer class="footer" th:fragment="footer">
-    <div class="footer-section contact-info">
-        <h3>SCHOOL MEDICAL</h3>
-        <div><i class="fas fa-map-marker-alt"></i> Trụ sở: Tầng 6 Ladeco, 266 Đội Cấn, Hà Nội</div>
-        <div><i class="fas fa-phone"></i> Hotline: 1900 6750</div>
-        <div><i class="fas fa-envelope"></i> Email: support@edu.vn</div>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-google-plus-g"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+<footer class="footer" th:fragment="footer-large">
+    <!-- Đường viền ánh sáng chuyển tiếp mềm mại -->
+    <div class="footer-top-accent"></div>
+
+    <div class="footer-container">
+        <div class="footer-grid">
+            <!-- Cột 1: Thông tin thương hiệu & liên hệ trường học -->
+            <div class="footer-col brand-col">
+                <div class="footer-brand">
+                    <div class="footer-brand-badge">
+                        <i class="fas fa-heartbeat footer-brand-icon"></i>
+                    </div>
+                    <div>
+                        <span class="footer-brand-title">Y TẾ HỌC ĐƯỜNG</span>
+                        <span class="footer-brand-sub">Hệ Thống Quản Lý Sức Khỏe Học Sinh</span>
+                    </div>
+                </div>
+                <p class="footer-bio">
+                    Giải pháp y tế học đường toàn diện, an toàn và thân thiện — đồng hành cùng sự phát triển khỏe mạnh của từng thế hệ học sinh và an tâm của phụ huynh.
+                </p>
+                <div class="footer-contact-mini">
+                    <div class="contact-mini-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Phòng Y Tế - Tầng 1, Tòa B, Khuôn viên Trường học (266 Đội Cấn, Hà Nội)</span>
+                    </div>
+                    <div class="contact-mini-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>Hotline Sơ cấp cứu: <strong class="hotline-num">1900 6750</strong></span>
+                    </div>
+                    <div class="contact-mini-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>yte@truonghoc.edu.vn &bull; support@edu.vn</span>
+                    </div>
+                </div>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook" title="Facebook Nhà Trường"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Youtube" title="Kênh Youtube Sức Khỏe"><i class="fab fa-youtube"></i></a>
+                    <a href="#" aria-label="Zalo" title="Zalo Tư Vấn Y Tế"><i class="fas fa-comment-dots"></i></a>
+                    <a href="mailto:yte@truonghoc.edu.vn" aria-label="Email" title="Hòm Thư Y Tế"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+
+            <!-- Cột 2: Điều hướng nhanh -->
+            <div class="footer-col">
+                <h3 class="footer-col-title">Điều Hướng Nhanh</h3>
+                <ul class="footer-nav-links">
+                    <li><a th:href="@{/#home}"><i class="fas fa-chevron-right"></i> Trang chủ</a></li>
+                    <li><a th:href="@{/#services}"><i class="fas fa-chevron-right"></i> Dịch vụ y tế trọng tâm</a></li>
+                    <li><a th:href="@{/#about}"><i class="fas fa-chevron-right"></i> Giới thiệu về trường</a></li>
+                    <li><a th:href="@{/#blog}"><i class="fas fa-chevron-right"></i> Cẩm nang sức khỏe</a></li>
+                    <li><a th:href="@{/#doctors}"><i class="fas fa-chevron-right"></i> Đội ngũ cán bộ y tế</a></li>
+                    <li><a th:href="@{/#contact}"><i class="fas fa-chevron-right"></i> Liên hệ phòng y tế</a></li>
+                </ul>
+            </div>
+
+            <!-- Cột 3: Cổng Phụ Huynh & Dịch Vụ -->
+            <div class="footer-col">
+                <h3 class="footer-col-title">Cổng Thông Tin</h3>
+                <ul class="footer-nav-links">
+                    <li><a th:href="@{/login}"><i class="fas fa-shield-alt"></i> Hồ sơ sức khỏe cá nhân</a></li>
+                    <li><a th:href="@{/login}"><i class="fas fa-calendar-check"></i> Đăng ký khám định kỳ</a></li>
+                    <li><a th:href="@{/login}"><i class="fas fa-syringe"></i> Lịch tiêm vắc xin học sinh</a></li>
+                    <li><a th:href="@{/login}"><i class="fas fa-pills"></i> Dặn thuốc & Gửi thuốc</a></li>
+                    <li><a th:href="@{/login}"><i class="fas fa-user-circle"></i> Đăng nhập học sinh &amp; phụ huynh</a></li>
+                    <li><a th:href="@{/admin/login}"><i class="fas fa-user-md"></i> Cổng cán bộ y tế &amp; Quản trị</a></li>
+                </ul>
+            </div>
+
+            <!-- Cột 4: Giờ làm việc & Khẩn cấp -->
+            <div class="footer-col">
+                <h3 class="footer-col-title">Thời Gian Làm Việc</h3>
+                <div class="working-hours-card">
+                    <div class="working-badge">
+                        <i class="fas fa-clock"></i> GIỜ TRỰC PHÒNG Y TẾ
+                    </div>
+                    <ul class="schedule-list">
+                        <li>
+                            <span>Thứ 2 - Thứ 6:</span>
+                            <strong>07:30 - 17:30</strong>
+                        </li>
+                        <li>
+                            <span>Thứ 7:</span>
+                            <strong>08:00 - 12:00</strong>
+                        </li>
+                        <li>
+                            <span>Chủ nhật:</span>
+                            <span class="schedule-note">Trực cấp cứu</span>
+                        </li>
+                    </ul>
+                    <div class="emergency-box">
+                        <div class="emergency-icon-wrap">
+                            <i class="fas fa-phone-volume"></i>
+                        </div>
+                        <div class="emergency-text">
+                            <span class="emergency-title">Cấp Cứu Học Đường 24/7</span>
+                            <a href="tel:19006750" class="emergency-call">1900 6750</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dòng bản quyền dưới cùng -->
+        <div class="footer-bottom">
+            <p>&copy; 2026 Hệ Thống Y Tế Học Đường Thông Minh. Bản quyền thuộc về Nhà Trường.</p>
+            <div class="footer-bottom-links">
+                <a th:href="@{/#about}">Quy định y tế</a>
+                <span class="dot-sep">&bull;</span>
+                <a th:href="@{/#contact}">Hỗ trợ kỹ thuật</a>
+                <span class="dot-sep">&bull;</span>
+                <a th:href="@{/login}">Chính sách bảo mật hồ sơ</a>
+            </div>
         </div>
     </div>
-    <div class="footer-section">
-        <h3>Thông tin trường</h3>
-        <ul>
-            <li>Trang chủ</li>
-            <li>Giới thiệu</li>
-            <li>Lịch tiêm vaccin</li>
-            <li>Lịch khám sức khỏe định kì</li>
-            <li>Hồ sơ sức khỏe</li>
-            <li>Liên hệ</li>
-        </ul>
-    </div>
-    <div class="footer-section working-hours">
-        <h3>GIỜ LÀM VIỆC</h3>
-        <ul>
-            <li>Thứ 2: 8h00 - 20h30</li>
-            <li>Thứ 3: 13h30 - 20h30</li>
-            <li>Thứ 4: 8h00 - 20h30</li>
-            <li>Thứ 5: 13h30 - 20h30</li>
-            <li>Thứ 6: 8h00 - 20h30</li>
-            <li>Thứ 7, CN: 8h30 - 12h30</li>
-        </ul>
+</footer>
+
+<!-- ── Chân trang rút gọn tinh tế dành cho tất cả vai trò đã đăng nhập (Unified Executive Footer) ── -->
+<footer class="footer-compact" th:fragment="footer-compact">
+    <div class="footer-compact-container">
+        <div class="footer-compact-left">
+            <div class="footer-compact-brand">
+                <i class="fas fa-heartbeat"></i>
+                <span>Y TẾ HỌC ĐƯỜNG</span>
+            </div>
+            <span class="footer-compact-sep">|</span>
+            <p class="footer-compact-copy">&copy; 2026 Hệ Thống Quản Lý Sức Khỏe Học Sinh</p>
+        </div>
+        <div class="footer-compact-right">
+            <div class="footer-compact-hotline">
+                <i class="fas fa-phone-alt"></i>
+                <span>Hotline: <strong>1900 6750</strong></span>
+            </div>
+            <div class="footer-compact-status">
+                <span class="status-dot"></span>
+                <span>Hệ thống sẵn sàng</span>
+            </div>
+            <span class="footer-compact-version">v1.0.0</span>
+        </div>
     </div>
 </footer>
-<button class="back-to-top" onclick="scrollToTop()">↑</button>
 
-<script th:src="@{/static/assets/js/fragments/footer.js}"></script>
+<button class="back-to-top" onclick="scrollToTop()" aria-label="Về đầu trang" title="Về đầu trang">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<script th:src="@{/assets/js/fragments/footer.js}"></script>

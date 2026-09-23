@@ -1,19 +1,304 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Lỗi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Báo Hệ Thống | School Medical</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: sans-serif; padding: 40px; background: #f8f9fa; }
-        .error-box { background: #fff3cd; padding: 20px; border: 1px solid #ffeeba; border-radius: 5px; color: #856404; }
-        h2 { color: #dc3545; }
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --primary-light: #e0f2fe;
+            --danger: #ef4444;
+            --danger-bg: #fef2f2;
+            --danger-border: #fecaca;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --bg-page: #f8fafc;
+            --card-bg: #ffffff;
+            --card-shadow: 0 20px 45px -15px rgba(15, 23, 42, 0.12), 0 0 1px 1px rgba(15, 23, 42, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(2, 132, 199, 0.07) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.06) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(244, 63, 94, 0.04) 0px, transparent 60%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            color: var(--text-dark);
+        }
+
+        .error-wrapper {
+            width: 100%;
+            max-width: 580px;
+        }
+
+        .error-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 44px 36px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            animation: fadeInCard 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .error-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #f43f5e, #f97316, #0284c7);
+        }
+
+        @keyframes fadeInCard {
+            from {
+                opacity: 0;
+                transform: translateY(16px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .icon-circle {
+            width: 86px;
+            height: 86px;
+            margin: 0 auto 22px;
+            background: linear-gradient(135deg, #fff1f2, #fee2e2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.25);
+            position: relative;
+        }
+
+        .icon-circle i {
+            font-size: 38px;
+            color: var(--danger);
+        }
+
+        .system-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            letter-spacing: 0.3px;
+        }
+
+        .system-pill i {
+            color: var(--primary);
+        }
+
+        h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .error-lead {
+            font-size: 14.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .error-detail-box {
+            background: var(--danger-bg);
+            border: 1px solid var(--danger-border);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 28px;
+            text-align: left;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .error-detail-box i {
+            color: var(--danger);
+            font-size: 18px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .error-detail-text {
+            font-size: 13.5px;
+            color: #991b1b;
+            line-height: 1.5;
+            word-break: break-word;
+            font-weight: 500;
+        }
+
+        .actions-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 26px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 13px 24px;
+            border-radius: 12px;
+            font-size: 14.5px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.22s ease-in-out;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: #ffffff !important;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
+            filter: brightness(1.05);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #334155 !important;
+            border: 1px solid #cbd5e1;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            color: #0f172a !important;
+            transform: translateY(-1px);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-muted) !important;
+            font-size: 13.5px;
+            padding: 8px 16px;
+        }
+
+        .btn-ghost:hover {
+            color: var(--text-dark) !important;
+            text-decoration: underline;
+        }
+
+        .support-info {
+            border-top: 1px solid #f1f5f9;
+            padding-top: 18px;
+            font-size: 12.5px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .support-info a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .support-info a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .error-card {
+                padding: 32px 20px;
+            }
+            h1 {
+                font-size: 22px;
+            }
+        }
     </style>
 </head>
 <body>
-<div class="error-box">
-    <h2>Đã xảy ra lỗi!</h2>
-    <p th:text="${errorMessage} ?: 'Có lỗi xảy ra, vui lòng thử lại sau.'"></p>
-    <a href="/" style="color: #007bff;">← Quay lại trang chính</a>
+
+<div class="error-wrapper">
+    <div class="error-card">
+        <div class="system-pill">
+            <i class="fas fa-heartbeat"></i> Hệ Thống Y Tế Học Đường
+        </div>
+
+        <div class="icon-circle">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+
+        <h1>Đã Xảy Ra Sự Cố</h1>
+        <p class="error-lead">
+            Yêu cầu không thể hoàn tất hoặc tài nguyên bạn tìm kiếm hiện không khả dụng.
+        </p>
+
+        <div class="error-detail-box">
+            <i class="fas fa-info-circle"></i>
+            <div class="error-detail-text" th:text="${errorMessage} ?: 'Không tìm thấy tài nguyên được yêu cầu hoặc phiên làm việc đã thay đổi.'">
+                Đã xảy ra lỗi trong quá trình xử lý.
+            </div>
+        </div>
+
+        <!-- Điều Hướng Nhanh Thông Minh Theo Vai Trò -->
+        <div class="actions-group">
+            <!-- Nút chính: Luôn trỏ về đúng Cổng / Bảng điều khiển theo vai trò nếu đã đăng nhập -->
+            <a th:href="@{${homeUrl} ?: '/'}" class="btn btn-primary">
+                <i class="fas fa-arrow-left"></i>
+                <span th:text="${homeTitle != null && homeTitle != 'Trang Chủ' ? 'Quay Lại ' + homeTitle : 'Về Bảng Điều Khiển Của Bạn'}">Quay Lại Bảng Điều Khiển</span>
+            </a>
+
+            <!-- Nút phụ: Trở về trang chủ hệ thống -->
+            <a th:href="@{/}" class="btn btn-secondary">
+                <i class="fas fa-home"></i> Về Trang Chủ Hệ Thống
+            </a>
+
+            <!-- Nút quay lại trang trước -->
+            <button type="button" onclick="if(window.history.length > 1) { window.history.back(); } else { window.location.href='/yte/'; }" class="btn btn-ghost">
+                <i class="fas fa-undo"></i> Quay lại trang trước
+            </button>
+        </div>
+
+        <div class="support-info">
+            <span><i class="fas fa-phone-alt"></i> Hotline: <a href="tel:19006750">1900 6750</a></span>
+            <span><i class="fas fa-shield-alt"></i> Trung tâm hỗ trợ kỹ thuật 24/7</span>
+        </div>
+    </div>
 </div>
+
 </body>
 </html>

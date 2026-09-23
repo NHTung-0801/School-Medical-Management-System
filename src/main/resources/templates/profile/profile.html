@@ -90,7 +90,7 @@
                 <!-- Vai trò -->
                 <div class="info-item">
                     <div class="info-label"><i class="fas fa-user-tag"></i> Quyền truy cập</div>
-                    <div class="info-val" style="color: #ff4d88; font-weight: 600;" th:text="${user.role.name()}">ADMIN</div>
+                    <div class="info-val" style="color: #0284c7; font-weight: 600;" th:text="${user.role.name()}">ADMIN</div>
                 </div>
 
                 <!-- Nếu là Phụ huynh -->
@@ -131,6 +131,6 @@
 </main>
 
 <script th:src="@{/assets/js/fragments/header.js}"></script>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="fragments/footer :: footer-compact"></div>
 </body>
 </html>

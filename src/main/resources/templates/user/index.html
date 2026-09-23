@@ -12,17 +12,86 @@
 <body>
 <div th:replace="fragments/header :: Header"></div>
 <div th:replace="fragments/header :: Nav-User"></div>
+
 <section id="home" class="hero">
     <div class="hero-content">
+        <div class="hero-badge-top"><i class="fas fa-heartbeat"></i> Hệ Thống Y Tế Học Đường Thông Minh</div>
         <h1>Chăm Sóc Sức Khỏe Học Đường</h1>
-        <p>Hỗ trợ sức khỏe toàn diện cho học sinh và giáo viên.</p>
-        <button class="cta-btn">Khám Phá Ngay</button>
+        <p>Đồng hành cùng sự phát triển khỏe mạnh của học sinh với quy trình khám định kỳ, tiêm chủng và tủ thuốc đạt chuẩn.</p>
+        <div class="hero-actions">
+            <a href="#services" class="cta-btn"><span>Khám Phá Dịch Vụ</span></a>
+            <!-- Nút lối tắt vai trò khi đã đăng nhập -->
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/dashboard}" class="hero-secondary-btn" title="Vào Bảng Điều Khiển Quản Trị">
+                <i class="fas fa-shield-alt"></i> Bảng Quản Trị
+            </a>
+            <a sec:authorize="hasRole('NURSE')" th:href="@{/nurse/nurse-home}" class="hero-secondary-btn" title="Vào Cổng Cán Bộ Y Tế">
+                <i class="fas fa-stethoscope"></i> Cổng Y Tế
+            </a>
+            <a sec:authorize="hasRole('PARENT')" th:href="@{/parent/parent-home}" class="hero-secondary-btn" title="Vào Cổng Phụ Huynh">
+                <i class="fas fa-home"></i> Cổng Phụ Huynh
+            </a>
+            <a sec:authorize="hasRole('MANAGER')" th:href="@{/manager/manager-home}" class="hero-secondary-btn" title="Vào Cổng Quản Lý">
+                <i class="fas fa-tasks"></i> Cổng Quản Lý
+            </a>
+            <a sec:authorize="isAnonymous()" th:href="@{/login}" class="hero-secondary-btn">
+                <i class="fas fa-sign-in-alt"></i> Cổng Phụ Huynh
+            </a>
+        </div>
+        <div class="hero-trust-badges">
+            <div class="trust-badge"><i class="fas fa-user-md"></i> Đội ngũ y tế tận tâm</div>
+            <div class="trust-badge"><i class="fas fa-shield-alt"></i> Chuẩn an toàn Bộ Y Tế</div>
+            <div class="trust-badge"><i class="fas fa-clock"></i> Kết nối 24/7</div>
+        </div>
+    </div>
+</section>
+
+<!-- Dịch Vụ Y Tế Trọng Tâm -->
+<section id="services" class="services">
+    <h2>Dịch Vụ Y Tế Trọng Tâm</h2>
+    <div class="services-grid">
+        <div class="service-card enhanced-card">
+            <div class="service-icon"><i class="fas fa-stethoscope"></i></div>
+            <h3>Khám Sức Khỏe Định Kỳ</h3>
+            <p>Khám tổng quát, kiểm tra thị lực, nha khoa và thể lực hàng năm theo đúng tiêu chuẩn Bộ Y Tế cho từng học sinh.</p>
+        </div>
+        <div class="service-card enhanced-card">
+            <div class="service-icon"><i class="fas fa-syringe"></i></div>
+            <h3>Tiêm Chủng Học Đường</h3>
+            <p>Thông báo lịch tiêm chủng mở rộng, lấy ý kiến đồng thuận trực tuyến từ phụ huynh và theo dõi phản ứng sau tiêm an toàn.</p>
+        </div>
+        <div class="service-card enhanced-card">
+            <div class="service-icon"><i class="fas fa-pills"></i></div>
+            <h3>Tủ Thuốc & Cấp Phát</h3>
+            <p>Kiểm soát kho dược phẩm chuẩn GPP, hỗ trợ tiếp nhận đơn gửi thuốc từ phụ huynh và cấp phát đúng liều lượng.</p>
+        </div>
+        <div class="service-card enhanced-card">
+            <div class="service-icon"><i class="fas fa-comments"></i></div>
+            <h3>Tư Vấn Y Tế Trực Tuyến</h3>
+            <p>Kênh trao đổi trực tiếp giữa phụ huynh và cán bộ y tế trường học về chế độ dinh dưỡng, tiền sử bệnh và chăm sóc đặc biệt.</p>
+        </div>
     </div>
 </section>
 
 <section id="about" class="about">
-    <h2>Giới Thiệu Về Trường</h2>
-    <p>Trường Học Khỏe Mạnh là nơi cung cấp môi trường học tập an toàn, hỗ trợ sức khỏe tinh thần và thể chất cho học sinh. Chúng tôi cam kết xây dựng một cộng đồng học đường lành mạnh.</p>
+    <h2>Về Hệ Thống Y Tế Học Đường</h2>
+    <p class="section-lead">Đồng hành cùng sự phát triển toàn diện của học sinh bằng sự tận tâm, chuyên nghiệp và chuẩn mực y khoa cao nhất.</p>
+    <div class="about-values-grid">
+        <div class="about-value-card enhanced-card">
+            <div class="value-icon"><i class="fas fa-heartbeat"></i></div>
+            <h3>Chăm Sóc Tận Tâm</h3>
+            <p>Đội ngũ y bác sĩ và điều dưỡng luôn túc trực, thấu hiểu tâm lý học đường, chăm sóc ân cần từng bữa ăn, giấc ngủ và sức khỏe của từng em học sinh.</p>
+        </div>
+        <div class="about-value-card enhanced-card">
+            <div class="value-icon"><i class="fas fa-shield-virus"></i></div>
+            <h3>Chuẩn Mực & An Toàn</h3>
+            <p>Tủ thuốc đạt chuẩn GPP, trang thiết bị y tế hiện đại, thuốc và vật tư tiêu hao được kiểm duyệt nghiêm ngặt theo đúng tiêu chuẩn của Bộ Y Tế.</p>
+        </div>
+        <div class="about-value-card enhanced-card">
+            <div class="value-icon"><i class="fas fa-hands-helping"></i></div>
+            <h3>Kết Nối Gia Đình</h3>
+            <p>Minh bạch hồ sơ sức khỏe điện tử, gửi thông báo tiêm chủng và kết quả khám định kỳ tức thì đến phụ huynh qua cổng thông tin trực tuyến 24/7.</p>
+        </div>
+    </div>
 </section>
 
 <section id="resources" class="resources">
@@ -57,86 +126,110 @@
     <h2>Blog Chia Sẻ Kinh Nghiệm</h2>
     <div class="blog-posts">
         <div class="blog-post enhanced-card">
-            <img th:src="@{/assets/images/blog1.jpg}" alt="Hình ảnh mẫu">
+            <img th:src="@{/assets/images/blog1.jpg}" alt="Cách Giảm Căng Thẳng Học Tập">
+            <div class="blog-meta-header">
+                <span class="blog-tag">Tâm lý học đường</span>
+                <span class="blog-time"><i class="far fa-clock"></i> 3 phút đọc</span>
+            </div>
             <h3>Cách Giảm Căng Thẳng Học Tập</h3>
-            <p>- Đăng ngày: 08/07/2025 <br> - Tác giả: Nguyễn Văn A</p>
-            <br>
-            <p>Hãy thả lỏng và chia sẻ những cảm xúc thật sự của mình, bất kể là bạn đang cảm thấy vui vẻ hay buồn rầu, cảm thấy mệt mỏi ra sao... Gia đình, bạn bè và thầy cô sẽ luôn sẵn sàng lắng nghe nỗi lòng của bạn và đưa ra những lời khuyên hữu ích, từ đó giúp bạn giải tỏa căng thẳng.</p>
+            <p>- Đăng ngày: 08/07/2025 | Tác giả: Nguyễn Văn A</p>
+            <p>Hãy thả lỏng và chia sẻ những cảm xúc thật sự của mình. Gia đình, bạn bè và thầy cô sẽ luôn sẵn sàng lắng nghe nỗi lòng của bạn và đưa ra những lời khuyên hữu ích giúp giải tỏa căng thẳng.</p>
         </div>
         <div class="blog-post enhanced-card">
-            <img th:src="@{/assets/images/blog2.jpg}" alt="Hình ảnh mẫu">
+            <img th:src="@{/assets/images/blog2.jpg}" alt="Tầm Quan Trọng Của Thể Dục">
+            <div class="blog-meta-header">
+                <span class="blog-tag">Thể chất</span>
+                <span class="blog-time"><i class="far fa-clock"></i> 4 phút đọc</span>
+            </div>
             <h3>Tầm Quan Trọng Của Thể Dục</h3>
-            <p>- Đăng ngày: 07/07/2025 <br> - Tác giả: Trần Thị B</p>
-            <br>
-            <p> Việc tập thể dục vừa phải và đều đặn sẽ hỗ trợ tăng cường miễn dịch cơ thể, giảm nguy cơ các bệnh về tim mạch như tăng huyết áp, đái tháo đường, đột quỵ, viêm khớp. Ngoài ra còn giúp chúng ta có vóc dáng thon gọn, giúp đốt cháy nhiều calo, tác nhân gây béo phì. Còn đối với người cao tuổi ngoài giúp họ có sức khỏe tốt , mà còn hổ trợ thêm về mặt tinh thần như các cụ có cuốc sống tích cực hơn ,vui tươi, yêu đời hơn, đặc biệt là các cụ tập dưỡng sinh, vì các cụ có được những giây phút thư giãn trò chuyện cùng nhau.</p>
+            <p>- Đăng ngày: 07/07/2025 | Tác giả: Trần Thị B</p>
+            <p>Tập thể dục đều đặn giúp tăng cường miễn dịch cơ thể, phòng ngừa các bệnh tim mạch và mang lại tinh thần phấn chấn, tràn đầy năng lượng cho các buổi học tập.</p>
         </div>
         <div class="blog-post enhanced-card">
-            <img th:src="@{/assets/images/blog3.jpg}" alt="Hình ảnh mẫu">
-            <h3>Những vấn đề nguy hiểm khi sốt cao.</h3>
-            <p>- Đăng ngày: 06/07/2025 <br>- Tác giả: Trần Văn Đạt </p>
-            <br>
-            <p>Sốt cao có thể gây ra nhiều vấn đề nguy hiểm, đặc biệt là ở trẻ em và người có bệnh lý nền. Các biến chứng có thể bao gồm co giật, mất nước, rối loạn điện giải, tổn thương thần kinh, suy hô hấp, suy tim, và thậm chí là suy đa cơ quan nếu không được can thiệp kịp thời. </p>
+            <img th:src="@{/assets/images/blog3.jpg}" alt="Những vấn đề nguy hiểm khi sốt cao">
+            <div class="blog-meta-header">
+                <span class="blog-tag">Sơ cứu y tế</span>
+                <span class="blog-time"><i class="far fa-clock"></i> 5 phút đọc</span>
+            </div>
+            <h3>Những vấn đề nguy hiểm khi sốt cao</h3>
+            <p>- Đăng ngày: 06/07/2025 | Tác giả: Trần Văn Đạt</p>
+            <p>Sốt cao có thể dẫn đến mất nước, co giật hoặc các biến chứng nguy hiểm nếu không được bù nước và hạ sốt kịp thời theo chỉ dẫn của cán bộ y tế.</p>
         </div>
         <div class="blog-post enhanced-card">
-            <img th:src="@{/assets/images/blog4.jpg}" alt="Hình ảnh mẫu">
+            <img th:src="@{/assets/images/blog4.jpg}" alt="Nên tắm nước lạnh hay nước nóng?">
+            <div class="blog-meta-header">
+                <span class="blog-tag">Thói quen sống</span>
+                <span class="blog-time"><i class="far fa-clock"></i> 3 phút đọc</span>
+            </div>
             <h3>Nên tắm nước lạnh hay nước nóng?</h3>
-            <p>- Đăng ngày: 07/07/2025 <br>- Tác giả: Trần Thị B</p>
-            <br>
-            <p>Tắm là một phần quan trọng của sinh hoạt hàng ngày, giúp giải tỏa căng thẳng và loại bỏ bụi bẩn trên cơ thể. Mặc dù nhiều người cho rằng tắm nước lạnh dễ gây bệnh, trong khi tắm nước nóng có thể làm khô da, nhưng điều này có phải là sự thật?</p>
-            <br/>
-            <p>Những người mắc viêm khớp nên tắm nước nóng vào buổi sáng vì nó mang lại cảm giác thoải mái. Tuy nhiên, đối với những chấn thương có tình trạng viêm nhiễm, tắm nước lạnh có thể mang lại nhiều lợi ích cho sức khỏe. <br>
-                Những người mắc các vấn đề da như chàm (eczema) và phát ban da nên tránh tắm nước nóng hoàn toàn, vì có thể làm khô da.</p>
+            <p>- Đăng ngày: 07/07/2025 | Tác giả: Trần Thị B</p>
+            <p>Lựa chọn nhiệt độ nước tắm phù hợp giúp cải thiện tuần hoàn máu, thư giãn cơ bắp sau giờ thể dục và bảo vệ làn da khỏe mạnh.</p>
         </div>
         <div class="blog-post enhanced-card">
-            <img th:src="@{/assets/images/blog5.jpg}" alt="Hình ảnh mẫu">
+            <img th:src="@{/assets/images/blog5.jpg}" alt="Tại sao phải bổ sung Vitamin?">
+            <div class="blog-meta-header">
+                <span class="blog-tag">Dinh dưỡng</span>
+                <span class="blog-time"><i class="far fa-clock"></i> 4 phút đọc</span>
+            </div>
             <h3>Tại sao phải bổ sung Vitamin?</h3>
-            <p>-Đăng ngày: 08/07/2025 <br>- Tác giả: Nguyễn Văn A</p>
-            <br>
-            <p>Việc bổ sung vitamin là cần thiết vì chúng là những chất dinh dưỡng thiết yếu giúp cơ thể hoạt động bình thường, duy trì sức khỏe tốt và ngăn ngừa bệnh tật. <br>
-                Cơ thể không tự sản xuất đủ vitamin, nên việc bổ sung qua chế độ ăn uống hoặc thực phẩm chức năng là rất quan trọng. </p>
+            <p>- Đăng ngày: 08/07/2025 | Tác giả: Nguyễn Văn A</p>
+            <p>Bổ sung đầy đủ vitamin và khoáng chất qua khẩu phần ăn hàng ngày là chìa khóa để phát triển chiều cao, thể lực và thị lực cho học sinh lứa tuổi học đường.</p>
         </div>
         <div class="blog-post enhanced-card">
-            <img th:src="@{/assets/images/blog6.jpg}" alt="Hình ảnh mẫu">
-            <h3>Tại sao phải rửa sạch tay?.</h3>
-            <p>- Đăng ngày: 07/07/2025 <br>- Tác giả: Trần Thị B</p>
-            <br>
-            <p>Có thể nói rằng đôi bàn tay là bộ phận linh hoạt nhất trên cơ thể của con người. Bàn tay giúp chúng ta làm mọi việc từ lao động, ăn uống, vệ sinh cá nhân, cầm nắm các vật...<br> Chính vì sự linh hoạt đó mà bàn tay của con người phải tiếp xúc với rất nhiều thứ từ đồ ăn, đất cát, phân, động vật hay đơn giản là tay nắm cửa.</p>
+            <img th:src="@{/assets/images/blog6.jpg}" alt="Tại sao phải rửa sạch tay?">
+            <div class="blog-meta-header">
+                <span class="blog-tag">Vệ sinh học đường</span>
+                <span class="blog-time"><i class="far fa-clock"></i> 2 phút đọc</span>
+            </div>
+            <h3>Tại sao phải rửa sạch tay?</h3>
+            <p>- Đăng ngày: 07/07/2025 | Tác giả: Trần Thị B</p>
+            <p>Rửa tay bằng xà phòng đúng quy trình 6 bước là biện pháp đơn giản nhưng hiệu quả nhất để phòng tránh các bệnh truyền nhiễm đường tiêu hóa và hô hấp trong trường học.</p>
         </div>
     </div>
 </section>
 
 <section id="doctors" class="doctors">
-    <h2>Đội Ngũ Bác Sĩ</h2>
+    <h2>Đội Ngũ Bác Sĩ & Cán Bộ Y Tế</h2>
     <div class="doctor-cards">
         <div class="doctor-card enhanced-card">
             <img th:src="@{/assets/images/nurse01.jpg}" alt="Dr. Nguyễn Văn C">
             <h3>Dr. Nguyễn Văn C</h3>
-            <p>Chuyên khoa: Nhi khoa</p>
-            <p>Kinh nghiệm: 10 năm</p>
+            <div class="doctor-meta-tags">
+                <span class="doctor-spec-tag">Nhi khoa</span>
+                <span class="doctor-exp-tag">10 năm KN</span>
+            </div>
         </div>
         <div class="doctor-card enhanced-card">
             <img th:src="@{/assets/images/nurse02.jpg}" alt="Dr. Trần Thị D">
             <h3>Dr. Trần Thị D</h3>
-            <p>Chuyên khoa: Tâm lý học</p>
-            <p>Kinh nghiệm: 8 năm</p>
+            <div class="doctor-meta-tags">
+                <span class="doctor-spec-tag">Tâm lý học</span>
+                <span class="doctor-exp-tag">8 năm KN</span>
+            </div>
         </div>
         <div class="doctor-card enhanced-card">
             <img th:src="@{/assets/images/nurse03.jpg}" alt="Dr. Nguyễn Văn Chiến">
             <h3>Dr. Nguyễn Văn Chiến</h3>
-            <p>Chuyên khoa: Nội khoa</p>
-            <p>Kinh nghiệm: 6 năm</p>
+            <div class="doctor-meta-tags">
+                <span class="doctor-spec-tag">Nội khoa</span>
+                <span class="doctor-exp-tag">6 năm KN</span>
+            </div>
         </div>
         <div class="doctor-card enhanced-card">
             <img th:src="@{/assets/images/nurse04.jpg}" alt="Dr. Hoàng Thị Lan">
             <h3>Dr. Hoàng Thị Lan</h3>
-            <p>Chuyên khoa: Y tá trưởng</p>
-            <p>Kinh nghiệm: 9 năm</p>
+            <div class="doctor-meta-tags">
+                <span class="doctor-spec-tag">Y tá trưởng</span>
+                <span class="doctor-exp-tag">9 năm KN</span>
+            </div>
         </div>
         <div class="doctor-card enhanced-card">
             <img th:src="@{/assets/images/nurse05.jpg}" alt="Dr. Đặng Nam Anh">
             <h3>Dr. Đặng Nam Anh</h3>
-            <p>Chuyên khoa: Ngoại khoa</p>
-            <p>Kinh nghiệm: 4 năm</p>
+            <div class="doctor-meta-tags">
+                <span class="doctor-spec-tag">Ngoại khoa</span>
+                <span class="doctor-exp-tag">4 năm KN</span>
+            </div>
         </div>
     </div>
 </section>
@@ -180,8 +273,86 @@
     </div>
 </section>
 
+<!-- Phân đoạn Liên Hệ & Hỗ Trợ Y Tế -->
+<section id="contact" class="contact">
+    <h2>Liên Hệ & Hỗ Trợ Y Tế Học Đường</h2>
+    <p class="section-lead">Phòng Y tế luôn sẵn sàng đồng hành, tiếp nhận thông tin và tư vấn chăm sóc sức khỏe cho học sinh 24/7.</p>
+    <div class="contact-container">
+        <div class="contact-info-card enhanced-card">
+            <h3><i class="fas fa-hospital-alt"></i> Phòng Y Tế Trường Học</h3>
+            <p class="contact-desc">Nơi tiếp nhận học sinh khám sơ cấp cứu, dặn thuốc hàng ngày từ phụ huynh và theo dõi sức khỏe học sinh.</p>
+            <div class="contact-items">
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="contact-text">
+                        <strong>Địa điểm phòng y tế:</strong>
+                        <span>Tầng 1 - Khu Hiệu Bộ, Tòa B (Cơ sở 266 Đội Cấn, Ba Đình, Hà Nội)</span>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div class="contact-text">
+                        <strong>Hotline Sơ cấp cứu y tế:</strong>
+                        <span>1900 6750 &bull; (024) 3838 9999</span>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="contact-text">
+                        <strong>Hòm thư hỗ trợ y tế:</strong>
+                        <span>yte@truonghoc.edu.vn &bull; support@edu.vn</span>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                    <div class="contact-text">
+                        <strong>Giờ tiếp đón & tư vấn:</strong>
+                        <span>Thứ 2 - Thứ 6: 07:30 - 17:30 &bull; Thứ 7: 08:00 - 12:00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="emergency-alert">
+                <i class="fas fa-ambulance"></i>
+                <div class="alert-content">
+                    <strong>Đội sơ cấp cứu phản ứng nhanh:</strong>
+                    <span>Có mặt trong vòng 2 phút tại tất cả các lớp học và sân thể thao.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form-card enhanced-card">
+            <h3><i class="fas fa-paper-plane"></i> Gửi Yêu Cầu / Tư Vấn Y Tế</h3>
+            <p class="form-desc">Phụ huynh và học sinh có thể gửi dặn dò thuốc, thông báo dị ứng hoặc đặt câu hỏi tư vấn trực tuyến tại đây.</p>
+            <form class="quick-contact-form" onsubmit="event.preventDefault(); alert('Cảm ơn bạn đã gửi liên hệ! Bộ phận Y tế học đường sẽ liên hệ lại trong thời gian sớm nhất.'); this.reset();">
+                <div class="form-field">
+                    <label><i class="fas fa-user"></i> Họ và tên người gửi</label>
+                    <input type="text" placeholder="Nguyễn Văn A (Phụ huynh hoặc học sinh)" required>
+                </div>
+                <div class="form-row-2">
+                    <div class="form-field">
+                        <label><i class="fas fa-phone"></i> Số điện thoại liên hệ</label>
+                        <input type="tel" placeholder="0912 345 678" required>
+                    </div>
+                    <div class="form-field">
+                        <label><i class="fas fa-id-card"></i> Lớp / Mã học sinh</label>
+                        <input type="text" placeholder="Ví dụ: 10A1 - HS00234">
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label><i class="fas fa-comment-medical"></i> Nội dung dặn dò / Câu hỏi tư vấn</label>
+                    <textarea rows="4" placeholder="Mô tả tiền sử bệnh, dị ứng thức ăn hoặc thời gian cần uống thuốc trong ngày..." required></textarea>
+                </div>
+                <button type="submit" class="contact-submit-btn">
+                    <span>Gửi Thông Tin Cho Cán Bộ Y Tế</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
 <script th:src="@{/assets/js/index.js}"></script>
 <script th:src="@{/assets/js/fragments/header.js}"></script>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="fragments/footer :: footer-large"></div>
 </body>
 </html>
