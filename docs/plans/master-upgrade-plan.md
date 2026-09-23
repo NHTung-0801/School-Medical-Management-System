@@ -80,10 +80,10 @@ graph TD
 
 ---
 
-### 🔵 Giai Đoạn 4: Xây Dựng Hệ Thống Kiểm Thử Tự Động (Automated Testing) *(Đang thực hiện - 65%)*
+### 🔵 Giai Đoạn 4: Xây Dựng Hệ Thống Kiểm Thử Tự Động (Automated Testing) *(Đã Hoàn Thành - 100%)*
 > *Mục tiêu: Đạt tỷ lệ bao phủ kiểm thử (Test Coverage) > 75%, đảm bảo không bị lỗi hồi quy (Regression).*
 
-- [x] **4.1. Unit Tests cho Service Layer & Utilities:** *(Đã có 109 test cases, 100% Pass, H2 in-memory + JaCoCo)*
+- [x] **4.1. Unit Tests cho Service Layer & Utilities:** *(100% Pass, H2 in-memory + JaCoCo)*
   - `UserServiceTest`: Đã có 8 tests (đăng ký, cập nhật, tìm kiếm, xác thực).
   - `OtpServiceTest`: Đã có 7 tests (sinh mã ngẫu nhiên, xác thực đúng/sai, hết hạn, reset token).
   - `HealthCheckConsentServiceTest`: Đã có 2 tests (luồng gửi phiếu đồng ý, phê duyệt, từ chối).
@@ -95,24 +95,37 @@ graph TD
   - `StatisticsServiceTest`: Đã có 2 tests (thống kê tháng và phân loại vai trò).
   - `CustomUserDetailsServiceTest`: Đã có 2 tests (tải người dùng theo username, ném chuẩn `UsernameNotFoundException`).
   - `NotificationServiceTest`: Đã có 8 tests (kiểm tra đếm thông báo chưa đọc, trạng thái badge).
-  - `ValidationUtilTest`: Đã có 52 tests (kiểm tra SĐT Việt Nam, email, tính hợp lệ của họ tên Unicode không chứa `?`, `#`, ký tự lạ và tự động làm sạch `sanitizeFullName`).
-- [x] **4.2. Integration Tests cho Security & Controller:**
+  - `ValidationUtilTest`: Đã có 53 tests (kiểm tra SĐT Việt Nam, email, tính hợp lệ của họ tên Unicode không chứa `?`, `#`, ký tự lạ và tự động làm sạch `sanitizeFullName`).
+  - `HealthCheckExportServiceTest`: Kiểm tra xuất Excel danh sách khám sức khỏe với Apache POI.
+  - `VaccinationExportServiceTest`: Kiểm tra xuất Excel danh sách tiêm chủng với Apache POI.
+  - `HealthRecordPdfExportServiceTest`: Kiểm tra kết xuất Thẻ y tế điện tử ra file PDF bằng OpenPDF.
+- [x] **4.2. Integration Tests cho Security, Controller & Workflow:**
   - `ParentControllerSecurityTest`: Kiểm tra phân quyền truy cập Parent Portal, chặn vai trò khác (NURSE -> 403 access-denied), tự động chuyển hướng khi chưa xác thực.
   - `AdminControllerSecurityTest`: Kiểm tra quyền hạn Admin dashboard và từ chối truy cập trái phép từ các vai trò khác.
   - `LoginControllerTest`: Kiểm tra trang login và redirect khi chưa xác thực.
+  - `ManagerStudentControllerTest`: Kiểm tra CRUD học sinh, validation số điện thoại di động 10 số & họ tên Unicode, xử lý ngoại lệ ràng buộc dữ liệu.
+  - `NurseHealthRecordControllerTest`: Kiểm tra xem danh sách, tìm kiếm và chi tiết hồ sơ sức khỏe phía Y tá.
+  - `ActuatorSecurityTest`: Kiểm tra bảo mật các endpoint giám sát Actuator (`/actuator/health` public, `/actuator/metrics` hạn chế cho Admin).
+  - `SentMedicineWorkflowIntegrationTest`: Kiểm tra luồng tích hợp Phụ huynh gửi đơn thuốc -> Y tá tiếp nhận và ghi nhận nhật ký cho uống thuốc.
 
 ---
 
-### 🟣 Giai Đoạn 5: Nâng Cấp Tính Năng & Hoàn Thiện (Enhancements & Polish) *(Đã hoàn thành các cốt lõi)*
+### 🟣 Giai Đoạn 5: Nâng Cấp Tính Năng & Hoàn Thiện (Enhancements & Polish) *(Đã Hoàn Thành - 100%)*
 > *Mục tiêu: Đưa dự án lên tầm hoàn chỉnh, sẵn sàng triển khai thực tế.*
 
-- [x] **5.1. Xuất báo cáo (Export Excel):**
+- [x] **5.1. Xuất báo cáo (Export Excel & PDF):**
   - Tích hợp Apache POI (`poi-ooxml`) xuất kết quả khám sức khỏe định kỳ và sổ theo dõi tiêm chủng ra file `.xlsx` định dạng chuyên nghiệp với đầy đủ thông tin học sinh, lớp, kết quả khám và chữ ký y tá. Nút xuất Excel tích hợp trực tiếp trên giao diện Y tá (`ListSentSchedules.html`, `ListSentVaccinationSchedules.html`).
+  - Tích hợp OpenPDF (`com.github.librepdf:openpdf:2.0.3`) triển khai `HealthRecordPdfExportService` kết xuất Thẻ Y Tế Điện Tử Học Sinh ra file `.pdf` chuẩn phôi Bộ Giáo dục & Đào tạo, font tiếng Việt UTF-8 sắc nét, kèm nút tải PDF trực tiếp trên giao diện Phụ huynh và Y tá.
 - [x] **5.2. Hệ thống thông báo thời gian thực (In-App Notifications):**
   - Triển khai Notification Center cho Phụ huynh: Chuông thông báo trên Header kèm badge đếm số lượng thông báo mới, hiệu ứng animation nhịp tim (pulse), dropdown xem nhanh chi tiết từng loại thông báo (phiếu khám, phiếu tiêm, kết quả y tế mới) và indicator dot trên menu navigation.
 - [x] **5.3. Docker hóa & Cấu hình CI/CD:**
   - [x] **5.3a. Docker hóa:** Đã hoàn thành `Dockerfile` multi-stage (builder Eclipse Temurin 21 + runtime non-root user `spring:spring`, tích hợp healthcheck endpoint) và `docker-compose.yml` (Spring Boot + MySQL 8.0, cấu hình healthcheck dependency `service_healthy`).
-  - [x] **5.3b. CI/CD Pipeline:** Thiết lập GitHub Actions Workflow tự động hóa (`.github/workflows/ci.yml`): Checkout code, setup Java 21 Temurin có caching Maven, chạy toàn bộ 109 unit & integration tests, xuất báo cáo JaCoCo và xác minh Docker build.
+  - [x] **5.3b. CI/CD Pipeline:** Thiết lập GitHub Actions Workflow tự động hóa (`.github/workflows/ci.yml`): Checkout code, setup Java 21 Temurin có caching Maven, chạy toàn bộ bộ unit & integration tests, xuất báo cáo JaCoCo và xác minh Docker build.
+- [x] **5.4. Giám Sát Sức Khỏe Hệ Thống (Spring Boot Actuator):**
+  - Tích hợp `spring-boot-starter-actuator`, mở endpoint `/actuator/health` cho Docker healthcheck probe và bảo vệ các endpoint metrics cho Admin.
+- [x] **5.5. Bộ Tài Liệu Triển Khai & Vận Hành (Production Deliverables):**
+  - Hoàn thiện `docs/DEPLOYMENT.md` hướng dẫn triển khai Production (Docker Compose, Nginx SSL, sao lưu MySQL).
+  - Hoàn thiện `docs/USER_GUIDE.md` cẩm nang hướng dẫn sử dụng chi tiết theo 4 vai trò.
 
 ---
 
