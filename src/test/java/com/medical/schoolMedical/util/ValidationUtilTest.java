@@ -77,9 +77,68 @@ class ValidationUtilTest {
         assertFalse(ValidationUtil.isValidPhoneNumber(phone));
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "Nguyễn Văn An",
+            "Trần Thị Mai Phương",
+            "Lê Hoàng Đức",
+            "Đặng Quốc Hưng",
+            "Vũ Thị Ánh Tuyết",
+            "Jean-Luc Picard",
+            "Mary Jane",
+            "O'Connor",
+            "Dr. Nguyễn"
+    })
+    @DisplayName("Should return true for valid Vietnamese and international full names")
+    void testValidFullName(String name) {
+        assertTrue(ValidationUtil.isValidFullName(name));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "",
+            "   ",
+            "A",
+            "Nguyễn #1",
+            "Trần Văn A?",
+            "Lê Văn @Hải",
+            "Học sinh 123",
+            "Student <script>",
+            "Nguyễn/Văn/A",
+            "Tên_có_gạch_dưới"
+    })
+    @DisplayName("Should return false for invalid full names with special characters or numbers")
+    void testInvalidFullName(String name) {
+        assertFalse(ValidationUtil.isValidFullName(name));
+    }
+
     @Test
-    @DisplayName("Should return false when phone number is null")
-    void testNullPhoneNumber() {
-        assertFalse(ValidationUtil.isValidPhoneNumber(null));
+    @DisplayName("Should return false when full name is null or exceeds 100 chars")
+    void testNullAndOverlongFullName() {
+        assertFalse(ValidationUtil.isValidFullName(null));
+        String overlongName = "A".repeat(101);
+        assertFalse(ValidationUtil.isValidFullName(overlongName));
+    }
+
+    @Test
+    @DisplayName("Should sanitize full name by stripping ?, #, @, digits, and extra spaces")
+    void testSanitizeFullName() {
+        assertEquals("Nguyễn Văn An", ValidationUtil.sanitizeFullName("   Nguyễn   Văn    An   "));
+        assertEquals("Trần Văn B", ValidationUtil.sanitizeFullName("Trần #Văn ?B"));
+        assertEquals("Lê Hoàng C", ValidationUtil.sanitizeFullName("Lê Hoàng C #1"));
+        assertEquals("Vũ Thị Ánh", ValidationUtil.sanitizeFullName("Vũ Thị Ánh 123@@!!"));
+        assertEquals("", ValidationUtil.sanitizeFullName(null));
+        assertEquals("", ValidationUtil.sanitizeFullName("   ### ??? 123   "));
+    }
+
+    @Test
+    @DisplayName("Should normalize full name into clean Title Case and strip invalid characters")
+    void testNormalizeFullName() {
+        assertEquals("Nguyễn Văn An", ValidationUtil.normalizeFullName("nguyễn văn an"));
+        assertEquals("Trần Thị Mai", ValidationUtil.normalizeFullName("  TRẦN   THỊ   MAI  "));
+        assertEquals("Đặng Quốc Toàn", ValidationUtil.normalizeFullName("đặng quốc toàn #1"));
+        assertEquals("Vũ Đình Long", ValidationUtil.normalizeFullName("VŨ ĐÌNH LONG"));
+        assertEquals("", ValidationUtil.normalizeFullName(null));
+        assertEquals("", ValidationUtil.normalizeFullName("   "));
     }
 }

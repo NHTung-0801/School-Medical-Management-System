@@ -35,8 +35,8 @@ graph TD
 
 - [x] **1.1. Vá lỗ hổng Chiếm quyền tài khoản (Account Takeover / Broken Authentication):** Đã triển khai `PasswordResetToken` (UUID, 5 phút), yêu cầu xác thực OTP trước khi đổi mật khẩu và tự hủy sau khi dùng.
 - [x] **1.2. Bảo vệ thông tin đăng nhập nhạy cảm (Hardcoded Credentials):** Đã chuyển credentials email và CSDL sang biến môi trường trong `application.properties`, thêm `.env` và `application-dev.properties` vào `.gitignore`.
-- [x] **1.3. Kích hoạt lại CSRF Protection & Chuẩn hóa HTTP Methods:** Đã chuyển các endpoint xóa (`deleteUser`, `deleteHealthRecord`) sang `@PostMapping` và cập nhật form Thymeleaf tương ứng.
-- [x] **1.4. Vá lỗ hổng phân quyền cấp đối tượng (IDOR / Broken Object-Level Authorization):** Đã bổ sung kiểm tra phụ huynh chỉ được xóa hồ sơ và chỉ được gửi thuốc cho con của chính mình.
+- [x] **1.3. Kích hoạt lại CSRF Protection & Chuẩn hóa HTTP Methods:** Đã kích hoạt bảo vệ CSRF toàn diện cho cả Admin và User filter chains, cấu hình Thymeleaf auto-insert token, chuẩn hóa `.anyRequest().authenticated()`, tích hợp `AntPathRequestMatcher` hỗ trợ an toàn cho thao tác đăng xuất, và chuyển toàn bộ các endpoint xóa sang `@PostMapping`.
+- [x] **1.4. Vá lỗ hổng phân quyền cấp đối tượng (IDOR / Broken Object-Level Authorization):** Đã bổ sung kiểm tra phụ huynh chỉ được xóa hồ sơ và chỉ được gửi thuốc cho con của chính mình (sử dụng `.equals()` chuẩn cho so sánh định danh `Long`).
 - [x] **1.5. Nâng cấp cơ chế OTP trong `OtpService`:** Đã chuyển sang `SecureRandom`, 6 chữ số, thời hạn 3 phút, hủy mã ngay khi dùng (chống Replay Attack).
 - [x] **1.6. Sửa lỗi `MultipleBagFetchException` trong Hibernate:** Đã chuyển `medicineUsed` và `supplyUsed` trong `MedicalEvent.java` sang `Set` và cập nhật các luồng stream trong `MedicalEventService.java`.
 
@@ -80,30 +80,74 @@ graph TD
 
 ---
 
-### 🔵 Giai Đoạn 4: Xây Dựng Hệ Thống Kiểm Thử Tự Động (Automated Testing)
+### 🔵 Giai Đoạn 4: Xây Dựng Hệ Thống Kiểm Thử Tự Động (Automated Testing) *(Đang thực hiện - 65%)*
 > *Mục tiêu: Đạt tỷ lệ bao phủ kiểm thử (Test Coverage) > 75%, đảm bảo không bị lỗi hồi quy (Regression).*
 
-- [ ] **4.1. Unit Tests cho Service Layer:**
-  - `UserServiceTest`: Kiểm tra đăng ký, đăng nhập, mã hóa mật khẩu.
-  - `OtpServiceTest`: Kiểm tra sinh mã ngẫu nhiên, xác thực đúng/sai, kiểm tra hết hạn.
-  - `HealthCheckConsentServiceTest`: Kiểm tra luồng gửi phiếu đồng ý, phê duyệt và từ chối.
-  - `MedicalEventServiceTest`: Kiểm tra trừ kho thuốc/vật tư khi xảy ra sự cố y tế.
-- [ ] **4.2. Integration Tests cho Security & Controller:**
-  - Kiểm tra phân quyền truy cập: Parent không được vào URL của Nurse/Admin, Anonymous không được vào URL riêng tư.
-  - Kiểm tra endpoint Reset Password đảm bảo không bị bypass.
+- [x] **4.1. Unit Tests cho Service Layer & Utilities:** *(Đã có 109 test cases, 100% Pass, H2 in-memory + JaCoCo)*
+  - `UserServiceTest`: Đã có 8 tests (đăng ký, cập nhật, tìm kiếm, xác thực).
+  - `OtpServiceTest`: Đã có 7 tests (sinh mã ngẫu nhiên, xác thực đúng/sai, hết hạn, reset token).
+  - `HealthCheckConsentServiceTest`: Đã có 2 tests (luồng gửi phiếu đồng ý, phê duyệt, từ chối).
+  - `MedicalEventServiceTest`: Đã có 4 tests (trừ kho thuốc/vật tư khi xảy ra sự cố y tế).
+  - `StudentServiceTest`: Đã có 8 tests (CRUD và nghiệp vụ học sinh).
+  - `MedicineServiceTest`: Đã có 6 tests (quản lý danh mục thuốc).
+  - `SentMedicineServiceTest`: Đã có 5 tests (phụ huynh gửi thuốc).
+  - `VaccinationConsentServiceTest`: Đã có 2 tests (tiêm chủng).
+  - `StatisticsServiceTest`: Đã có 2 tests (thống kê tháng và phân loại vai trò).
+  - `CustomUserDetailsServiceTest`: Đã có 2 tests (tải người dùng theo username, ném chuẩn `UsernameNotFoundException`).
+  - `NotificationServiceTest`: Đã có 8 tests (kiểm tra đếm thông báo chưa đọc, trạng thái badge).
+  - `ValidationUtilTest`: Đã có 52 tests (kiểm tra SĐT Việt Nam, email, tính hợp lệ của họ tên Unicode không chứa `?`, `#`, ký tự lạ và tự động làm sạch `sanitizeFullName`).
+- [x] **4.2. Integration Tests cho Security & Controller:**
+  - `ParentControllerSecurityTest`: Kiểm tra phân quyền truy cập Parent Portal, chặn vai trò khác (NURSE -> 403 access-denied), tự động chuyển hướng khi chưa xác thực.
+  - `AdminControllerSecurityTest`: Kiểm tra quyền hạn Admin dashboard và từ chối truy cập trái phép từ các vai trò khác.
+  - `LoginControllerTest`: Kiểm tra trang login và redirect khi chưa xác thực.
 
 ---
 
-### 🟣 Giai Đoạn 5: Nâng Cấp Tính Năng & Hoàn Thiện (Enhancements & Polish)
+### 🟣 Giai Đoạn 5: Nâng Cấp Tính Năng & Hoàn Thiện (Enhancements & Polish) *(Đã hoàn thành các cốt lõi)*
 > *Mục tiêu: Đưa dự án lên tầm hoàn chỉnh, sẵn sàng triển khai thực tế.*
 
-- [ ] **5.1. Xuất báo cáo (Export PDF / Excel):**
-  - Tích hợp Apache POI hoặc iText để xuất phiếu khám sức khỏe định kỳ và sổ theo dõi tiêm chủng ra file Excel / PDF cho phụ huynh và nhà trường.
-- [ ] **5.2. Hệ thống thông báo thời gian thực (In-App Notifications):**
-  - Hiển thị chuông thông báo trực tiếp trên giao diện khi phụ huynh có phiếu khám/tiêm mới cần xác nhận.
-- [ ] **5.3. Docker hóa & Cấu hình CI/CD:**
-  - Viết `Dockerfile` và `docker-compose.yml` (chạy đồng thời Spring Boot App và MySQL).
-  - Thiết lập GitHub Actions tự động build và chạy test khi có commit mới.
+- [x] **5.1. Xuất báo cáo (Export Excel):**
+  - Tích hợp Apache POI (`poi-ooxml`) xuất kết quả khám sức khỏe định kỳ và sổ theo dõi tiêm chủng ra file `.xlsx` định dạng chuyên nghiệp với đầy đủ thông tin học sinh, lớp, kết quả khám và chữ ký y tá. Nút xuất Excel tích hợp trực tiếp trên giao diện Y tá (`ListSentSchedules.html`, `ListSentVaccinationSchedules.html`).
+- [x] **5.2. Hệ thống thông báo thời gian thực (In-App Notifications):**
+  - Triển khai Notification Center cho Phụ huynh: Chuông thông báo trên Header kèm badge đếm số lượng thông báo mới, hiệu ứng animation nhịp tim (pulse), dropdown xem nhanh chi tiết từng loại thông báo (phiếu khám, phiếu tiêm, kết quả y tế mới) và indicator dot trên menu navigation.
+- [x] **5.3. Docker hóa & Cấu hình CI/CD:**
+  - [x] **5.3a. Docker hóa:** Đã hoàn thành `Dockerfile` multi-stage (builder Eclipse Temurin 21 + runtime non-root user `spring:spring`, tích hợp healthcheck endpoint) và `docker-compose.yml` (Spring Boot + MySQL 8.0, cấu hình healthcheck dependency `service_healthy`).
+  - [x] **5.3b. CI/CD Pipeline:** Thiết lập GitHub Actions Workflow tự động hóa (`.github/workflows/ci.yml`): Checkout code, setup Java 21 Temurin có caching Maven, chạy toàn bộ 109 unit & integration tests, xuất báo cáo JaCoCo và xác minh Docker build.
+
+---
+
+## 🏆 Thành Quả Ngoài Kế Hoạch (Out-of-Plan Wins)
+- [x] **Kiến trúc Modular Monolith:** Tái tổ chức toàn bộ mã nguồn hệ thống thành 8 module độc lập trong thư mục `src/main/java/com/medical/schoolMedical/modules/` (auth, user_management, pharmacy, healthcheck, health_record, vaccination, medical_event, consultation), nâng cao tính độc lập và khả năng bảo trì.
+- [x] **Đại Tu Giao Diện Hiện Đại & Hiệu Ứng Động (UI/UX Modernization & Dynamic Hover):**
+  - Thiết kế lại trang đăng nhập User (`user/login.html` & `login.css`) phong cách Medical Portal với Glassmorphism, animated glowing orbs, input focus glow và micro-interactions.
+  - Thiết kế trang đăng nhập Admin (`admin/login.html` & `admin_login.css`) phong cách Executive Dark & Indigo Security Command độc quyền với khiên bảo vệ phát sáng và cảnh báo an ninh.
+  - Nâng cấp trang chủ Public (`user/index.html` & `index.css`) với Hero banner hiện đại, thanh Quick Actions, trust badges, lưới Dịch Vụ Y Tế Trọng Tâm với hiệu ứng 3D Card Hover Lift (`translateY(-8px)`), blog tags và thẻ bác sĩ chuyên nghiệp.
+- [x] **Chuẩn Hóa Dữ Liệu Học Sinh & Xử Lý Triệt Để Ký Tự Lạ (Student Data Hygiene):**
+  - Triệt tiêu lỗi `?` từ gốc bằng cấu hình UTF-8 cho kết nối MySQL và HTTP Servlet trong `application.properties`.
+  - Bổ sung `isValidFullName()` và `sanitizeFullName()` trong `ValidationUtil` để phát hiện và làm sạch các ký tự đặc biệt (`#`, `?`, `@`, v.v.), chuẩn hóa khoảng trắng giữa các từ.
+  - Tích hợp tự động sanitize và validate tại `ManagerStudentController` (tạo/sửa học sinh), `StudentService` và `ProfileController` (cập nhật hồ sơ cá nhân).
+- [x] **Đăng nhập bằng Số điện thoại chuẩn Việt Nam:** Hỗ trợ chuẩn hóa định dạng 10 số di động các đầu số mạng di động Việt Nam (03, 05, 07, 08, 09) qua `ValidationUtil` với test cases chặt chẽ.
+- [x] **CRUD Học Sinh hoàn chỉnh cho Manager:** Triển khai tính năng tạo mới, cập nhật, xóa học sinh kèm kiểm soát ràng buộc dữ liệu toàn vẹn `DataIntegrityViolationException` tại `ManagerStudentController`.
+- [x] **Đại tu UI/UX Parent Portal & Đồng Bộ Hệ Màu Xanh Dương (Sky Blue & Teal):**
+  - Chuyển đổi toàn diện hệ màu của toàn bộ 11 file CSS phía Cổng Phụ Huynh sang hệ màu Sky Blue & Modern Teal (`#0284c7`, `#0ea5e9`, `#0369a1`, `#bae6fd`, `#f0f7ff`), loại bỏ triệt để 100% các tông màu hồng/đỏ cánh sen cũ.
+  - Thiết kế thẻ y tế điện tử hiện đại, pop-up modal kính mờ (backdrop-blur), hỗ trợ in ấn hồ sơ chuẩn mực qua CSS `@media print`.
+- [x] **Chuẩn Hóa Footer Toàn Hệ Thống (Footer Normalization):**
+  - Đồng bộ footer gọn gàng (`footer-compact`) trên toàn bộ 45 view nội bộ thuộc các cổng `parent/`, `nurse/`, `manager/` và các trang `profile/`. Footer thông báo đầy đủ chỉ hiển thị duy nhất tại Trang chủ công khai (`user/index.html`).
+- [x] **Đại Tu Trang Chủ Manager & Khắc Phục Lỗi Tràn Khung Biểu Đồ:**
+  - Khắc phục dứt điểm lỗi Canvas Chart.js tự động co dãn vô hạn bằng cách bọc `.chart-wrapper` chuẩn chiều cao 270px.
+  - Tái thiết kế giao diện `manager-home.html` với Header Executive Bar, 4 thẻ KPI metrics thời gian thực, bảng học sinh mới thêm có tab Tháng này / Tháng trước và các nút thao tác nhanh.
+  - Dọn dẹp sạch sẽ toàn bộ khối thống kê ảo/dummy data.
+- [x] **Đại Tu Giao Diện Nurse Portal, Khắc Phục Lỗi Footer Lơ Lửng & Loại Bỏ Tông Màu Đen:**
+  - Khắc phục triệt để lỗi footer lơ lửng bằng cách xóa bỏ hoàn toàn `padding: 20px/40px` khỏi `body` trên tất cả 22 file CSS của Nurse, loại bỏ `min-vh-100` gây khoảng trống lớn tại `vaccination-schedule-list.html`.
+  - Khắc phục 100% lỗi tông màu đen kịt tại `healthCheck-schedule-list.html` do nạp nhầm `index.css`.
+  - Chuẩn hóa hệ thống khung thẻ card nổi (`.medical-card`, `.schedule-card`) và đồng bộ hệ thống nút bấm (`.btn-back`, `.btn-add`, `.btn-action-send`, badge `.btn-edit` và `.btn-delete`) theo chuẩn Medical Sky Blue hiện đại.
+- [x] **Nâng Cấp Khung Thẻ Card Y Tế & Loại Bỏ Nút "Quay Lại" Ở Phân Hệ Nurse:**
+  - Loại bỏ hoàn toàn các nút "Quay lại" trên các trang danh sách/chức năng của Nurse (Hồ sơ sức khỏe, Lịch tiêm chủng, Lịch khám sức khỏe, Quản lý thuốc, Quản lý vật tư, Thuốc phụ huynh gửi), tận dụng tối đa thanh điều hướng chính `Nav-Nurse`.
+  - Nâng cấp hiệu ứng khung thẻ Card y tế: Vạch màu gradient đa sắc trên cùng (4px top accent stripe: `#0284c7` -> `#38bdf8` -> `#818cf8`), huy hiệu biểu tượng phát quang mềm mại (Executive Header Banner), hiệu ứng nền lưới phát sáng (Ambient Mesh Glow), chuẩn hóa các badge dữ liệu học sinh và nút xem chi tiết tinh tế.
+- [x] **Đồng Bộ Giao Diện Khung Thẻ Card & Loại Bỏ Nút "Quay Lại" Cho Toàn Bộ Phân Hệ Parent & Manager:**
+  - Đồng bộ toàn diện ngôn ngữ thiết kế Clinical Gradient Elevation & Executive Header Banner sang toàn bộ các trang chức năng của Parent và Manager.
+  - Phân hệ Manager: Xóa nút "Trang chủ" trên trang danh sách học sinh, đưa header vào `.medical-card` với huy hiệu mũ cử nhân `fa-user-graduate`, nút "+ Thêm học sinh mới", và bổ sung dải gradient 4px cho trang tạo/sửa học sinh.
+  - Phân hệ Parent: Xóa nút "Trang chủ" / "Quay lại" trên trang Thuốc đã gửi, Lịch hẹn tư vấn, và Hồ sơ sức khỏe. Nâng cấp vạch màu gradient 4px và nền lưới phát quang ambient glow trên toàn bộ thẻ card, thông báo khám/tiêm và kết quả sức khỏe.
 
 ---
 

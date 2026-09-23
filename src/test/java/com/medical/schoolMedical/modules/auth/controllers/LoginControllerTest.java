@@ -9,6 +9,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -47,6 +49,30 @@ class LoginControllerTest {
     @DisplayName("Unauthenticated request to /parent/parent-home should redirect to /login")
     void testParentHomeUnauthorizedRedirect() throws Exception {
         mockMvc.perform(get("/parent/parent-home"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/login"));
+    }
+
+    @Test
+    @DisplayName("POST /logout with CSRF should successfully redirect to /")
+    void testUserLogoutPost() throws Exception {
+        mockMvc.perform(post("/logout").with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"));
+    }
+
+    @Test
+    @DisplayName("POST /admin/logout with CSRF should successfully redirect to /admin/login?logout=true")
+    void testAdminLogoutPost() throws Exception {
+        mockMvc.perform(post("/admin/logout").with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/admin/login?logout=true"));
+    }
+
+    @Test
+    @DisplayName("GET /logout should NOT trigger logout filter redirect to /")
+    void testGetLogoutDoesNotTriggerLogoutFilter() throws Exception {
+        mockMvc.perform(get("/logout"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("http://localhost/login"));
     }

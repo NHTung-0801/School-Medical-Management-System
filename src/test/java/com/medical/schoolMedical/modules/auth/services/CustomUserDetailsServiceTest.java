@@ -1,8 +1,6 @@
 package com.medical.schoolMedical.modules.auth.services;
 
 import com.medical.schoolMedical.enums.Role;
-import com.medical.schoolMedical.exceptions.BusinessException;
-import com.medical.schoolMedical.exceptions.ErrorCode;
 import com.medical.schoolMedical.modules.user_management.entities.User;
 import com.medical.schoolMedical.modules.user_management.repositories.UserRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -46,15 +45,15 @@ class CustomUserDetailsServiceTest {
     }
 
     @Test
-    @DisplayName("Should throw BusinessException when user does not exist")
+    @DisplayName("Should throw UsernameNotFoundException when user does not exist")
     void testLoadUserByUsernameNotFound() {
         when(userRepository.findByUsername("unknown_user")).thenReturn(null);
 
-        BusinessException exception = assertThrows(BusinessException.class, () -> {
+        UsernameNotFoundException exception = assertThrows(UsernameNotFoundException.class, () -> {
             customUserDetailsService.loadUserByUsername("unknown_user");
         });
 
-        assertEquals(ErrorCode.STUDENT_NOT_FOUND, exception.getErrorCode());
+        assertTrue(exception.getMessage().contains("unknown_user"));
         verify(userRepository, times(1)).findByUsername("unknown_user");
     }
 }
