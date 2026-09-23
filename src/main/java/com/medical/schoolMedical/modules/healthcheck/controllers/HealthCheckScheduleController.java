@@ -14,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -26,6 +28,15 @@ public class HealthCheckScheduleController {
     private HealthCheckScheduleService healthCheckScheduleService;
     @Autowired
     private HealthCheckConsentService healthCheckConsentService;
+    @Autowired
+    private com.medical.schoolMedical.modules.healthcheck.services.HealthCheckExportService healthCheckExportService;
+
+    @GetMapping("/export/{scheduleId}")
+    public void exportExcel(@PathVariable Long scheduleId, HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=\"BaoCao_KhamSucKhoe_" + scheduleId + ".xlsx\"");
+        healthCheckExportService.exportToExcel(scheduleId, response.getOutputStream());
+    }
 
     @GetMapping
     public String healthCheckSchedule(Model model) {

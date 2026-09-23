@@ -1,4 +1,4 @@
-/* Health Record Form Modern Redesign */
+/* Health Record Form - Modern Blue/Teal Theme */
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +7,7 @@
 }
 
 body {
-    background: linear-gradient(135deg, #fff5f7 0%, #fdf2f4 100%);
+    background: linear-gradient(135deg, #f0f7ff 0%, #f8fbff 100%);
     color: #1e293b;
     min-height: 100vh;
 }
@@ -21,8 +21,8 @@ body {
 .form-card {
     background: #ffffff;
     border-radius: 20px;
-    box-shadow: 0 10px 35px rgba(225, 29, 72, 0.08);
-    border: 1px solid #ffe4e6;
+    box-shadow: 0 10px 35px rgba(2, 132, 199, 0.08);
+    border: 1px solid #bae6fd;
     padding: 36px 40px;
     animation: fadeIn 0.4s ease-out;
 }
@@ -43,7 +43,7 @@ body {
 .form-header-icon {
     width: 64px;
     height: 64px;
-    background: linear-gradient(135deg, #ff4d88, #e11d48);
+    background: linear-gradient(135deg, #0284c7, #0ea5e9);
     color: #ffffff;
     border-radius: 18px;
     display: inline-flex;
@@ -51,7 +51,7 @@ body {
     justify-content: center;
     font-size: 28px;
     margin-bottom: 16px;
-    box-shadow: 0 8px 20px rgba(225, 29, 72, 0.25);
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.25);
 }
 
 .form-header h2 {
@@ -72,9 +72,9 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: #fff1f2;
-    color: #be123c;
-    border: 1px solid #fecdd3;
+    background: #e0f2fe;
+    color: #0284c7;
+    border: 1px solid #bae6fd;
     padding: 6px 16px;
     border-radius: 30px;
     font-size: 14px;
@@ -88,7 +88,7 @@ body {
 .section-legend {
     font-size: 15px;
     font-weight: 700;
-    color: #be123c;
+    color: #0369a1;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 16px;
@@ -99,7 +99,7 @@ body {
 
 .section-legend i {
     font-size: 16px;
-    color: #e11d48;
+    color: #0284c7;
 }
 
 .grid-row-2 {
@@ -121,7 +121,7 @@ body {
 }
 
 .field-group label .required-mark {
-    color: #e11d48;
+    color: #ef4444;
     margin-left: 2px;
 }
 
@@ -142,8 +142,8 @@ body {
 .field-group input:focus,
 .field-group select:focus,
 .field-group textarea:focus {
-    border-color: #ff4d88;
-    box-shadow: 0 0 0 3px rgba(255, 77, 136, 0.15);
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
 }
 
 .field-group textarea {

@@ -37,7 +37,7 @@ public class NurseHealthRecordController {
         Optional<HealthRecord> optionalRecord = healthRecordService.findByIdWithStudentAndParent(id);
 
         if (optionalRecord.isEmpty()) {
-            return "redirect:/nurse/health-records";
+            return "redirect:/nurse/health-record";
         }
 
         model.addAttribute("record", optionalRecord.get());

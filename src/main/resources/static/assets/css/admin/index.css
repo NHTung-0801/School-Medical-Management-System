@@ -1,6 +1,6 @@
 /* ==========================================================================
    ADMIN DASHBOARD MODERN STYLESHEET
-   Design System: Medical Rose & Clean Elevation
+   Design System: Sky Blue & Slate Clean Elevation
    ========================================================================== */
 
 * {
@@ -11,7 +11,7 @@
 }
 
 body {
-    background: #fbf8fa;
+    background: #f8fafc;
     color: #1e293b;
     min-height: 100vh;
     overflow-x: hidden;
@@ -49,7 +49,7 @@ body {
 }
 
 .dashboard-header-bar h1 i {
-    color: #ff4d88;
+    color: #0284c7;
     font-size: 22px;
 }
 
@@ -74,15 +74,15 @@ body {
     display: flex;
     align-items: center;
     gap: 18px;
-    border: 1px solid #fce7ef;
-    box-shadow: 0 4px 20px rgba(255, 77, 136, 0.05);
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .kpi-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(255, 77, 136, 0.12);
-    border-color: #fca5c5;
+    box-shadow: 0 8px 25px rgba(2, 132, 199, 0.12);
+    border-color: #bae6fd;
 }
 
 .kpi-icon-wrap {
@@ -98,17 +98,17 @@ body {
 
 .kpi-card.parents .kpi-icon-wrap {
     background: #eff6ff;
-    color: #2563eb;
+    color: #0284c7;
 }
 
 .kpi-card.nurses .kpi-icon-wrap {
     background: #f0fdf4;
-    color: #059669;
+    color: #10b981;
 }
 
 .kpi-card.students .kpi-icon-wrap {
-    background: #fdf2f8;
-    color: #db2777;
+    background: #f0fdfa;
+    color: #0d9488;
 }
 
 .kpi-card.medicines .kpi-icon-wrap {
@@ -144,8 +144,8 @@ body {
     background: #ffffff;
     border-radius: 16px;
     padding: 22px 24px;
-    border: 1px solid #fce7ef;
-    box-shadow: 0 4px 20px rgba(255, 77, 136, 0.05);
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
     display: flex;
     flex-direction: column;
 }
@@ -169,7 +169,7 @@ body {
 }
 
 .chart-card-header h2 i {
-    color: #ff4d88;
+    color: #0284c7;
     font-size: 16px;
 }
 
@@ -188,7 +188,7 @@ body {
 .year-select {
     padding: 6px 14px;
     border-radius: 20px;
-    border: 1px solid #fbcfe8;
+    border: 1px solid #cbd5e1;
     background: #fff;
     color: #0f172a;
     font-size: 13px;
@@ -199,8 +199,8 @@ body {
 }
 
 .year-select:focus {
-    border-color: #ff4d88;
-    box-shadow: 0 0 0 3px rgba(255, 77, 136, 0.15);
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
 }
 
 .chart-wrapper {
@@ -214,8 +214,8 @@ body {
     background: #ffffff;
     border-radius: 16px;
     padding: 24px;
-    border: 1px solid #fce7ef;
-    box-shadow: 0 4px 20px rgba(255, 77, 136, 0.05);
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
 }
 
 .students-card-header {
@@ -237,7 +237,7 @@ body {
 }
 
 .students-card-header h2 i {
-    color: #ff4d88;
+    color: #0284c7;
 }
 
 .tab-nav {
@@ -263,7 +263,7 @@ body {
 
 .tab-button.active {
     background: #ffffff;
-    color: #ff4d88;
+    color: #0284c7;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
@@ -281,17 +281,17 @@ body {
 }
 
 .custom-table thead {
-    background: #fdf2f6;
+    background: #f8fafc;
 }
 
 .custom-table th {
     padding: 12px 18px;
     font-size: 12px;
     font-weight: 700;
-    color: #831843;
+    color: #475569;
     text-transform: uppercase;
     letter-spacing: 0.6px;
-    border-bottom: 1px solid #fce7ef;
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .custom-table td {
@@ -306,15 +306,15 @@ body {
 }
 
 .custom-table tbody tr:hover {
-    background-color: #fff9fb;
+    background-color: #f1f5f9;
 }
 
 .class-badge {
     display: inline-block;
     padding: 4px 10px;
     border-radius: 8px;
-    background: #eff6ff;
-    color: #2563eb;
+    background: #e0f2fe;
+    color: #0369a1;
     font-size: 12px;
     font-weight: 600;
 }
@@ -324,6 +324,83 @@ body {
     padding: 30px !important;
     color: #94a3b8 !important;
     font-style: italic;
+}
+
+/* --- ACTION BUTTONS & BADGES --- */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-action-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: linear-gradient(135deg, #0284c7, #0ea5e9);
+    color: #ffffff;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 13px;
+    box-shadow: 0 4px 14px rgba(14, 165, 233, 0.25);
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-action-primary:hover {
+    background: linear-gradient(135deg, #0369a1, #0284c7);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(14, 165, 233, 0.35);
+    color: #ffffff;
+}
+
+.btn-action-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: #ffffff;
+    color: #334155;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 13px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s ease;
+}
+
+.btn-action-secondary:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+    color: #0f172a;
+    transform: translateY(-2px);
+}
+
+.btn-table-edit {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    background: #eff6ff;
+    color: #0284c7;
+    border: 1px solid #bae6fd;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.btn-table-edit:hover {
+    background: #0284c7;
+    color: #ffffff;
+    border-color: #0284c7;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(2, 132, 199, 0.2);
 }
 
 /* --- RESPONSIVE BREAKPOINTS --- */

@@ -8,7 +8,10 @@
 }
 
 body {
-    background-color: #f8fafc;
+    background: radial-gradient(at 10% 15%, rgba(2, 132, 199, 0.08) 0px, transparent 45%),
+                radial-gradient(at 90% 85%, rgba(14, 165, 233, 0.08) 0px, transparent 45%),
+                radial-gradient(at 50% 50%, rgba(99, 102, 241, 0.04) 0px, transparent 60%),
+                #f8fafc;
     color: #334155;
     min-height: 100vh;
     display: flex;
@@ -26,11 +29,23 @@ body {
 .form-container {
     background-color: #ffffff;
     padding: 36px 40px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px -5px rgba(2, 132, 199, 0.08), 0 4px 16px -2px rgba(15, 23, 42, 0.04);
+    border: 1px solid rgba(226, 232, 240, 0.9);
     width: 100%;
     max-width: 720px;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #0284c7 0%, #38bdf8 50%, #818cf8 100%);
 }
 
 .form-header {
@@ -49,7 +64,7 @@ body {
 }
 
 .form-title i {
-    color: #e11d48;
+    color: #0284c7;
 }
 
 .form-subtitle {
@@ -94,7 +109,7 @@ form label {
 }
 
 form label i {
-    color: #e11d48;
+    color: #0284c7;
     margin-right: 4px;
 }
 
@@ -115,8 +130,8 @@ form select {
 form input[type="text"]:focus,
 form input[type="date"]:focus,
 form select:focus {
-    border-color: #e11d48;
-    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
 }
 
 .form-buttons {
@@ -145,14 +160,14 @@ form select:focus {
 }
 
 .btn-primary {
-    background-color: #e11d48;
+    background-color: #0284c7;
     color: #ffffff;
-    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
 }
 
 .btn-primary:hover {
-    background-color: #be123c;
-    box-shadow: 0 6px 16px rgba(225, 29, 72, 0.35);
+    background-color: #0369a1;
+    box-shadow: 0 6px 16px rgba(2, 132, 199, 0.35);
     transform: translateY(-1px);
 }
 

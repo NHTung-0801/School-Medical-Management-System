@@ -15,32 +15,35 @@
 <div th:replace="fragments/header :: Nav-Manager"></div>
 
 <main class="container">
-  <!-- Header & Toolbar -->
-  <div class="page-header">
-    <div class="page-title-group">
-      <h2><i class="fas fa-user-graduate"></i> Danh Sách Học Sinh</h2>
-      <p class="subtitle">Quản lý hồ sơ học sinh, thông tin lớp học và liên kết phụ huynh</p>
+  <div class="medical-card">
+    <!-- Executive Header Banner -->
+    <div class="card-header-banner">
+      <div class="banner-title-group">
+        <div class="header-icon-badge">
+          <i class="fas fa-user-graduate"></i>
+        </div>
+        <div>
+          <h2 class="banner-title">Danh Sách Học Sinh</h2>
+          <p class="banner-subtitle">Quản lý hồ sơ học sinh, thông tin lớp học và liên kết phụ huynh</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a th:href="@{/manager/students/create}" class="btn-add">
+          <i class="fas fa-plus-circle"></i> Thêm học sinh mới
+        </a>
+      </div>
     </div>
-    <div class="header-actions">
-      <a th:href="@{/manager/manager-home}" class="btn-back">
-        <i class="fas fa-arrow-left"></i> Trang chủ
-      </a>
-      <a th:href="@{/manager/students/create}" class="btn-add">
-        <i class="fas fa-plus-circle"></i> Thêm học sinh mới
-      </a>
+
+    <!-- Thông báo thành công / lỗi -->
+    <div th:if="${success}" class="message success">
+      <i class="fas fa-check-circle"></i> <span th:text="${success}"></span>
     </div>
-  </div>
+    <div th:if="${error}" class="message error">
+      <i class="fas fa-exclamation-circle"></i> <span th:text="${error}"></span>
+    </div>
 
-  <!-- Thông báo thành công / lỗi -->
-  <div th:if="${success}" class="message success">
-    <i class="fas fa-check-circle"></i> <span th:text="${success}"></span>
-  </div>
-  <div th:if="${error}" class="message error">
-    <i class="fas fa-exclamation-circle"></i> <span th:text="${error}"></span>
-  </div>
-
-  <!-- Table Container -->
-  <div class="table-responsive">
+    <!-- Table Container -->
+    <div class="table-responsive">
     <table>
       <thead>
       <tr>
@@ -107,9 +110,10 @@
       </tbody>
     </table>
   </div>
+  </div>
 </main>
 
 <script th:src="@{/assets/js/fragments/header.js}"></script>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="fragments/footer :: footer-compact"></div>
 </body>
 </html>

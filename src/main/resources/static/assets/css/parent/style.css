@@ -1,6 +1,6 @@
 /* ==========================================================================
-   EDIT PROFILE STYLESHEET
-   Design System: Medical Rose & Clean Elevation Form
+   EDIT PROFILE & ACCOUNT FORM STYLESHEET
+   Design System: Sky Blue & Slate Clean Elevation Form
    ========================================================================== */
 
 * {
@@ -11,7 +11,7 @@
 }
 
 body {
-    background: #fbf8fa;
+    background: #f8fafc;
     color: #1e293b;
     min-height: 100vh;
     padding: 0;
@@ -22,11 +22,11 @@ body {
     background: #ffffff;
     padding: 36px 40px 44px;
     border-radius: 20px;
-    box-shadow: 0 6px 30px rgba(255, 77, 136, 0.07);
+    box-shadow: 0 6px 30px rgba(15, 23, 42, 0.06);
     width: 100%;
     max-width: 720px;
     margin: 32px auto 50px;
-    border: 1px solid #fce7ef;
+    border: 1px solid #e2e8f0;
     animation: fadeIn 0.4s ease-out;
 }
 
@@ -42,7 +42,7 @@ h2 {
     text-align: center;
     margin-bottom: 24px;
     padding-bottom: 16px;
-    border-bottom: 1px solid #fce7ef;
+    border-bottom: 1px solid #e2e8f0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -50,11 +50,11 @@ h2 {
 }
 
 h2 i {
-    color: #ff4d88;
+    color: #0284c7;
 }
 
 h2 span {
-    color: #ff4d88;
+    color: #0284c7;
 }
 
 .form-group {
@@ -63,7 +63,7 @@ h2 span {
 
 label {
     display: block;
-    color: #475569;
+    color: #0369a1;
     font-weight: 600;
     margin-bottom: 8px;
     font-size: 14px;
@@ -72,7 +72,7 @@ label {
 input, select, textarea {
     width: 100%;
     padding: 12px 16px;
-    border: 1px solid #fbcfe8;
+    border: 1px solid #cbd5e1;
     border-radius: 12px;
     font-size: 14px;
     transition: all 0.2s ease;
@@ -87,8 +87,8 @@ textarea {
 }
 
 input:focus, select:focus, textarea:focus {
-    border-color: #ff4d88;
-    box-shadow: 0 0 0 3px rgba(255, 77, 136, 0.15);
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
     outline: none;
 }
 
@@ -100,7 +100,7 @@ input::placeholder, textarea::placeholder {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    color: #ff4d88;
+    color: #0284c7;
     font-weight: 600;
     font-size: 14px;
     text-decoration: none;
@@ -109,7 +109,7 @@ input::placeholder, textarea::placeholder {
 }
 
 .change-password:hover {
-    color: #e11d48;
+    color: #0369a1;
     text-decoration: underline;
 }
 
@@ -136,14 +136,15 @@ button {
 }
 
 button[type="submit"] {
-    background: linear-gradient(135deg, #10b981, #059669);
+    background: linear-gradient(135deg, #0284c7, #0ea5e9);
     color: #ffffff;
-    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
 }
 
 button[type="submit"]:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.35);
+    background: linear-gradient(135deg, #0369a1, #0284c7);
 }
 
 button[type="button"] {

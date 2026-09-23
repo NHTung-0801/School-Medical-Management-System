@@ -48,7 +48,10 @@
     <td>
       <a th:href="@{/nurse/healthCheckConsent/list-student-health-check(idSchedule=${schedule.id})}"
       style="color: #007bff; text-decoration: underline;">Xem học sinh</a>
-
+      <a th:href="@{/nurse/healthCheckSchedule/export/{id}(id=${schedule.id})}"
+         style="margin-left: 10px; color: #28a745; font-weight: bold; text-decoration: none;" title="Xuất báo cáo Excel">
+        📥 Xuất Excel
+      </a>
     </td>
   </tr>
 
@@ -66,6 +69,6 @@
 </div>
 <script th:src="@{/assets/js/fragments/header.js}"></script>
 <script th:src="@{/assets/js/phanTrang.js}"></script>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="fragments/footer :: footer-compact"></div>
 </body>
 </html>

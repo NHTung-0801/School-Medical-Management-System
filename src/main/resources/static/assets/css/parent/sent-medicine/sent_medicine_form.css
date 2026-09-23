@@ -1,4 +1,4 @@
-/* Sent Medicine Form - Modern Redesign */
+/* Sent Medicine Form - Modern Blue/Teal Theme */
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +7,7 @@
 }
 
 body {
-    background: linear-gradient(135deg, #fff5f7 0%, #fdf2f4 100%);
+    background: linear-gradient(135deg, #f0f7ff 0%, #f8fbff 100%);
     color: #1e293b;
     min-height: 100vh;
 }
@@ -21,8 +21,8 @@ body {
 .form-card {
     background: #ffffff;
     border-radius: 20px;
-    box-shadow: 0 10px 35px rgba(225, 29, 72, 0.08);
-    border: 1px solid #ffe4e6;
+    box-shadow: 0 10px 35px rgba(2, 132, 199, 0.08);
+    border: 1px solid #bae6fd;
     padding: 36px 40px;
     animation: fadeIn 0.4s ease-out;
 }
@@ -42,7 +42,7 @@ body {
 .form-icon {
     width: 64px;
     height: 64px;
-    background: linear-gradient(135deg, #ff4d88, #e11d48);
+    background: linear-gradient(135deg, #0284c7, #0ea5e9);
     color: #ffffff;
     border-radius: 18px;
     display: inline-flex;
@@ -50,7 +50,7 @@ body {
     justify-content: center;
     font-size: 26px;
     margin-bottom: 16px;
-    box-shadow: 0 8px 20px rgba(225, 29, 72, 0.25);
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.25);
 }
 
 .form-header h2 {
@@ -80,7 +80,7 @@ body {
 }
 
 .field-group label .required-mark {
-    color: #e11d48;
+    color: #ef4444;
     margin-left: 2px;
 }
 
@@ -99,8 +99,8 @@ body {
 
 .field-group select:focus,
 .field-group textarea:focus {
-    border-color: #ff4d88;
-    box-shadow: 0 0 0 3px rgba(255, 77, 136, 0.15);
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
 }
 
 .field-group textarea {
@@ -177,21 +177,21 @@ body {
     align-items: center;
     gap: 8px;
     padding: 11px 26px;
-    background: linear-gradient(135deg, #e11d48, #ff4d88);
+    background: linear-gradient(135deg, #0284c7, #0ea5e9);
     color: #ffffff;
     border: none;
     border-radius: 10px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(225, 29, 72, 0.25);
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
     transition: all 0.2s ease;
 }
 
 .btn-submit-medicine:hover {
-    background: linear-gradient(135deg, #be123c, #e11d48);
+    background: linear-gradient(135deg, #0369a1, #0284c7);
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(225, 29, 72, 0.35);
+    box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
 }
 
 @media (max-width: 640px) {

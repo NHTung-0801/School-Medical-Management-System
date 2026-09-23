@@ -9,6 +9,7 @@ import com.medical.schoolMedical.modules.user_management.entities.Student;
 import com.medical.schoolMedical.modules.user_management.mappers.StudentMapper;
 import com.medical.schoolMedical.modules.user_management.repositories.ParentRepository;
 import com.medical.schoolMedical.modules.user_management.repositories.StudentRepository;
+import com.medical.schoolMedical.util.ValidationUtil;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -51,11 +52,11 @@ public class StudentService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.PARENT_NOT_EXISTS));
 
         Student student = new Student();
-        student.setFullName(fullName);
+        student.setFullName(ValidationUtil.normalizeFullName(fullName));
         student.setGender(gender);
         student.setBirthDate(birthDate);
-        student.setAddress(address);
-        student.setClassName(className);
+        student.setAddress(address != null ? address.trim().replaceAll("\\s+", " ") : "");
+        student.setClassName(className != null ? className.trim().toUpperCase() : "");
         student.setParent(parent);
 
         studentRepository.save(student);
@@ -69,11 +70,11 @@ public class StudentService {
         Parent parent = parentRepository.findById(parentId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.PARENT_NOT_EXISTS));
 
-        student.setFullName(fullName);
+        student.setFullName(ValidationUtil.normalizeFullName(fullName));
         student.setGender(gender);
         student.setBirthDate(birthDate);
-        student.setAddress(address);
-        student.setClassName(className);
+        student.setAddress(address != null ? address.trim().replaceAll("\\s+", " ") : "");
+        student.setClassName(className != null ? className.trim().toUpperCase() : "");
         student.setParent(parent);
 
         studentRepository.save(student);

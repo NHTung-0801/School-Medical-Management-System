@@ -1,6 +1,6 @@
 /* ==========================================================================
    USER MANAGEMENT STYLESHEET (ADMIN)
-   Design System: Medical Rose & Clean Elevation
+   Design System: Sky Blue & Slate Clean Elevation
    ========================================================================== */
 
 * {
@@ -11,7 +11,7 @@
 }
 
 body {
-    background: #fbf8fa;
+    background: #f8fafc;
     color: #1e293b;
     min-height: 100vh;
     padding: 0;
@@ -22,11 +22,11 @@ body {
     background: #ffffff;
     padding: 28px 32px 40px;
     border-radius: 20px;
-    box-shadow: 0 4px 25px rgba(255, 77, 136, 0.06);
+    box-shadow: 0 4px 25px rgba(15, 23, 42, 0.06);
     width: 100%;
     max-width: 1240px;
     margin: 24px auto;
-    border: 1px solid #fce7ef;
+    border: 1px solid #e2e8f0;
     animation: fadeIn 0.4s ease-out;
 }
 
@@ -44,7 +44,7 @@ body {
     flex-wrap: wrap;
     gap: 16px;
     padding-bottom: 20px;
-    border-bottom: 1px solid #fce7ef;
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .page-title-group h2 {
@@ -57,7 +57,7 @@ body {
 }
 
 .page-title-group h2 i {
-    color: #ff4d88;
+    color: #0284c7;
     font-size: 22px;
 }
 
@@ -78,7 +78,7 @@ body {
     align-items: center;
     gap: 8px;
     padding: 10px 22px;
-    background: linear-gradient(135deg, #10b981, #059669);
+    background: linear-gradient(135deg, #0284c7, #0ea5e9);
     color: #ffffff;
     border: none;
     border-radius: 25px;
@@ -86,14 +86,14 @@ body {
     font-weight: 600;
     cursor: pointer;
     text-decoration: none;
-    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .add-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
-    background: linear-gradient(135deg, #059669, #047857);
+    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.35);
+    background: linear-gradient(135deg, #0369a1, #0284c7);
 }
 
 /* --- NOTIFICATION MESSAGES --- */
@@ -124,7 +124,7 @@ body {
 .table-responsive {
     overflow-x: auto;
     border-radius: 14px;
-    border: 1px solid #f1f5f9;
+    border: 1px solid #e2e8f0;
     background: #ffffff;
 }
 
@@ -136,17 +136,17 @@ table {
 }
 
 thead {
-    background: #fdf2f6;
+    background: #f8fafc;
 }
 
 th {
     padding: 14px 20px;
     font-size: 12px;
     font-weight: 700;
-    color: #831843;
+    color: #475569;
     text-transform: uppercase;
     letter-spacing: 0.6px;
-    border-bottom: 1px solid #fce7ef;
+    border-bottom: 1px solid #e2e8f0;
     white-space: nowrap;
 }
 
@@ -162,7 +162,7 @@ tbody tr {
 }
 
 tbody tr:hover {
-    background-color: #fff9fb;
+    background-color: #f8fafc;
 }
 
 /* --- ROLE BADGES --- */
@@ -178,15 +178,15 @@ tbody tr:hover {
 }
 
 .role-badge.role-admin {
-    background: #fee2e2;
-    color: #b91c1c;
-    border: 1px solid #fca5a5;
-}
-
-.role-badge.role-parent {
     background: #eff6ff;
     color: #1d4ed8;
     border: 1px solid #bfdbfe;
+}
+
+.role-badge.role-parent {
+    background: #f0fdfa;
+    color: #0f766e;
+    border: 1px solid #99f6e4;
 }
 
 .role-badge.role-nurse {
@@ -265,7 +265,7 @@ tbody tr:hover {
 }
 
 .back-link:hover {
-    color: #ff4d88;
+    color: #0284c7;
 }
 
 @media (max-width: 768px) {

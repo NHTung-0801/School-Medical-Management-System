@@ -19,5 +19,10 @@ public interface VaccinationRecordRepository extends JpaRepository<VaccinationRe
     @Query("SELECT r FROM VaccinationRecord r WHERE r.vaccinationConsent.id IN :consentIds")
     List<VaccinationRecord> findByConsentIds(@Param("consentIds") List<Long> consentIds);
 
+    boolean existsByVaccinationConsent_Parent_IdAndSentToParentTrueAndViewedByParentFalse(Long parentId);
+
     Page<VaccinationRecord> findBySentToParentTrueAndVaccinationConsent_Parent_User_Id(Long userId, Pageable pageable);
+
+    @Query("SELECT r FROM VaccinationRecord r JOIN FETCH r.vaccinationConsent c JOIN FETCH c.student WHERE c.schedule.id = :scheduleId")
+    List<VaccinationRecord> findByScheduleId(@Param("scheduleId") Long scheduleId);
 }

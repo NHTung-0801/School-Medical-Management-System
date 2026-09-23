@@ -19,25 +19,20 @@
 <div th:replace="fragments/header :: Nav-Parent"></div>
 
 <div class="page-wrapper">
-    <!-- Top Action Bar -->
-    <div class="page-top-bar">
-        <div class="page-heading">
-            <div class="heading-icon">
-                <i class="fas fa-calendar-check"></i>
-            </div>
-            <div>
-                <h2 class="page-title">Lịch hẹn tư vấn y tế</h2>
-                <p class="page-subtitle">Theo dõi danh sách các buổi hẹn làm việc trực tiếp với phòng y tế nhà trường</p>
+    <!-- Elevated Table Card with Executive Header Banner -->
+    <div class="table-card medical-card">
+        <div class="card-header-banner">
+            <div class="banner-title-group">
+                <div class="header-icon-badge">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div>
+                    <h2 class="banner-title">Lịch Hẹn Tư Vấn Y Tế</h2>
+                    <p class="banner-subtitle">Theo dõi danh sách các buổi hẹn làm việc trực tiếp với phòng y tế nhà trường</p>
+                </div>
             </div>
         </div>
 
-        <a th:href="@{/parent/parent-home}" class="btn-ghost-back">
-            <i class="fas fa-arrow-left"></i> Trang chủ
-        </a>
-    </div>
-
-    <!-- Table Card -->
-    <div class="table-card">
         <div class="table-responsive-custom">
             <table class="custom-medical-table">
                 <thead>
@@ -141,6 +136,6 @@
         }
     }
 </script>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="fragments/footer :: footer-compact"></div>
 </body>
 </html>

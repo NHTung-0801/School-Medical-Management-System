@@ -1,78 +1,96 @@
+/* Health Record View - Modern Blue/Teal Theme */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', 'Arial', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #ffe6f0, #fff0f5);
-    display: contents;
-    justify-content: center;
-    align-items: center;
+    background: linear-gradient(135deg, #f0f7ff 0%, #f8fbff 100%);
+    color: #1e293b;
     min-height: 100vh;
-    padding: 20px;
 }
-h2{
-    color: #e91e63;
+
+h2 {
+    color: #0f172a;
+    font-size: 22px;
+    font-weight: 700;
 }
+
 .record-container {
     max-width: 740px;
-    margin: 20px auto;
+    margin: 36px auto;
+    padding: 32px 36px;
+    border: 1px solid #bae6fd;
+    border-radius: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 10px 30px rgba(2, 132, 199, 0.06);
 }
 
 .w-25 {
     width: 160px;
 }
-.btn-pink {
-    background-color: #e91e63;
-    border-color:   #e91e63;
-    color: #fff;
+
+/* Backward compatibility for .btn-pink -> styled as modern primary blue */
+.btn-pink, .btn-primary-custom {
+    background: linear-gradient(135deg, #0284c7, #0ea5e9);
+    border: none;
+    color: #ffffff !important;
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-pink:hover,
-.btn-pink:focus {
-    background-color: #d81b60;
-    border-color:     #d81b60;
-    color: #fff;
-}
-.record-container {
-    max-width: 700px;
-    margin: 30px auto;
-    padding: 24px;
-    border: 1px solid #eee;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 0 8px rgba(0,0,0,0.05);
+.btn-pink:focus,
+.btn-primary-custom:hover {
+    background: linear-gradient(135deg, #0369a1, #0284c7);
+    color: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(2, 132, 199, 0.35);
+    text-decoration: none;
 }
 
 .health-info-box {
-    max-width: 600px;
-    margin: 0 auto; /* canh giữa */
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    max-width: 640px;
+    margin: 20px auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
     padding: 24px;
-    background-color: #fafafa;
-    word-wrap: break-word;      /* Gãy dòng khi quá dài */
+    background-color: #f8fafc;
+    word-wrap: break-word;
     overflow-wrap: break-word;
 }
+
 .info-row {
     display: flex;
     justify-content: space-between;
     padding: 12px 0;
-    border-bottom: 2px solid #ccc;
-    font-size: 16px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 15px;
 }
 
 .info-row strong {
     width: 40%;
     font-weight: 600;
+    color: #0369a1;
 }
 
 .info-row:last-child {
     border-bottom: none;
 }
+
 .info-content {
     white-space: pre-wrap;
     word-break: break-word;
+    color: #1e293b;
 }

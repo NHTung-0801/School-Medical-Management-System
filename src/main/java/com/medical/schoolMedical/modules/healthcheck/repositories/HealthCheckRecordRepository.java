@@ -25,4 +25,7 @@ public interface HealthCheckRecordRepository extends JpaRepository<HealthCheckRe
     Page<HealthCheckRecord> findBySentToParentTrueAndHealthCheckConsent_Parent_User_Id(Long userId, Pageable pageable);
 
     Optional<HealthCheckRecord> findByHealthCheckConsent_Id(Long scheduleId);
+
+    @Query("SELECT r FROM HealthCheckRecord r JOIN FETCH r.healthCheckConsent c JOIN FETCH c.student WHERE c.schedule.id = :scheduleId")
+    List<HealthCheckRecord> findByScheduleId(@Param("scheduleId") Long scheduleId);
 }

@@ -27,7 +27,7 @@ public class VaccinationConsentController {
                                           RedirectAttributes redirectAttributes) {
         if (idSchedule == null) {
             redirectAttributes.addFlashAttribute("error", "idSchedule không được để trống");
-            return "redirect:/nurse/vaccinationSchedule/vaccinationSchedules";
+            return "redirect:/nurse/vaccinationSchedule/vaccinationSchedules/sent";
         }
 
         boolean is_vaccinated = false;

@@ -2,7 +2,6 @@ package com.medical.schoolMedical.modules.user_management.controllers;
 
 import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.modules.auth.services.NotificationService;
-import com.medical.schoolMedical.modules.healthcheck.services.HealthCheckConsentService;
 import com.medical.schoolMedical.modules.user_management.dto.ParentDTO;
 import com.medical.schoolMedical.modules.user_management.services.ParentService;
 import com.medical.schoolMedical.security.CustomUserDetails;
@@ -24,24 +23,28 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/parent")
 public class ParentController {
-    HealthCheckConsentService healthCheckConsentService;
     NotificationService notificationService;
     ParentService parentService;
 
     @ModelAttribute("notifications")
-    public Map<String, Boolean> getNotifications(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    public Map<String, Object> getNotifications(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         Long userId = customUserDetails.getUser().getId();
         try{
             ParentDTO parentDTO = parentService.getParentbyId(userId);
             Long parentId = parentDTO.getId();
             return notificationService.getUserNotifications(parentId);
-
-        }catch(BusinessException e){
+        }catch(Exception e){
             log.warn("Không thể lấy thông báo cho phụ huynh (userId={}): {}", userId, e.getMessage());
-            return Map.of(
-                    "newConsent", false,
-                    "newRecord", false
-            );
+            Map<String, Object> fallback = new java.util.HashMap<>();
+            fallback.put("hasNewHealthCheckConsent", false);
+            fallback.put("hasNewHealthCheckRecord", false);
+            fallback.put("hasNewVaccinationConsent", false);
+            fallback.put("hasNewVaccinationRecord", false);
+            fallback.put("hasNewConsent", false);
+            fallback.put("hasNewRecord", false);
+            fallback.put("hasAnyNotification", false);
+            fallback.put("unreadCount", 0);
+            return fallback;
         }
 
     }

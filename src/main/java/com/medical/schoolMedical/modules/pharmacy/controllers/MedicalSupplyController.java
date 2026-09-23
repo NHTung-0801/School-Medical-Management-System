@@ -42,10 +42,11 @@ public class MedicalSupplyController {
 
     // Hiển thị form sửa vật tư
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable("id") Long id, Model model) {
+    public String showEditForm(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         MedicalSupply supply = medicalSupplyService.getSupplyById(id);
         if (supply == null) {
-            return "redirect:/nurse/medical-supplies?error=Không tìm thấy vật tư";
+            redirectAttributes.addFlashAttribute("error", "Không tìm thấy vật tư");
+            return "redirect:/nurse/medical-supplies";
         }
         model.addAttribute("supply", supply);
         return "nurse/medicalSupply/supply_form";

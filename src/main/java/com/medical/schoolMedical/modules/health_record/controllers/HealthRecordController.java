@@ -62,9 +62,15 @@ public class HealthRecordController {
                              RedirectAttributes redirectAttributes,
                              Model model) {
 
-        Student student = userService.findStudentById(record.getStudent().getId());
+        if (record.getStudent() == null || record.getStudent().getId() == null) {
+            redirectAttributes.addFlashAttribute("error", "Thông tin học sinh không hợp lệ.");
+            return "redirect:/parent/health-record/select-student";
+        }
 
-        if (!userService.getCurrentParent().getStudents().contains(student)) {
+        Student student = userService.findStudentById(record.getStudent().getId());
+        Parent currentParent = userService.getCurrentParent();
+
+        if (student == null || student.getParent() == null || student.getParent().getId() != currentParent.getId()) {
             redirectAttributes.addFlashAttribute("error", "Bạn không có quyền lưu hồ sơ cho học sinh này.");
             return "redirect:/parent/health-record/select-student";
         }
@@ -73,10 +79,10 @@ public class HealthRecordController {
         if (record.getVision() < 0 || record.getVision() > 10) {
             model.addAttribute("error", "Giá trị thị lực phải từ 0 đến 10.");
             model.addAttribute("record", record);
-            return "parent/health_record_form";
+            return "parent/health-record/health_record_form";
         }
 
-        record.setParent(userService.getCurrentParent());
+        record.setParent(currentParent);
         record.setStudent(student);
         healthRecordService.save(record);
 

@@ -6,19 +6,15 @@
 }
 
 body {
-    background: linear-gradient(135deg, #ffe6f0, #fff0f5);
-    display: contents;
-    justify-content: center;
-    align-items: center;
+    background: #f8fafc;
     min-height: 100vh;
-    padding: 20px;
 }
 
 .container {
     background: #ffffff;
     padding: 30px;
     border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(255, 77, 136, 0.2);
+    box-shadow: 0 4px 20px rgba(2, 132, 199, 0.08);
     width: 100%;
     max-width: 600px;
     animation: fadeIn 0.5s ease-in-out;
@@ -31,7 +27,7 @@ body {
 }
 
 h2 {
-    color: #ff4d88;
+    color: #0284c7;
     font-size: 28px;
     font-weight: 700;
     text-align: center;
@@ -41,7 +37,7 @@ h2 {
 }
 
 h3 {
-    color: #ff4d88;
+    color: #0284c7;
     font-size: 20px;
     font-weight: 600;
     margin: 20px 0 10px;
@@ -53,7 +49,7 @@ h3 {
 
 label {
     display: block;
-    color: #ff4d88;
+    color: #0369a1;
     font-weight: 500;
     margin: 8px 0;
     font-size: 16px;
@@ -62,7 +58,7 @@ label {
 input, textarea, select {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ffe6f0;
+    border: 1px solid #cbd5e1;
     border-radius: 10px;
     font-size: 14px;
     transition: border-color 0.3s, box-shadow 0.3s;
@@ -71,8 +67,8 @@ input, textarea, select {
 }
 
 input:focus, textarea:focus, select:focus {
-    border-color: #ff1a66;
-    box-shadow: 0 0 8px rgba(255, 26, 102, 0.2);
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
     outline: none;
 }
 
@@ -83,7 +79,7 @@ input::placeholder, textarea::placeholder {
 hr {
     border: 0;
     height: 1px;
-    background: #ffe6f0;
+    background: #e2e8f0;
     margin: 15px 0;
 }
 
@@ -110,7 +106,7 @@ button[type="submit"] {
 }
 
 button[type="button"] {
-    background: linear-gradient(90deg, #ff7182, #e62020);
+    background: linear-gradient(90deg, #64748b, #475569);
     color: #fff;
 }
 

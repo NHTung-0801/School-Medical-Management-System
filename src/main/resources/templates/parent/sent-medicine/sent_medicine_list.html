@@ -18,30 +18,26 @@
 <div th:replace="fragments/header :: Nav-Parent"></div>
 
 <div class="page-wrapper">
-    <!-- Top Action Bar -->
-    <div class="page-top-bar">
-        <div class="page-heading">
-            <div class="heading-icon">
-                <i class="fas fa-pills"></i>
+    <!-- Elevated Card with Executive Header Banner -->
+    <div class="table-card medical-card">
+        <div class="card-header-banner">
+            <div class="banner-title-group">
+                <div class="header-icon-badge">
+                    <i class="fas fa-pills"></i>
+                </div>
+                <div>
+                    <h2 class="banner-title">Danh Sách Thuốc Đã Gửi</h2>
+                    <p class="banner-subtitle">Quản lý và theo dõi các đơn thuốc phụ huynh đã gửi cho phòng y tế trường học</p>
+                </div>
             </div>
-            <div>
-                <h2 class="page-title">Danh sách thuốc đã gửi</h2>
-                <p class="page-subtitle">Quản lý và theo dõi các đơn thuốc phụ huynh đã gửi cho phòng y tế trường học</p>
+
+            <div class="header-actions">
+                <a th:href="@{/parent/sentMedicine/form}" class="btn-add">
+                    <i class="fas fa-plus-circle"></i> Gửi thuốc mới
+                </a>
             </div>
         </div>
 
-        <div class="top-bar-actions">
-            <a th:href="@{/parent/parent-home}" class="btn-ghost-back">
-                <i class="fas fa-arrow-left"></i> Trang chủ
-            </a>
-            <a th:href="@{/parent/sentMedicine/form}" class="btn-action-primary">
-                <i class="fas fa-plus-circle"></i> Gửi thuốc mới
-            </a>
-        </div>
-    </div>
-
-    <!-- Table Card -->
-    <div class="table-card">
         <div class="table-responsive-custom">
             <table class="custom-medical-table">
                 <thead>
@@ -99,6 +95,6 @@
 
 <script th:src="@{/assets/js/parent/sent-medicine/sent_medicine_list.js}"></script>
 <script th:src="@{/assets/js/fragments/header.js}"></script>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="fragments/footer :: footer-compact"></div>
 </body>
 </html>

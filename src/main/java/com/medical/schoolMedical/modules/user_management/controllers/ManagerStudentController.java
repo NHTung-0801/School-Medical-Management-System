@@ -5,6 +5,7 @@ import com.medical.schoolMedical.exceptions.BusinessException;
 import com.medical.schoolMedical.modules.user_management.entities.Student;
 import com.medical.schoolMedical.modules.user_management.services.ParentService;
 import com.medical.schoolMedical.modules.user_management.services.StudentService;
+import com.medical.schoolMedical.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -42,8 +43,10 @@ public class ManagerStudentController {
                                 @RequestParam String className,
                                 @RequestParam Long parentId,
                                 RedirectAttributes redirectAttributes) {
-        if (fullName == null || fullName.trim().isEmpty()) {
-            redirectAttributes.addFlashAttribute("error", "Họ và tên học sinh không được để trống.");
+        // Sanitize và validate họ tên
+        String sanitizedName = ValidationUtil.sanitizeFullName(fullName);
+        if (!ValidationUtil.isValidFullName(sanitizedName)) {
+            redirectAttributes.addFlashAttribute("error", "Họ và tên học sinh không hợp lệ. Vui lòng chỉ nhập chữ cái và khoảng trắng, không dùng ký tự đặc biệt (?, #, số...).");
             return "redirect:/manager/students/create";
         }
         if (birthDate == null || birthDate.isAfter(LocalDate.now())) {
@@ -55,7 +58,7 @@ public class ManagerStudentController {
             return "redirect:/manager/students/create";
         }
         try {
-            studentService.createStudent(fullName.trim(), gender, birthDate, address != null ? address.trim() : "", className.trim(), parentId);
+            studentService.createStudent(sanitizedName, gender, birthDate, address != null ? address.trim() : "", className.trim(), parentId);
             redirectAttributes.addFlashAttribute("success", "Thêm học sinh thành công!");
         } catch (BusinessException ex) {
             redirectAttributes.addFlashAttribute("error", ex.getMessage());
@@ -87,8 +90,10 @@ public class ManagerStudentController {
                                 @RequestParam String className,
                                 @RequestParam Long parentId,
                                 RedirectAttributes redirectAttributes) {
-        if (fullName == null || fullName.trim().isEmpty()) {
-            redirectAttributes.addFlashAttribute("error", "Họ và tên học sinh không được để trống.");
+        // Sanitize và validate họ tên
+        String sanitizedName = ValidationUtil.sanitizeFullName(fullName);
+        if (!ValidationUtil.isValidFullName(sanitizedName)) {
+            redirectAttributes.addFlashAttribute("error", "Họ và tên học sinh không hợp lệ. Vui lòng chỉ nhập chữ cái và khoảng trắng, không dùng ký tự đặc biệt (?, #, số...).");
             return "redirect:/manager/students/edit/" + id;
         }
         if (birthDate == null || birthDate.isAfter(LocalDate.now())) {
@@ -100,7 +105,7 @@ public class ManagerStudentController {
             return "redirect:/manager/students/edit/" + id;
         }
         try {
-            studentService.updateStudent(id, fullName.trim(), gender, birthDate, address != null ? address.trim() : "", className.trim(), parentId);
+            studentService.updateStudent(id, sanitizedName, gender, birthDate, address != null ? address.trim() : "", className.trim(), parentId);
             redirectAttributes.addFlashAttribute("success", "Cập nhật thông tin học sinh thành công!");
         } catch (BusinessException ex) {
             redirectAttributes.addFlashAttribute("error", ex.getMessage());

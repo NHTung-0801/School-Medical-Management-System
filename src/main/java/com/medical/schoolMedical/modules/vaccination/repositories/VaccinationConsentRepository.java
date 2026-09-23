@@ -14,6 +14,9 @@ import java.util.List;
 
 @Repository
 public interface VaccinationConsentRepository extends JpaRepository<VaccinationConsent, Long> {
+    // Kiểm tra xem có consent của phụ huynh theo trạng thái hay không
+    boolean existsByParent_IdAndStatus(Long parentId, ConsentStatus status);
+
     // Lấy các vaccinationConsent của parent tương ứng
     Page<VaccinationConsent> findByParent_User_IdOrderByIdDesc(Long userId, Pageable pageable);
 

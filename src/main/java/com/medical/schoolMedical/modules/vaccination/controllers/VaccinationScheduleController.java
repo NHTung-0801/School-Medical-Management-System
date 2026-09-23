@@ -12,9 +12,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
 
 @Controller
 @Slf4j
@@ -25,6 +28,15 @@ public class VaccinationScheduleController {
     private VaccinationScheduleService vaccinationScheduleService;
     @Autowired
     private VaccinationConsentService vaccinationConsentService;
+    @Autowired
+    private com.medical.schoolMedical.modules.vaccination.services.VaccinationExportService vaccinationExportService;
+
+    @GetMapping("/export/{scheduleId}")
+    public void exportExcel(@PathVariable Long scheduleId, HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=\"BaoCao_TiemChung_" + scheduleId + ".xlsx\"");
+        vaccinationExportService.exportToExcel(scheduleId, response.getOutputStream());
+    }
 
     @GetMapping
     public String vaccinationSchedule(Model model) {

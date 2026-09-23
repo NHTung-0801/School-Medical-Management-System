@@ -1,4 +1,4 @@
-/* Vaccination Record Certificate - Modern Redesign */
+/* Vaccination Record Certificate - Modern Blue/Teal Theme */
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +7,7 @@
 }
 
 body {
-    background: linear-gradient(135deg, #fff5f7 0%, #fdf2f4 100%);
+    background: linear-gradient(135deg, #f0f7ff 0%, #f8fbff 100%);
     color: #1e293b;
     min-height: 100vh;
 }
@@ -21,8 +21,8 @@ body {
 .certificate-card {
     background: #ffffff;
     border-radius: 24px;
-    box-shadow: 0 12px 35px rgba(225, 29, 72, 0.08);
-    border: 1px solid #ffe4e6;
+    box-shadow: 0 12px 35px rgba(2, 132, 199, 0.08);
+    border: 1px solid #bae6fd;
     overflow: hidden;
     animation: fadeIn 0.4s ease-out;
 }
@@ -33,7 +33,7 @@ body {
 }
 
 .cert-header-banner {
-    background: linear-gradient(135deg, #e11d48, #ff4d88);
+    background: linear-gradient(135deg, #0284c7, #0ea5e9);
     color: #ffffff;
     padding: 30px 32px;
     display: flex;
@@ -71,8 +71,8 @@ body {
 }
 
 .student-hero-box {
-    background: #fff5f7;
-    border: 1px solid #fecdd3;
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
     border-radius: 14px;
     padding: 16px 20px;
     display: flex;
@@ -92,8 +92,8 @@ body {
 .student-hero-avatar {
     width: 44px;
     height: 44px;
-    background: #ffe4e6;
-    color: #e11d48;
+    background: #e0f2fe;
+    color: #0284c7;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -196,19 +196,19 @@ body {
     align-items: center;
     gap: 8px;
     padding: 11px 24px;
-    background: linear-gradient(135deg, #e11d48, #ff4d88);
+    background: linear-gradient(135deg, #0284c7, #0ea5e9);
     color: #ffffff;
     border: none;
     border-radius: 10px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(225, 29, 72, 0.25);
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
     transition: all 0.2s ease;
 }
 
 .btn-cert-print:hover {
-    background: linear-gradient(135deg, #be123c, #e11d48);
+    background: linear-gradient(135deg, #0369a1, #0284c7);
     transform: translateY(-1px);
 }
 

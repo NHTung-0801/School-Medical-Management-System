@@ -1,7 +1,5 @@
 package com.medical.schoolMedical.modules.auth.services;
 
-import com.medical.schoolMedical.exceptions.BusinessException;
-import com.medical.schoolMedical.exceptions.ErrorCode;
 import com.medical.schoolMedical.modules.user_management.entities.User;
 import com.medical.schoolMedical.modules.user_management.repositories.UserRepository;
 import com.medical.schoolMedical.security.CustomUserDetails;
@@ -24,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsername(username);
 
         if (user == null) {
-            throw new BusinessException(ErrorCode.STUDENT_NOT_FOUND);
+            throw new UsernameNotFoundException("Tài khoản không tồn tại: " + username);
         }
 
         return new CustomUserDetails(user);

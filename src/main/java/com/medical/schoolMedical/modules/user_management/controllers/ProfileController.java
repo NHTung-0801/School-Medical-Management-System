@@ -4,6 +4,7 @@ import com.medical.schoolMedical.enums.Role;
 import com.medical.schoolMedical.modules.user_management.entities.*;
 import com.medical.schoolMedical.modules.user_management.services.UserService;
 import com.medical.schoolMedical.security.CustomUserDetails;
+import com.medical.schoolMedical.util.ValidationUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +23,52 @@ public class ProfileController {
     @Autowired
     private UserService userService;
 
-    //Trang thông tin chung
+    // Điều hướng thông minh /profile về đúng trang hồ sơ theo vai trò
+    @GetMapping("/profile")
+    public String redirectProfile(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        if (customUserDetails == null || customUserDetails.getUser() == null) {
+            return "redirect:/login";
+        }
+        Role role = customUserDetails.getUser().getRole();
+        if (role == null) {
+            return "redirect:/login";
+        }
+        return switch (role) {
+            case ADMIN -> "redirect:/admin/profile";
+            case NURSE -> "redirect:/nurse/profile";
+            case PARENT -> "redirect:/parent/profile";
+            case MANAGER -> "redirect:/manager/profile";
+        };
+    }
+
+    @GetMapping("/edit-profile")
+    public String redirectEditProfile(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        if (customUserDetails == null || customUserDetails.getUser() == null) {
+            return "redirect:/login";
+        }
+        return "redirect:/" + customUserDetails.getUser().getRole().name().toLowerCase() + "/edit-profile";
+    }
+
+    // Trang thông tin cá nhân theo vai trò
     @GetMapping({"/admin/profile", "/parent/profile", "/manager/profile", "/nurse/profile"})
     public String viewProfile(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                               Model model) {
 
+        if (customUserDetails == null || customUserDetails.getUser() == null) {
+            return "redirect:/login";
+        }
+
         String username = customUserDetails.getUser().getUsername();
         User user = userService.findByUsername(username);
+        if (user == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("user", user);
 
         Role role = user.getRole();
+        if (role == null) {
+            return "redirect:/login";
+        }
 
         String homeUrl = switch (role) {
             case ADMIN -> "/admin/dashboard";
@@ -66,6 +103,9 @@ public class ProfileController {
     @GetMapping({"/admin/edit-profile", "/parent/edit-profile", "/manager/edit-profile", "/nurse/edit-profile"})
     public String showEditProfile(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                                   Model model) {
+        if (customUserDetails == null || customUserDetails.getUser() == null) {
+            return "redirect:/login";
+        }
         User user = customUserDetails.getUser();
         model.addAttribute("user", user);
         model.addAttribute("role", customUserDetails.getUser().getRole().name().toLowerCase());
@@ -95,6 +135,13 @@ public class ProfileController {
             user.setEmail(email);
         }
 
+        String rawFullName = request.getParameter("fullName");
+        String fullName = ValidationUtil.normalizeFullName(rawFullName);
+        if (rawFullName != null && !rawFullName.isBlank() && !ValidationUtil.isValidFullName(fullName)) {
+            redirectAttributes.addFlashAttribute("error", "Họ và tên không hợp lệ. Vui lòng chỉ nhập chữ cái và khoảng trắng, không chứa ký tự đặc biệt (?, #...).");
+            return "redirect:/" + role.name().toLowerCase() + "/edit-profile";
+        }
+
         switch (role) {
             case ADMIN -> {
                 Admin admin = userService.findAdminByUsername(user.getUsername());
@@ -102,7 +149,7 @@ public class ProfileController {
                     admin = new Admin();
                     admin.setUser(user);
                 }
-                admin.setFullName(request.getParameter("fullName"));
+                admin.setFullName(fullName);
                 userService.saveAdmin(admin);
             }
 
@@ -112,7 +159,7 @@ public class ProfileController {
                     parent = new Parent();
                     parent.setUser(user);
                 }
-                parent.setFullName(request.getParameter("fullName"));
+                parent.setFullName(fullName);
                 parent.setPhoneNumber(request.getParameter("phoneNumber"));
                 parent.setAddress(request.getParameter("address"));
                 userService.saveParent(parent);
@@ -124,7 +171,7 @@ public class ProfileController {
                     manager = new Manager();
                     manager.setUser(user);
                 }
-                manager.setFullName(request.getParameter("fullName"));
+                manager.setFullName(fullName);
                 userService.saveManager(manager);
             }
 
@@ -134,7 +181,7 @@ public class ProfileController {
                     nurse = new SchoolNurse();
                     nurse.setUser(user);
                 }
-                nurse.setFullName(request.getParameter("fullName"));
+                nurse.setFullName(fullName);
 
                 String experienceParam = request.getParameter("experience");
                 if (experienceParam != null && !experienceParam.isBlank()) {

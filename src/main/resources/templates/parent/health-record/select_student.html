@@ -14,10 +14,18 @@
 <div th:replace="fragments/header :: Header"></div>
 <div th:replace="fragments/header :: Nav-Parent"></div>
 
-<main class="select-student-container">
-    <div class="page-header">
-        <h2><i class="fas fa-file-medical-alt"></i> Hồ Sơ Sức Khỏe Học Sinh</h2>
-        <p class="subtitle">Chọn học sinh để thực hiện khai báo y tế ban đầu hoặc theo dõi hồ sơ sức khỏe định kỳ</p>
+<main class="select-student-container medical-card">
+    <!-- Executive Header Banner -->
+    <div class="card-header-banner">
+        <div class="banner-title-group">
+            <div class="header-icon-badge">
+                <i class="fas fa-file-medical-alt"></i>
+            </div>
+            <div>
+                <h2 class="banner-title">Hồ Sơ Sức Khỏe Học Sinh</h2>
+                <p class="banner-subtitle">Chọn học sinh để thực hiện khai báo y tế ban đầu hoặc theo dõi hồ sơ sức khỏe định kỳ</p>
+            </div>
+        </div>
     </div>
 
     <div class="table-responsive">
@@ -69,15 +77,9 @@
             </tbody>
         </table>
     </div>
-
-    <div class="back-container">
-        <a th:href="@{/parent/parent-home}" class="back-link">
-            <i class="fas fa-arrow-left"></i> Quay lại trang chủ phụ huynh
-        </a>
-    </div>
 </main>
 
 <script th:src="@{/assets/js/fragments/header.js}"></script>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="fragments/footer :: footer-compact"></div>
 </body>
 </html>
