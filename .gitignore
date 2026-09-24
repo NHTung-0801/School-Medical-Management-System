@@ -79,4 +79,14 @@ src/main/resources/application-dev.properties
 .env
 
 # Database & SQL scripts
-*.sql
+*.sql
+
+# AI Coding Agent Rules & Local Configs
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+.agents/
+.claude/
+.gemini/
+.cursor/
+.cursorrules
