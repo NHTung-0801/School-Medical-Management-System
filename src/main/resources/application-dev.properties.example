@@ -1,0 +1,20 @@
+# ==============================================================================
+# HƯỚNG DẪN CẤU HÌNH GMAIL CÁ NHÂN (LOCAL DEVELOPMENT)
+# ==============================================================================
+# 1. Tạo bản sao của file này và đặt tên là: application-dev.properties
+#    (Đường dẫn: src/main/resources/application-dev.properties)
+# 2. File này đã được thêm vào .gitignore nên mật khẩu cá nhân của bạn sẽ
+#    KHÔNG BAO GIỜ bị đẩy lên GitHub hay lộ ra ngoài.
+# 3. Điền thông tin tài khoản Gmail của bạn vào 2 dòng bên dưới:
+#    - spring.mail.username: Địa chỉ Gmail của bạn (vd: nguyenvana@gmail.com)
+#    - spring.mail.password: Mật khẩu ứng dụng 16 ký tự do Google cấp (App Password)
+#
+# CÁCH LẤY MẬT KHẨU ỨNG DỤNG GMAIL (16 KÝ TỰ):
+# - Bước 1: Vào https://myaccount.google.com/security -> Bật "Xác minh 2 bước" (2-Step Verification)
+# - Bước 2: Vào https://myaccount.google.com/apppasswords
+# - Bước 3: Đặt tên ứng dụng là "School Medical" và nhấn "Tạo" (Create)
+# - Bước 4: Copy chuỗi 16 chữ cái (bỏ khoảng trắng) và dán vào spring.mail.password bên dưới.
+# ==============================================================================
+
+spring.mail.username=your_email@gmail.com
+spring.mail.password=your_16_char_app_password

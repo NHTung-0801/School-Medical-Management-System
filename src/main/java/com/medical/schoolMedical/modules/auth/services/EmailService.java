@@ -14,14 +14,26 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 @Service
 @Slf4j
 public class EmailService {
-    @Autowired(required = false)
-    private JavaMailSender mailSender;
 
-    @Autowired
-    private SpringTemplateEngine templateEngine;
+    private final JavaMailSender mailSender;
+    private final SpringTemplateEngine templateEngine;
 
     @Value("${spring.mail.username:}")
     private String senderEmail;
+
+    public EmailService(@Autowired(required = false) JavaMailSender mailSender,
+                        @Autowired SpringTemplateEngine templateEngine) {
+        this.mailSender = mailSender;
+        this.templateEngine = templateEngine;
+    }
+
+    public void setSenderEmail(String senderEmail) {
+        this.senderEmail = senderEmail;
+    }
+
+    public String getSenderEmail() {
+        return senderEmail;
+    }
 
     @Async
     public void sendOtpEmail(String to, String otp) {
@@ -32,15 +44,17 @@ public class EmailService {
 
         // Nếu chưa cấu hình email hoặc email rỗng, dừng lại tại đây (không gây crash)
         if (mailSender == null || senderEmail == null || senderEmail.isBlank()) {
-            log.warn("⚠️ Chưa cấu hình Gmail trong application.properties! Mã OTP đã được in ra console log ở trên.");
+            log.warn("⚠️ Chưa cấu hình Gmail trong application-dev.properties hoặc biến môi trường! Mã OTP đã được in ra console log ở trên.");
             return;
         }
 
         try {
+            log.info("🚀 Đang gửi email OTP từ [{}] tới [{}] qua SMTP Gmail...", senderEmail, to);
+
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-            helper.setFrom(senderEmail, "School Medical Management System");
+            helper.setFrom(senderEmail, "Hệ Thống Y Tế Học Đường - School Medical System");
             helper.setTo(to);
             helper.setSubject("Mã xác thực OTP - Quản lý Y tế Học đường");
 
@@ -59,3 +73,4 @@ public class EmailService {
         }
     }
 }
+
