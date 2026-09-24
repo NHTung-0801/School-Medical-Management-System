@@ -231,7 +231,7 @@ Toàn bộ 135 bài kiểm thử tự động đều chạy qua H2 in-memory dat
 | **Khởi chạy Multi-Container** | `docker compose up -d` (Spring Boot + MySQL 8.0) | ✅ SẴN SÀNG |
 | **Healthcheck Probe** | `/yte/actuator/health` trả về HTTP 200 `{"status":"UP"}` | ✅ ĐẠT |
 | **Bảo mật Bí Mật** | Không hardcode mật khẩu CSDL hoặc Email trên Git | ✅ TUÂN THỦ 100% |
-| **Tài liệu Triển khai** | Đầy đủ hướng dẫn tại `docs/DEPLOYMENT.md` | ✅ ĐÃ CÓ |
+| **Vận hành Đám mây 24/7** | Triển khai Render Cloud + Aiven MySQL 8.4 + UptimeRobot | ✅ HOÀN TẤT |
 | **Hướng dẫn Sử dụng** | Sổ tay cho 4 vai trò tại `docs/USER_GUIDE.md` | ✅ ĐÃ CÓ |
 
 ---
