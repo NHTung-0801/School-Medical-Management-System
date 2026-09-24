@@ -78,4 +78,71 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     updateTime();
     setInterval(updateTime, 60000);
+
+    // =========================================================
+    // 1. Scroll-Driven Reveal (Lướt đến đâu nội dung hiển thị đến đó)
+    // =========================================================
+    const revealElements = document.querySelectorAll('.reveal-on-scroll');
+    if ('IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Chỉ kích hoạt một lần mượt mà
+                }
+            });
+        }, {
+            threshold: 0.12,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    } else {
+        // Fallback cho trình duyệt cũ
+        revealElements.forEach(el => el.classList.add('is-visible'));
+    }
+
+    // =========================================================
+    // 2. 3D Interactive Card Tilt (Nghiêng 3D & Phản Quang Theo Chuột)
+    // =========================================================
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (!isTouchDevice) {
+        const tiltCards = document.querySelectorAll('.enhanced-card');
+        tiltCards.forEach(card => {
+            let isHovered = false;
+
+            card.addEventListener('mouseenter', () => {
+                isHovered = true;
+            });
+
+            card.addEventListener('mousemove', (e) => {
+                if (!isHovered) return;
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                // Góc nghiêng tối đa ±8 độ để vừa mắt và chuyên nghiệp
+                const rotateX = ((centerY - y) / centerY) * 8.5;
+                const rotateY = ((x - centerX) / centerX) * 8.5;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-8px) translateZ(12px)`;
+
+                // Cập nhật tâm phản chiếu ánh sáng specular glare
+                const mousePercentX = ((x / rect.width) * 100).toFixed(1);
+                const mousePercentY = ((y / rect.height) * 100).toFixed(1);
+                card.style.setProperty('--mouse-x', `${mousePercentX}%`);
+                card.style.setProperty('--mouse-y', `${mousePercentY}%`);
+            });
+
+            card.addEventListener('mouseleave', () => {
+                isHovered = false;
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) translateZ(0)';
+                card.style.setProperty('--mouse-x', '50%');
+                card.style.setProperty('--mouse-y', '50%');
+            });
+        });
+    }
 });

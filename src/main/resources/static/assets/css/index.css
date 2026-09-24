@@ -1028,3 +1028,138 @@ section > h2::after {
         padding: 10px 16px;
     }
 }
+
+/* =========================================================
+   3D DEPTH, PERSPECTIVE & SCROLL-DRIVEN REVEAL ANIMATIONS
+   ========================================================= */
+
+/* ── 3D Container Context ── */
+.services-grid,
+.about-values-grid,
+.stats-cards,
+.blog-posts,
+.doctor-cards,
+.contact-container {
+    perspective: 1200px;
+    transform-style: preserve-3d;
+}
+
+/* ── Scroll-Driven Reveal Classes ── */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(35px) scale(0.97) perspective(1000px) rotateX(7deg);
+    transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s ease;
+    will-change: transform, opacity;
+}
+
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1) perspective(1000px) rotateX(0deg);
+}
+
+/* Staggered transition delays for children */
+.stagger-1 { transition-delay: 0.08s; }
+.stagger-2 { transition-delay: 0.16s; }
+.stagger-3 { transition-delay: 0.24s; }
+.stagger-4 { transition-delay: 0.32s; }
+.stagger-5 { transition-delay: 0.40s; }
+.stagger-6 { transition-delay: 0.48s; }
+
+/* ── 3D Interactive Card Styles ── */
+.enhanced-card {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1),
+                box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s ease;
+    will-change: transform;
+}
+
+/* 3D dynamic specular glare reflection */
+.enhanced-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+        circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.14),
+        transparent 65%
+    );
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.enhanced-card:hover::after {
+    opacity: 1;
+}
+
+/* Elevate inner items along the Z-axis for physical 3D layered feel */
+.enhanced-card .service-icon,
+.enhanced-card .value-icon,
+.enhanced-card .stat-card i,
+.enhanced-card .contact-icon {
+    transform: translateZ(28px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.enhanced-card h3,
+.enhanced-card .blog-meta-header,
+.enhanced-card .doctor-meta-tags {
+    transform: translateZ(18px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.enhanced-card p,
+.enhanced-card .contact-desc {
+    transform: translateZ(10px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 3D Floating animation for Hero trust badges */
+@keyframes float3D {
+    0%, 100% {
+        transform: translateY(0px) translateZ(10px) rotateZ(0deg);
+    }
+    50% {
+        transform: translateY(-6px) translateZ(15px) rotateZ(0.8deg);
+    }
+}
+
+.hero-trust-badges .trust-badge {
+    animation: float3D 5s ease-in-out infinite;
+    transform-style: preserve-3d;
+}
+
+.hero-trust-badges .trust-badge:nth-child(2) {
+    animation-delay: -1.7s;
+}
+
+.hero-trust-badges .trust-badge:nth-child(3) {
+    animation-delay: -3.4s;
+}
+
+/* Hero Content subtle 3D depth */
+.hero-content {
+    transform-style: preserve-3d;
+}
+
+.hero-badge-top {
+    transform: translateZ(20px);
+}
+
+.hero h1 {
+    transform: translateZ(30px);
+}
+
+.hero p {
+    transform: translateZ(15px);
+}
+
+.hero-actions {
+    transform: translateZ(25px);
+}
