@@ -110,7 +110,6 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .loginProcessingUrl("/doLogin") // URL để submit form login
                         .successHandler(customSuccessHandler)
-                        //.defaultSuccessUrl("/home", true) // chuyển hướng sau khi login thành công
                         .failureUrl("/login?error=true") // chuyển hướng khi login sai
                         .permitAll()
                 )

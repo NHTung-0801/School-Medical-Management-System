@@ -22,10 +22,8 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-        // Lặp qua các vai trò (roles) của người dùng
         for (GrantedAuthority auth : authorities) {
-        //for (GrantedAuthority auth : authentication.getAuthorities()) {
-                String role = auth.getAuthority();
+            String role = auth.getAuthority();
 
                 // Sai trang login thì không cho phép
                 if (role.equals("ROLE_ADMIN") && "user".equals(source)) {

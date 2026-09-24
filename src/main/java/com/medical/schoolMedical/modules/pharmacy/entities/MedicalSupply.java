@@ -24,7 +24,6 @@ public class MedicalSupply {
     @Column(name = "medical_supply_id")
     private Long id;
 
-    // Quan hệ với bảng trung gian
     @OneToMany(mappedBy = "medicalSupply", cascade = CascadeType.ALL)
     private List<SupplyUsed> supplyUsed;
 
